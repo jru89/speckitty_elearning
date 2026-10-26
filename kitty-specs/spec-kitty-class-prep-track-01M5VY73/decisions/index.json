@@ -1,146 +1,146 @@
-{
-  "entries": [
-    {
-      "created_at": "2026-10-26T11:06:14.030808Z",
-      "decision_id": "01M5VY7D4ERJ7F4M3BRS698QQY",
-      "final_answer": "Yes, that outline",
-      "input_key": "track_outline",
-      "mission_id": "01M5VY73A9X474Q43WCVE1RFDD",
-      "mission_slug": "spec-kitty-class-prep-track-01M5VY73",
-      "opened_by": "cli",
-      "options": [],
-      "origin_flow": "specify",
-      "other_answer": false,
-      "question": "Is the 4-module outline (Words you'll hear, Vibe coding vs spec-driven, Get set up, Ready check; ~30 min) the scope?",
-      "rationale": null,
-      "resolved_at": "2026-10-26T11:06:16.747931Z",
-      "resolved_by": null,
-      "slot_key": "specify.scope.track-outline",
-      "status": "resolved",
-      "step_id": null,
-      "summary_json": null
-    },
-    {
-      "created_at": "2026-10-26T11:06:19.181926Z",
-      "decision_id": "01M5VY7J5DN0ARS0JQB11BJQCH",
-      "final_answer": "English",
-      "input_key": "content_language",
-      "mission_id": "01M5VY73A9X474Q43WCVE1RFDD",
-      "mission_slug": "spec-kitty-class-prep-track-01M5VY73",
-      "opened_by": "cli",
-      "options": [],
-      "origin_flow": "specify",
-      "other_answer": false,
-      "question": "What language should the content be in?",
-      "rationale": null,
-      "resolved_at": "2026-10-26T11:06:21.637646Z",
-      "resolved_by": null,
-      "slot_key": "specify.audience.language",
-      "status": "resolved",
-      "step_id": null,
-      "summary_json": null
-    },
-    {
-      "created_at": "2026-10-26T11:06:24.089196Z",
-      "decision_id": "01M5VY7PYSRP2BZXEBZMXN2XGR",
-      "final_answer": "All operating systems, all hardware, all AI coding tools: generalized and tool-neutral",
-      "input_key": "platform_coverage",
-      "mission_id": "01M5VY73A9X474Q43WCVE1RFDD",
-      "mission_slug": "spec-kitty-class-prep-track-01M5VY73",
-      "opened_by": "cli",
-      "options": [],
-      "origin_flow": "specify",
-      "other_answer": false,
-      "question": "Which platforms, hardware and AI coding tools must the setup guidance cover?",
-      "rationale": null,
-      "resolved_at": "2026-10-26T11:06:26.472579Z",
-      "resolved_by": null,
-      "slot_key": "specify.setup.platform-coverage",
-      "status": "resolved",
-      "step_id": null,
-      "summary_json": null
-    },
-    {
-      "created_at": "2026-10-26T11:06:28.883986Z",
-      "decision_id": "01M5VY7VMKWYE4R8GV0F7MW46H",
-      "final_answer": "Yes, short intake that filters content; hosted on the trainer's GitHub Pages; every attendee gets an individual experience with no mixing between users",
-      "input_key": "intake_questionnaire",
-      "mission_id": "01M5VY73A9X474Q43WCVE1RFDD",
-      "mission_slug": "spec-kitty-class-prep-track-01M5VY73",
-      "opened_by": "cli",
-      "options": [],
-      "origin_flow": "specify",
-      "other_answer": false,
-      "question": "Should the track start with a short intake questionnaire that tailors the content?",
-      "rationale": null,
-      "resolved_at": "2026-10-26T11:06:31.307381Z",
-      "resolved_by": null,
-      "slot_key": "specify.personalization.intake-questionnaire",
-      "status": "resolved",
-      "step_id": null,
-      "summary_json": null
-    },
-    {
-      "created_at": "2026-10-26T11:06:34.109107Z",
-      "decision_id": "01M5VY80QWRVXXA5EPF5S2BCZ9",
-      "final_answer": "A full new standalone repo and app; the onboarding lab was only context",
-      "input_key": "standalone_repo",
-      "mission_id": "01M5VY73A9X474Q43WCVE1RFDD",
-      "mission_slug": "spec-kitty-class-prep-track-01M5VY73",
-      "opened_by": "cli",
-      "options": [],
-      "origin_flow": "specify",
-      "other_answer": false,
-      "question": "Is this built inside the existing onboarding lab or as its own app?",
-      "rationale": null,
-      "resolved_at": "2026-10-26T11:06:36.576250Z",
-      "resolved_by": null,
-      "slot_key": "specify.scope.standalone-repo",
-      "status": "resolved",
-      "step_id": null,
-      "summary_json": null
-    },
-    {
-      "created_at": "2026-10-26T11:08:34.536152Z",
-      "decision_id": "01M5VYBPB8AK5FJP1071488HG9",
-      "final_answer": "Vanilla HTML/CSS/JS, native ES modules, no build step, offline-capable; same as the trainer's other apps",
-      "input_key": "tech_stack",
-      "mission_id": "01M5VY73A9X474Q43WCVE1RFDD",
-      "mission_slug": "spec-kitty-class-prep-track-01M5VY73",
-      "opened_by": "cli",
-      "options": [],
-      "origin_flow": "plan",
-      "other_answer": false,
-      "question": "Which tech stack: vanilla HTML/CSS/JS static site with no build step (like the trainer's other apps), or a framework?",
-      "rationale": null,
-      "resolved_at": "2026-10-26T11:18:55.635889Z",
-      "resolved_by": null,
-      "slot_key": "plan.stack.tech-stack",
-      "status": "resolved",
-      "step_id": null,
-      "summary_json": null
-    },
-    {
-      "created_at": "2026-10-26T11:08:36.855879Z",
-      "decision_id": "01M5VYBRKQP26GTMKW59AV37NF",
-      "final_answer": "Open to anyone with the link; no passphrase",
-      "input_key": "link_gate",
-      "mission_id": "01M5VY73A9X474Q43WCVE1RFDD",
-      "mission_slug": "spec-kitty-class-prep-track-01M5VY73",
-      "opened_by": "cli",
-      "options": [],
-      "origin_flow": "plan",
-      "other_answer": false,
-      "question": "Should the course be open to anyone with the link, or behind a simple shared passphrase?",
-      "rationale": null,
-      "resolved_at": "2026-10-26T11:18:57.979558Z",
-      "resolved_by": null,
-      "slot_key": "plan.access.link-gate",
-      "status": "resolved",
-      "step_id": null,
-      "summary_json": null
-    }
-  ],
-  "mission_id": "01M5VY73A9X474Q43WCVE1RFDD",
-  "version": 1
-}
+{
+  "entries": [
+    {
+      "created_at": "2026-10-26T11:06:14.030808Z",
+      "decision_id": "01M5VY7D4ERJ7F4M3BRS698QQY",
+      "final_answer": "Yes, that outline",
+      "input_key": "track_outline",
+      "mission_id": "01M5VY73A9X474Q43WCVE1RFDD",
+      "mission_slug": "spec-kitty-class-prep-track-01M5VY73",
+      "opened_by": "cli",
+      "options": [],
+      "origin_flow": "specify",
+      "other_answer": false,
+      "question": "Is the 4-module outline (Words you'll hear, Vibe coding vs spec-driven, Get set up, Ready check; ~30 min) the scope?",
+      "rationale": null,
+      "resolved_at": "2026-10-26T11:06:16.747931Z",
+      "resolved_by": null,
+      "slot_key": "specify.scope.track-outline",
+      "status": "resolved",
+      "step_id": null,
+      "summary_json": null
+    },
+    {
+      "created_at": "2026-10-26T11:06:19.181926Z",
+      "decision_id": "01M5VY7J5DN0ARS0JQB11BJQCH",
+      "final_answer": "English",
+      "input_key": "content_language",
+      "mission_id": "01M5VY73A9X474Q43WCVE1RFDD",
+      "mission_slug": "spec-kitty-class-prep-track-01M5VY73",
+      "opened_by": "cli",
+      "options": [],
+      "origin_flow": "specify",
+      "other_answer": false,
+      "question": "What language should the content be in?",
+      "rationale": null,
+      "resolved_at": "2026-10-26T11:06:21.637646Z",
+      "resolved_by": null,
+      "slot_key": "specify.audience.language",
+      "status": "resolved",
+      "step_id": null,
+      "summary_json": null
+    },
+    {
+      "created_at": "2026-10-26T11:06:24.089196Z",
+      "decision_id": "01M5VY7PYSRP2BZXEBZMXN2XGR",
+      "final_answer": "All operating systems, all hardware, all AI coding tools: generalized and tool-neutral",
+      "input_key": "platform_coverage",
+      "mission_id": "01M5VY73A9X474Q43WCVE1RFDD",
+      "mission_slug": "spec-kitty-class-prep-track-01M5VY73",
+      "opened_by": "cli",
+      "options": [],
+      "origin_flow": "specify",
+      "other_answer": false,
+      "question": "Which platforms, hardware and AI coding tools must the setup guidance cover?",
+      "rationale": null,
+      "resolved_at": "2026-10-26T11:06:26.472579Z",
+      "resolved_by": null,
+      "slot_key": "specify.setup.platform-coverage",
+      "status": "resolved",
+      "step_id": null,
+      "summary_json": null
+    },
+    {
+      "created_at": "2026-10-26T11:06:28.883986Z",
+      "decision_id": "01M5VY7VMKWYE4R8GV0F7MW46H",
+      "final_answer": "Yes, short intake that filters content; hosted on the trainer's GitHub Pages; every attendee gets an individual experience with no mixing between users",
+      "input_key": "intake_questionnaire",
+      "mission_id": "01M5VY73A9X474Q43WCVE1RFDD",
+      "mission_slug": "spec-kitty-class-prep-track-01M5VY73",
+      "opened_by": "cli",
+      "options": [],
+      "origin_flow": "specify",
+      "other_answer": false,
+      "question": "Should the track start with a short intake questionnaire that tailors the content?",
+      "rationale": null,
+      "resolved_at": "2026-10-26T11:06:31.307381Z",
+      "resolved_by": null,
+      "slot_key": "specify.personalization.intake-questionnaire",
+      "status": "resolved",
+      "step_id": null,
+      "summary_json": null
+    },
+    {
+      "created_at": "2026-10-26T11:06:34.109107Z",
+      "decision_id": "01M5VY80QWRVXXA5EPF5S2BCZ9",
+      "final_answer": "A full new standalone repo and app; the onboarding lab was only context",
+      "input_key": "standalone_repo",
+      "mission_id": "01M5VY73A9X474Q43WCVE1RFDD",
+      "mission_slug": "spec-kitty-class-prep-track-01M5VY73",
+      "opened_by": "cli",
+      "options": [],
+      "origin_flow": "specify",
+      "other_answer": false,
+      "question": "Is this built inside the existing onboarding lab or as its own app?",
+      "rationale": null,
+      "resolved_at": "2026-10-26T11:06:36.576250Z",
+      "resolved_by": null,
+      "slot_key": "specify.scope.standalone-repo",
+      "status": "resolved",
+      "step_id": null,
+      "summary_json": null
+    },
+    {
+      "created_at": "2026-10-26T11:08:34.536152Z",
+      "decision_id": "01M5VYBPB8AK5FJP1071488HG9",
+      "final_answer": "Vanilla HTML/CSS/JS, native ES modules, no build step, offline-capable; same as the trainer's other apps",
+      "input_key": "tech_stack",
+      "mission_id": "01M5VY73A9X474Q43WCVE1RFDD",
+      "mission_slug": "spec-kitty-class-prep-track-01M5VY73",
+      "opened_by": "cli",
+      "options": [],
+      "origin_flow": "plan",
+      "other_answer": false,
+      "question": "Which tech stack: vanilla HTML/CSS/JS static site with no build step (like the trainer's other apps), or a framework?",
+      "rationale": null,
+      "resolved_at": "2026-10-26T11:18:55.635889Z",
+      "resolved_by": null,
+      "slot_key": "plan.stack.tech-stack",
+      "status": "resolved",
+      "step_id": null,
+      "summary_json": null
+    },
+    {
+      "created_at": "2026-10-26T11:08:36.855879Z",
+      "decision_id": "01M5VYBRKQP26GTMKW59AV37NF",
+      "final_answer": "Open to anyone with the link; no passphrase",
+      "input_key": "link_gate",
+      "mission_id": "01M5VY73A9X474Q43WCVE1RFDD",
+      "mission_slug": "spec-kitty-class-prep-track-01M5VY73",
+      "opened_by": "cli",
+      "options": [],
+      "origin_flow": "plan",
+      "other_answer": false,
+      "question": "Should the course be open to anyone with the link, or behind a simple shared passphrase?",
+      "rationale": null,
+      "resolved_at": "2026-10-26T11:18:57.979558Z",
+      "resolved_by": null,
+      "slot_key": "plan.access.link-gate",
+      "status": "resolved",
+      "step_id": null,
+      "summary_json": null
+    }
+  ],
+  "mission_id": "01M5VY73A9X474Q43WCVE1RFDD",
+  "version": 1
+}

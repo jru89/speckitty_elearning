@@ -1,32 +1,32 @@
-# Decision Moment `01M5VY80QWRVXXA5EPF5S2BCZ9`
-
-- **Mission:** `spec-kitty-class-prep-track-01M5VY73`
-- **Origin flow:** `specify`
-- **Slot key:** `specify.scope.standalone-repo`
-- **Input key:** `standalone_repo`
-- **Status:** `resolved`
-- **Created:** `2026-10-26T11:06:34.109107+00:00`
-- **Resolved:** `2026-10-26T11:06:36.576250+00:00`
-- **Opened by:** `cli`
-- **Other answer:** `false`
-
-## Question
-
-Is this built inside the existing onboarding lab or as its own app?
-
-## Options
-
-_(none)_
-
-## Final answer
-
-A full new standalone repo and app; the onboarding lab was only context
-
-## Rationale
-
-_(none)_
-
-## Change log
-
-- `2026-10-26T11:06:34.109107+00:00` — opened
-- `2026-10-26T11:06:36.576250+00:00` — resolved (final_answer="A full new standalone repo and app; the onboarding lab was only context")
+# Decision Moment `01M5VY80QWRVXXA5EPF5S2BCZ9`
+
+- **Mission:** `spec-kitty-class-prep-track-01M5VY73`
+- **Origin flow:** `specify`
+- **Slot key:** `specify.scope.standalone-repo`
+- **Input key:** `standalone_repo`
+- **Status:** `resolved`
+- **Created:** `2026-10-26T11:06:34.109107+00:00`
+- **Resolved:** `2026-10-26T11:06:36.576250+00:00`
+- **Opened by:** `cli`
+- **Other answer:** `false`
+
+## Question
+
+Is this built inside the existing onboarding lab or as its own app?
+
+## Options
+
+_(none)_
+
+## Final answer
+
+A full new standalone repo and app; the onboarding lab was only context
+
+## Rationale
+
+_(none)_
+
+## Change log
+
+- `2026-10-26T11:06:34.109107+00:00` — opened
+- `2026-10-26T11:06:36.576250+00:00` — resolved (final_answer="A full new standalone repo and app; the onboarding lab was only context")

@@ -1,0 +1,17 @@
+project:
+  uuid: 98634ece-20dd-40a1-a597-8d1baeebd956
+  slug: spec-kitty-class-prep
+  node_id: b051768c250c
+  build_id: b8464672-47d8-534b-a013-863500b2f0d3
+mission_type_activations:
+- software-dev
+- documentation
+- research
+- plan
+vcs:
+  type: git
+agents:
+  available:
+  - claude
+  auto_commit: true
+  lint_on_edit: false

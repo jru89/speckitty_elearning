@@ -1,6 +1,8 @@
 {
+  "accept_commit": "ee119b8a777a98259aa7a0837e5e6c4395c2e8a1",
   "acceptance_history": [
     {
+      "accept_commit": "ee119b8a777a98259aa7a0837e5e6c4395c2e8a1",
       "acceptance_mode": "local",
       "accepted_at": "2026-10-26T14:21:39.863221+00:00",
       "accepted_by": "jrutt",

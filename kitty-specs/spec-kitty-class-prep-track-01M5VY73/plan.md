@@ -143,12 +143,16 @@ js/
 │   ├── intake.js               # questions, options, chip-finding hints
 │   ├── tools.js                # supported AI coding tools: name, cost, install URL, command style
 │   ├── welcome.js              # what Spec Kitty is, agenda, what to bring
+│   ├── setup/                  # setup-module block sources, composed by modules/setup.js
+│   │   ├── platform-blocks.js  # Git + Python per OS/chip
+│   │   ├── tool-blocks.js      # one block per tool + "help me choose" + "other"
+│   │   └── support-blocks.js   # agent check, work-device guidance, pipx/uv head start
 │   └── modules/
 │       ├── index.js            # ordered module list
 │       ├── terminal.js         # optional primer (per-OS blocks)
 │       ├── words.js            # Module 1 + match exercise config
 │       ├── spec-driven.js      # Module 2 + judge exercise config
-│       ├── setup.js            # Module 3: git, python, tool, agent check, work device, pipx/uv
+│       ├── setup.js            # Module 3: composes data/setup/* in display order
 │       └── ready.js            # Module 4 + checklist config
 └── views/
     ├── welcome-view.js

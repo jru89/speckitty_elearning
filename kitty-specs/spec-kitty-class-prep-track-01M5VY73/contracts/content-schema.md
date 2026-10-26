@@ -4,7 +4,17 @@ Content authors (human or agent) change only these files to update the course. V
 
 ## Modules (`js/data/modules/*.js`)
 
-Each file default-exports one module object as defined in [data-model.md](../data-model.md#module-static). `js/data/modules/index.js` exports them in display order: `terminal` (optional), `words`, `spec-driven`, `setup`, `ready`.
+Each file default-exports one module object as defined in [data-model.md](../data-model.md#module-static). `js/data/modules/index.js` is a registry of `{ id, load }` entries in display order: `terminal` (optional), `words`, `spec-driven`, `setup`, `ready`. Each `load` is `() => import("./<id>.js")`, so a module file that doesn't exist yet makes only that module unavailable, not the whole app.
+
+The setup module is the exception to "one file per module". `js/data/modules/setup.js` builds its `blocks` array by concatenating, in display order:
+
+1. its own intro block;
+2. the `work-device` blocks from `js/data/setup/support-blocks.js` (shown first, so work-device attendees read them before trying installs);
+3. `js/data/setup/platform-blocks.js` (Git, then Python);
+4. `js/data/setup/tool-blocks.js`;
+5. the `agent-check` and `head-start` blocks from `support-blocks.js`.
+
+Each of those files exports a named array of blocks (`platformBlocks`, `toolBlocks`, `supportBlocks`).
 
 ### Block rules
 

@@ -58,8 +58,11 @@ Key `skcp:v1`, JSON:
   topic: "git",                       // setup blocks only: git | python | tool | agent-check | work-device | head-start | intro
   chipLabel: "ARM",                   // optional; shown when chip is "unsure"
   kind: "step" | "note" | "warning" | "check"   // optional styling hint
+        | "tool-chooser" | "command-style"       // interactive kinds, rendered by module-view (body ignored)
 }
 ```
+
+**Interactive kinds**: `tool-chooser` renders the tool list from `tools.js` with cost labels. Picking one saves `answers.tool` and re-renders the module (FR-015). `command-style` renders "In <tool name>, Spec Kitty commands look like `<commandStyle>`" for the attendee's tool (FR-025). Content files only place these blocks; `module-view.js` owns their behaviour.
 
 ## Module (static)
 
@@ -92,4 +95,4 @@ Key `skcp:v1`, JSON:
 
 ## Setup summary (derived, never stored)
 
-`buildSummary(answers, progress)` returns one line: labels for OS · chip (omitted when `unsure` or not asked) · device · tool name · experience · `"all checks passed"` or `"N of M checks done"`. Example: `macOS · Apple Silicon · personal · Cursor · uses AI daily · all checks passed`. It contains no free text, names or identifiers.
+`buildSummary(answers, progress, visibleChecklistIds)` returns one line (the caller passes the ready-check item ids visible for these answers): labels for OS · chip (omitted when `unsure` or not asked) · device · tool name · experience · `"all checks passed"` or `"N of M checks done"`. Example: `macOS · Apple Silicon · personal · Cursor · uses AI daily · all checks passed`. It contains no free text, names or identifiers.

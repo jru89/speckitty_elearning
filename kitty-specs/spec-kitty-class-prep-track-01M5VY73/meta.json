@@ -25,6 +25,7 @@
   "purpose_tldr": "A light, standalone pre-session e-learning so Spec Kitty class attendees arrive knowing the key terms and with Git, Python and an AI coding agent installed.",
   "slug": "spec-kitty-class-prep-track-01M5VY73",
   "source_description": "Light, standalone pre-session e-learning for the Spec Kitty class: intake-tailored setup for any OS, hardware and AI coding tool, per-attendee isolated, hosted on GitHub Pages.",
+  "status_phase": "1",
   "target_branch": "feat/spec-kitty-class-prep-track",
   "topology": "coord",
   "vcs": "git"

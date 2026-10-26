@@ -87,6 +87,10 @@ flowchart TB
 
 Module ids: `terminal` (optional), `words`, `spec-driven`, `setup`, `ready`.
 
+**Route guard**: `#/course` and every `#/m/:id` redirect to `#/intake` while the store has no valid answers. A deep link or an old bookmark therefore never shows untailored setup steps for every OS at once (FR-004).
+
+**Not in the app's navigation**: `tests/` is reachable by URL for the trainer, but it is never linked from the UI and never precached.
+
 ### Tailoring
 
 Each content block may carry `when: { os?, chip?, device?, tool?, experience? }`, where each value is an array of allowed answers. `appliesTo(when, answers)` returns true when every listed dimension matches. Absent `when` or an absent dimension means "everyone". `chip: "unsure"` matches every chip-labelled block, and the views show chip labels so attendees can pick the right one. The full rule is in [contracts/tailoring-contract.md](contracts/tailoring-contract.md).
@@ -180,6 +184,19 @@ No charter violations to justify.
 | R-03 | Platform install steps are wrong for some combination. | Exhaustive coverage test (no dead ends, exactly one OS's steps). Quickstart spot-checks four real combinations. |
 | R-04 | Copying to the clipboard is refused (older browsers, insecure context). | `clipboard.js` falls back to selecting the text in a read-only field (FR-020). |
 | R-05 | Storage unavailable (private mode). | `store.js` falls back to memory and exposes `isPersistent()`. The shell shows a one-line notice (edge case in spec). |
+| R-06 | Session details and trainer contact unknown at build time. | `welcome.js` `session` fields are optional and render nothing when empty. The trainer fills them in before sharing the link. |
+
+## Plan Review (2026-10-26)
+
+A self-review against spec.md found every FR, NFR and C referenced in the planning artifacts. It also found five gaps, fixed in this revision:
+
+1. **`tool: "other"` had no setup block**, which would have been a dead end and failed the coverage test. Added an "other tool" block rule in the tailoring contract.
+2. **A deep link to a module before the intake showed every OS's steps.** Added a route guard that redirects to the intake.
+3. **The suggested next step could point early-stop attendees at setup.** `suggestedNext` now skips setup and ready for them.
+4. **Ready-check items could be impossible** for some combinations (e.g. "logged in" with no tool chosen). Added coverage rule 5.
+5. **There was nowhere for session date, place or the trainer's contact.** The trainer-contact messages need the latter. Added optional `session` fields to the welcome content.
+
+Also clarified that `tests/` is not linked or precached.
 
 ## Implementation Concern Map
 

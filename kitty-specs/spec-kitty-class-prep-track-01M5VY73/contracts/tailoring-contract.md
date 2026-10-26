@@ -5,7 +5,7 @@ Pure functions with no DOM and no storage access. They decide what an attendee s
 ## `appliesTo(when, answers) → boolean`
 
 - `when` absent or `{}` → `true`.
-- `answers` is `null` (intake not done) → `true` (preview mode shows everything).
+- `answers` is `null` (intake not done) → `true`. This only happens in tests: the router never renders a module without answers (see plan, Routes).
 - For every dimension `d` present in `when`:
   - if `answers[d]` is in `when[d]` → this dimension matches;
   - special case `d === "chip"` and `answers.chip === "unsure"` → matches;
@@ -23,7 +23,7 @@ Per [data-model.md](../data-model.md#answers-per-attendee-persisted). `mobile` w
 
 ## `suggestedNext(answers, progress) → moduleId`
 
-Per data-model derived states. It never returns a module that is already `done`, except `ready` when everything is done.
+Per data-model derived states. It never returns a module that is already `done`, except `ready` when everything is done. When `earlyStop(answers)` is non-null it never returns `setup` or `ready` (those can't succeed on that device). It returns the first not-done vocabulary module instead, and the overview leads with the trainer-contact message.
 
 ## Coverage test (`tests/tailor.test.js`)
 
@@ -31,7 +31,8 @@ For **every** combination of `os × chip × device × tool × experience` (chip 
 
 1. **No dead ends (NFR-006)**: either `earlyStop(answers)` is non-null, or the visible blocks of `setup` include at least one block tagged `topic: "git"`, one `topic: "python"`, one `topic: "tool"` and one `topic: "agent-check"`.
 2. **One OS only (SC-003)**: every visible `setup` or `terminal` block with an `os` condition includes `answers.os`.
-3. **One tool only (SC-003)**: every visible block with a `tool` condition includes `answers.tool`, except for `undecided`, which shows the "help me choose" block instead.
+3. **One tool only (SC-003)**: every visible block with a `tool` condition includes `answers.tool`. `undecided` shows the "help me choose" block (`topic: "tool"`, `when: { tool: ["undecided"] }`). `other` shows a "check with the trainer that Spec Kitty supports your tool" block (`topic: "tool"`, `when: { tool: ["other"] }`). Both count as the tool block for rule 1.
+5. **Ready check has no dead items**: for every combination, every visible `ready` checklist item can be completed with that combination. For example, `undecided` sees "pick a tool" instead of "logged in to your tool", and early-stop combinations see "told the trainer" instead of the version checks.
 4. **Known dimensions only**: no block in any module uses a `when` key outside `os, chip, device, tool, experience`, or a value outside the data-model enums.
 
 Plus unit cases for each rule above, including the `chip: "unsure"` and `answers === null` cases.

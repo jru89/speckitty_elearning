@@ -28,3 +28,4 @@ Each file default-exports one module object as defined in [data-model.md](../dat
 ## Welcome (`js/data/welcome.js`)
 
 - Exports `whatIsIt` (HTML, links to https://github.com/spec-kitty/spec-kitty), `agenda` (ordered list of the session's six agenda items), `bring` (list), and `installedInSession` (one sentence, C-004).
+- Exports `session: { date, time, place, trainerContact }`, each optional. Empty fields are not rendered. `trainerContact` is also shown in every trainer-contact message (FR-006, the `other` tool block) as selectable text, never as a `mailto:`-only link. If it is empty, those messages say "your trainer" without contact details.

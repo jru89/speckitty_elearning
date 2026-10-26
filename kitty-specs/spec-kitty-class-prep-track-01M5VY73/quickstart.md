@@ -26,7 +26,8 @@ Use a fresh browser profile, or run "Start fresh" first.
    - Linux · x64 · work-can-install · undecided (the tool list with cost labels appears, and picking one updates the answers)
    - ChromeOS · personal · Gemini (the "turn on Linux" step comes first)
 4. **Change answers (FR-005)**: switch the OS from Windows to macOS via "Change my answers", then return to the setup module and confirm the content changed without a reload.
-5. **Early stop (FR-006)**: an intake with "tablet or phone" shows the trainer-contact message right after the intake. Repeat with "work, can't install".
+5. **Early stop (FR-006)**: an intake with "tablet or phone" shows the trainer-contact message right after the intake. Repeat with "work, can't install". In both cases the suggested next step is a vocabulary module, not setup.
+5b. **Route guard and "Other" tool**: after "Start fresh", open `#/m/setup` directly and confirm it redirects to the intake. Then complete the intake with tool "Other" and confirm the setup module shows the "check with the trainer" block.
 6. **Suggestions (FR-021, FR-022)**: `agents-daily` gets the ready check suggested. `terminal-new` gets the terminal primer suggested, showing that OS's content only. Every module is still openable in both cases.
 7. **Exercises (FR-009, FR-011)**: a wrong match shows an explanation, and every judge statement shows its "why". Each module is marked done after its exercise.
 8. **Ready check and summary (FR-019, FR-020)**: tick all visible items, then press "Copy my setup summary" and paste it somewhere. It should be one line matching the answers. In a browser that blocks clipboard access, the text is selected for manual copying instead.

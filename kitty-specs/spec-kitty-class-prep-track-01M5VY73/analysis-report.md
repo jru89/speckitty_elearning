@@ -4,7 +4,7 @@ artifact_type: spec-kitty.analysis-report
 command: /spec-kitty.analyze
 mission_slug: spec-kitty-class-prep-track-01M5VY73
 mission_id: 01M5VY73A9X474Q43WCVE1RFDD
-generated_at: '2026-10-26T12:18:21.576276+00:00'
+generated_at: '2026-10-26T12:25:04.878665+00:00'
 analyzer_agent: unknown
 input_artifacts:
   spec.md:
@@ -21,10 +21,10 @@ input_artifacts:
     sha256:
 verdict: ready
 issue_counts:
-  high: 0
-  low: 2
-  medium: 0
   critical: 0
+  medium: 0
+  low: 2
+  high: 0
   info: 0
 findings:
 - id: F5

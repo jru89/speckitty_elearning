@@ -1,32 +1,32 @@
-# Decision Moment `01M5VY7VMKWYE4R8GV0F7MW46H`
-
-- **Mission:** `spec-kitty-class-prep-track-01M5VY73`
-- **Origin flow:** `specify`
-- **Slot key:** `specify.personalization.intake-questionnaire`
-- **Input key:** `intake_questionnaire`
-- **Status:** `resolved`
-- **Created:** `2026-10-26T11:06:28.883986+00:00`
-- **Resolved:** `2026-10-26T11:06:31.307381+00:00`
-- **Opened by:** `cli`
-- **Other answer:** `false`
-
-## Question
-
-Should the track start with a short intake questionnaire that tailors the content?
-
-## Options
-
-_(none)_
-
-## Final answer
-
-Yes, short intake that filters content; hosted on the trainer's GitHub Pages; every attendee gets an individual experience with no mixing between users
-
-## Rationale
-
-_(none)_
-
-## Change log
-
-- `2026-10-26T11:06:28.883986+00:00` — opened
-- `2026-10-26T11:06:31.307381+00:00` — resolved (final_answer="Yes, short intake that filters content; hosted on the trainer's GitHub Pages; every attendee gets an individual experience with no mixing between users")
+# Decision Moment `01M5VY7VMKWYE4R8GV0F7MW46H`
+
+- **Mission:** `spec-kitty-class-prep-track-01M5VY73`
+- **Origin flow:** `specify`
+- **Slot key:** `specify.personalization.intake-questionnaire`
+- **Input key:** `intake_questionnaire`
+- **Status:** `resolved`
+- **Created:** `2026-10-26T11:06:28.883986+00:00`
+- **Resolved:** `2026-10-26T11:06:31.307381+00:00`
+- **Opened by:** `cli`
+- **Other answer:** `false`
+
+## Question
+
+Should the track start with a short intake questionnaire that tailors the content?
+
+## Options
+
+_(none)_
+
+## Final answer
+
+Yes, short intake that filters content; hosted on the trainer's GitHub Pages; every attendee gets an individual experience with no mixing between users
+
+## Rationale
+
+_(none)_
+
+## Change log
+
+- `2026-10-26T11:06:28.883986+00:00` — opened
+- `2026-10-26T11:06:31.307381+00:00` — resolved (final_answer="Yes, short intake that filters content; hosted on the trainer's GitHub Pages; every attendee gets an individual experience with no mixing between users")

@@ -20,7 +20,7 @@ export function mount(container, exercise, ctx) → { unmount() }
 |------|--------|-----------------|
 | `match` | `{ pairs: [{ term, definition, whyWrong? }] }` | every term matched correctly at least once (retries allowed, wrong matches show `whyWrong`) |
 | `judge` | `{ statements: [{ text, isCriterion: boolean, why }] }` | every statement judged once; feedback (`why`) shown after each judgement, right or wrong |
-| `checklist` | `{ items: [{ id, label, when? }], summary: true }` | every *visible* item checked (items filtered with `appliesTo`). When `summary` is true, renders "Copy my setup summary" using `buildSummary` + `clipboard.js` |
+| `checklist` | `{ items: [{ id, label, when? }], summary: true }` | every *visible* item checked (items filtered with `appliesTo`). Unchecking an item sets `completed` back to `false`. The module status stays `done` once reached (forward-only). When `summary` is true, renders "Copy my setup summary" using `buildSummary` + `clipboard.js` |
 
 ## Scoring
 

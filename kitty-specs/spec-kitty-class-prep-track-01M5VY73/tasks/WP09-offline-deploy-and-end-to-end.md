@@ -131,10 +131,10 @@ Sections:
 
 ### Subtask T041 – Full quickstart pass and fixes
 
-1. Start the preview (`preview_start` name `prep`) and run **every** step of [quickstart.md](../quickstart.md), including 5b, isolation with a foreign key, offline, 360 px and dark mode.
-2. Record pass or fail per step in the activity log, with screenshots for steps 3, 8, 10, 12 and 13.
+1. Start the preview (`preview_start` name `prep`) and run **every** step of [quickstart.md](../quickstart.md), including 5b, isolation with a foreign key, offline, 360 px, dark mode, first-view speed (step 14, NFR-010) and the network check (step 15, NFR-005).
+2. Record pass or fail per step in the activity log, with screenshots for steps 3, 8, 10, 12 and 13, and the recorded time for step 14.
 3. Fix failures in the owning file with minimal out-of-map edits and a one-line rationale each, or, if a fix is large, record it as a finding for the reviewer instead of absorbing it.
-4. Timing (step 14): time a full first run and an `agents-daily` run, and record both.
+4. Timing (step 16): time a full first run and an `agents-daily` run, and record both.
 
 ## Definition of Done
 

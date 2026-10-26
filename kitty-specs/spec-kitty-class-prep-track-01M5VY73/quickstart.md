@@ -39,7 +39,9 @@ Use a fresh browser profile, or run "Start fresh" first.
 11. **Storage unavailable**: in a private window that blocks storage, the course still works, and a one-line notice says answers won't be remembered.
 12. **Offline (NFR-009)**: after one full visit, switch DevTools → Network to Offline and reload. Every page still opens. In Application → Cache Storage, only `skcp-` caches belong to this app.
 13. **Phone width (NFR-008)**: at 360 px wide, no page scrolls horizontally, including the intake, the setup commands (code blocks scroll on their own) and the summary.
-14. **Timing (NFR-001, SC-004)**: a first-time run through the four main modules, excluding downloads, takes 35 minutes or less. An `agents-daily` run from opening to a completed ready check takes under 10 minutes.
+14. **First view speed (NFR-010)**: in DevTools → Network, pick the "Fast 4G" throttle with the cache disabled, and reload `#/welcome` in a fresh profile. The welcome heading and intro are readable within 2 seconds (check the Performance panel or the load timing). Record the time.
+15. **Nothing sent (NFR-005)**: with DevTools → Network open and "Preserve log" on, complete the intake, a module exercise and the ready check, then copy the summary. Every request is a same-origin GET for a static file (HTML, CSS, JS, JSON, icons). No request has a query string, body or header containing an answer value, and there are no POST requests and no other hosts.
+16. **Timing (NFR-001, SC-004)**: a first-time run through the four main modules, excluding downloads, takes 35 minutes or less. An `agents-daily` run from opening to a completed ready check takes under 10 minutes.
 
 ## Deploy
 

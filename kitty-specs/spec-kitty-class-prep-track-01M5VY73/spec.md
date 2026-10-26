@@ -231,5 +231,5 @@ Before the intake, the attendee sees a short welcome: what Spec Kitty is (with a
 - The trainer demos in Claude Code. Attendees using other tools follow along with equivalent commands.
 - The supported AI tool list and their cost models are checked once at build time. Keeping them current afterwards is the trainer's job.
 - Attendees use their own laptop or desktop. Shared or classroom machines are handled by "Start fresh".
-- The trainer shares the course link directly with attendees. Whether access is gated is a planning decision.
+- The trainer shares the course link directly with attendees. The course is open to anyone with the link, with no passphrase (decided in planning, DM-01M5VYBRKQP26GTMKW59AV37NF).
 - Discovery decisions are recorded in this mission's `decisions/` folder.

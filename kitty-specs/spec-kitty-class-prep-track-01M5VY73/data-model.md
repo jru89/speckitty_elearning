@@ -87,7 +87,8 @@ Key `skcp:v1`, JSON:
   cost: "free" | "free-tier" | "paid" | "api-key",
   costNote: "Free Hobby plan; paid plans for more usage",
   installUrl: "https://…",            // official docs only (C-006)
-  commandStyle: "/spec-kitty.specify" // how Spec Kitty commands look in this tool
+  commandStyle: "/spec-kitty.specify", // how Spec Kitty commands look in this tool
+  demo: true                          // optional; only on the tool the trainer demos with (Claude Code)
 }
 ```
 

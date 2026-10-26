@@ -138,7 +138,8 @@ js/
 │   ├── store.js                # ONLY module that touches localStorage
 │   ├── tailor.js               # pure: appliesTo(), visibleBlocks(), earlyStop(), suggestedNext()
 │   ├── summary.js              # pure: buildSummary()
-│   └── clipboard.js            # copy with select-text fallback
+│   ├── clipboard.js            # copy with select-text fallback
+│   └── enhance.js              # copy buttons on command blocks
 ├── data/
 │   ├── intake.js               # questions, options, chip-finding hints
 │   ├── tools.js                # supported AI coding tools: name, cost, install URL, command style
@@ -166,7 +167,8 @@ js/
 tests/
 ├── index.html                  # in-browser test runner page
 ├── runner.js                   # ~40-line assert/report helper
-├── tailor.test.js              # incl. exhaustive intake-combination coverage
+├── tailor.test.js              # unit cases for the tailoring rules
+├── coverage.test.js            # exhaustive intake-combination coverage (WP08)
 ├── summary.test.js
 └── store.test.js               # with injected fake storage
 README.md                       # run locally, deploy to GitHub Pages, update tool list
@@ -226,7 +228,7 @@ Also clarified that `tests/` is not linked or precached.
 
 - **Purpose**: collect the five answers and decide what each attendee sees, including early stop and the suggested next step.
 - **Relevant requirements**: FR-002, FR-003, FR-004, FR-005, FR-006, FR-021, NFR-002, NFR-006, SC-003
-- **Affected surfaces**: `js/data/intake.js`, `js/lib/tailor.js`, `js/views/intake-view.js`, `js/views/overview-view.js`, `tests/tailor.test.js`
+- **Affected surfaces**: `js/data/intake.js`, `js/lib/tailor.js`, `js/views/intake-view.js`, `js/views/overview-view.js`, `tests/tailor.test.js`, `tests/coverage.test.js`
 - **Sequencing/depends-on**: IC-02 (answers are persisted through the store)
 - **Risks**: the exhaustive combination test depends on the setup content (IC-05) existing. Write the rule and unit tests first, then extend the coverage test once IC-05 lands.
 

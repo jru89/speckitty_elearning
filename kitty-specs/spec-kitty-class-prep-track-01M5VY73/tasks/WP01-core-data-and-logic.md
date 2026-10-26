@@ -33,7 +33,7 @@ history:
 - at: '2026-10-26T11:38:51Z'
   actor: system
   action: Prompt generated via /spec-kitty.tasks
-agent_profile: ''
+agent_profile: implementer-ivan
 authoritative_surface: js/lib/
 create_intent:
 - tests/index.html

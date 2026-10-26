@@ -23,7 +23,7 @@ history:
 - at: '2026-10-26T11:38:51Z'
   actor: system
   action: Prompt generated via /spec-kitty.tasks
-agent_profile: ''
+agent_profile: scribe-sally
 authoritative_surface: js/data/setup/platform-blocks.js
 create_intent:
 - js/data/setup/platform-blocks.js
@@ -35,7 +35,7 @@ owned_files:
 - js/data/setup/platform-blocks.js
 - js/data/modules/setup.js
 - js/data/modules/terminal.js
-role: implementer
+role: documentarian
 tags: []
 task_type: implement
 tracker_refs: []

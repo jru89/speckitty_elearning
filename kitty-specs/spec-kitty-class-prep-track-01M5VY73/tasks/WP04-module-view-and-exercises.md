@@ -26,7 +26,7 @@ history:
 - at: '2026-10-26T11:38:51Z'
   actor: system
   action: Prompt generated via /spec-kitty.tasks
-agent_profile: ''
+agent_profile: frontend-freddy
 authoritative_surface: js/views/module-view.js
 create_intent:
 - js/views/module-view.js

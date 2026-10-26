@@ -26,7 +26,7 @@ history:
 - at: '2026-10-26T11:38:51Z'
   actor: system
   action: Prompt generated via /spec-kitty.tasks
-agent_profile: ''
+agent_profile: scribe-sally
 authoritative_surface: js/data/modules/words.js
 create_intent:
 - js/data/modules/words.js
@@ -36,7 +36,7 @@ model: ''
 owned_files:
 - js/data/modules/words.js
 - js/data/modules/spec-driven.js
-role: implementer
+role: documentarian
 tags: []
 task_type: implement
 tracker_refs: []

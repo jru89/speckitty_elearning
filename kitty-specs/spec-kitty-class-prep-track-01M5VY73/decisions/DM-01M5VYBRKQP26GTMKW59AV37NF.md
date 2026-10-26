@@ -1,32 +1,32 @@
-# Decision Moment `01M5VYBRKQP26GTMKW59AV37NF`
-
-- **Mission:** `spec-kitty-class-prep-track-01M5VY73`
-- **Origin flow:** `plan`
-- **Slot key:** `plan.access.link-gate`
-- **Input key:** `link_gate`
-- **Status:** `resolved`
-- **Created:** `2026-10-26T11:08:36.855879+00:00`
-- **Resolved:** `2026-10-26T11:18:57.979558+00:00`
-- **Opened by:** `cli`
-- **Other answer:** `false`
-
-## Question
-
-Should the course be open to anyone with the link, or behind a simple shared passphrase?
-
-## Options
-
-_(none)_
-
-## Final answer
-
-Open to anyone with the link; no passphrase
-
-## Rationale
-
-_(none)_
-
-## Change log
-
-- `2026-10-26T11:08:36.855879+00:00` — opened
-- `2026-10-26T11:18:57.979558+00:00` — resolved (final_answer="Open to anyone with the link; no passphrase")
+# Decision Moment `01M5VYBRKQP26GTMKW59AV37NF`
+
+- **Mission:** `spec-kitty-class-prep-track-01M5VY73`
+- **Origin flow:** `plan`
+- **Slot key:** `plan.access.link-gate`
+- **Input key:** `link_gate`
+- **Status:** `resolved`
+- **Created:** `2026-10-26T11:08:36.855879+00:00`
+- **Resolved:** `2026-10-26T11:18:57.979558+00:00`
+- **Opened by:** `cli`
+- **Other answer:** `false`
+
+## Question
+
+Should the course be open to anyone with the link, or behind a simple shared passphrase?
+
+## Options
+
+_(none)_
+
+## Final answer
+
+Open to anyone with the link; no passphrase
+
+## Rationale
+
+_(none)_
+
+## Change log
+
+- `2026-10-26T11:08:36.855879+00:00` — opened
+- `2026-10-26T11:18:57.979558+00:00` — resolved (final_answer="Open to anyone with the link; no passphrase")

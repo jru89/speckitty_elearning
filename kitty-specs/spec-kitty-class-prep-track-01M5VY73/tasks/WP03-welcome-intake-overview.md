@@ -1,198 +1,198 @@
----
-work_package_id: WP03
-title: Welcome, intake & overview
-dependencies:
-- WP01
-- WP02
-requirement_refs:
-- C-004
-- FR-001
-- FR-002
-- FR-003
-- FR-005
-- FR-006
-- FR-007
-- FR-021
-- FR-025
-- NFR-002
-planning_base_branch: feat/spec-kitty-class-prep-track
-merge_target_branch: feat/spec-kitty-class-prep-track
-branch_strategy: Planning artifacts for this mission were generated on feat/spec-kitty-class-prep-track. During /spec-kitty.implement this WP may branch from a dependency-specific base, but completed changes must merge back into feat/spec-kitty-class-prep-track unless the human explicitly redirects the landing branch.
-subtasks:
-- T013
-- T014
-- T015
-- T016
-- T017
-phase: Phase 3 - Views
-history:
-- at: '2026-10-26T11:38:51Z'
-  actor: system
-  action: Prompt generated via /spec-kitty.tasks
-agent_profile: frontend-freddy
-agent: claude
-authoritative_surface: js/views/
-create_intent:
-- js/data/welcome.js
-- js/data/modules/index.js
-- js/views/welcome-view.js
-- js/views/intake-view.js
-- js/views/overview-view.js
-execution_mode: code_change
-model: ''
-owned_files:
-- js/data/welcome.js
-- js/data/modules/index.js
-- js/views/welcome-view.js
-- js/views/intake-view.js
-- js/views/overview-view.js
-role: implementer
-tags: []
-task_type: implement
-tracker_refs: []
----
-
-# Work Package Prompt: WP03 – Welcome, intake & overview
-
-## ⚡ Do This First: Load Agent Profile
-
-Use the `/ad-hoc-profile-load` skill to load the agent profile specified in the frontmatter, and behave according to its guidance before parsing the rest of this prompt.
-
-- **Profile**: see `agent_profile` in the frontmatter | **Role**: `implementer` | **Agent/tool**: see `agent`
-
-## ⚠️ IMPORTANT: Review Feedback
-
-Check the `review_ref` field in the event log before starting. Address all feedback before your work is complete.
-
-## Markdown Formatting
-
-Wrap HTML/XML tags in backticks. Use language identifiers in code blocks.
-
----
-
-## Objectives & Success Criteria
-
-Build the attendee's first three screens and the module registry:
-
-- **Welcome** (FR-001, FR-025): what Spec Kitty is, the session agenda, what to bring, that Spec Kitty itself is installed together in the session, that the trainer demos in Claude Code, and optional session details. "Start" goes to the intake.
-- **Intake** (FR-002, FR-003, FR-005, FR-006; NFR-002): five questions on **one page**, chip asked only when relevant, pre-filled when changing answers, answerable in under 2 minutes.
-- **Overview** (FR-007, FR-021, FR-006, FR-023): modules with status and progress, a suggested next step, the early-stop banner with the trainer contact, and "Change my answers" / "Start fresh" entry points.
-- **Registry** (content schema): lazy `{ id, load }` entries, so missing module files don't break the app.
-
-## Context & Constraints
-
-- Read first: [spec.md](../spec.md) User Stories 1, 3, 5 and 6, plus the Edge Cases; [contracts/content-schema.md](../contracts/content-schema.md) (Welcome, Modules); [contracts/tailoring-contract.md](../contracts/tailoring-contract.md) (`earlyStop`, `suggestedNext`); [data-model.md](../data-model.md).
-- Imports: `store` (WP01); `QUESTIONS`, `CHIP_HINTS` and `normalizeAnswers` from `js/data/intake.js` (WP01); `earlyStop` and `suggestedNext` from `js/lib/tailor.js` (WP01); `navigate` from `js/app.js` (WP02).
-- **View contract** (set by WP02): each view exports `render(main, params, ctx)` and may return a cleanup function. Use WP02's CSS class names (listed in `css/style.css`). Don't add new global styles. If you need a small view-specific style, put it in `css/style.css` with a one-line rationale in the activity log (out-of-map edit).
-- Content is English, light and "for your information" in tone. Write plainly and briefly.
-
-## Branch Strategy
-
-- Planning base and final merge target: `feat/spec-kitty-class-prep-track`.
-- Execution worktrees are allocated per computed lane from `lanes.json`. Implement with:
-
-```bash
-spec-kitty agent action implement WP03 --agent <name>
-```
-
-## Subtasks & Detailed Guidance
-
-### Subtask T013 – Welcome content `js/data/welcome.js`
-
-Export per the content schema:
-
-- `whatIsIt`: 2-3 short sentences. Spec Kitty is an open-source tool that makes AI coding more structured. Instead of "vibe coding" from loose prompts, you work in a fixed flow: spec → plan → tasks → build → review → accept → merge. Specs, plans and decisions live in your Git repo, so the AI agent never loses track of what to build. Link: `https://github.com/spec-kitty/spec-kitty`.
-- `agenda`, in this order:
-  1. Intro: why spec-driven instead of pure vibe coding
-  2. Install Spec Kitty together
-  3. Demo repo walkthrough
-  4. Hands-on: we spec an idea together and build it, everyone following the same steps
-  5. Zoom in on what the Bright Factory is
-  6. Wrap-up and questions
-- `goal`: "You go home understanding the Bright Factory, so your vibe coding gets a lot better."
-- `bring`: "Your laptop and charger"; "Git, Python 3.11+ and an AI coding agent, installed using this course"; "An account for your AI coding agent, logged in once".
-- `installedInSession`: "We install Spec Kitty itself together during the session, so you don't need to do that here."
-- `demoNote`: "The trainer demos in Claude Code. Using another tool is fine: commands may look slightly different, and the course shows you how they look in yours."
-- `session`: `{ date: "", time: "", place: "", trainerContact: "" }`. Empty by design: the trainer fills these in (plan risk R-06).
-
-### Subtask T014 – Welcome view `js/views/welcome-view.js`
-
-**Steps**:
-1. Hero, as in the Bento Grid reference: `.hero-title` "Spec Kitty Class Prep" (the one gradient on the site), then one line in `--text-2`, "Get ready for the Spec Kitty class in about 30 minutes." Left-aligned on desktop; center it only if that looks clearly better in the preview.
-   Below the hero, a `.bento` grid of cells: "What Spec Kitty is" (`.span-2 .tall`), "The session" (`.span-2 .tall`, the agenda as an ordered list because the order is real), "What to bring" (`.span-2`) and "Session details" (`.span-2`, only if any field is filled). The demo and install-in-session notes go in one `.span-4` note cell. WP02's breakpoints handle the collapse to 2 and 1 columns.
-2. Sections: what Spec Kitty is, the agenda (an ordered list: the order is real), what to bring, and the install-in-session and demo notes.
-3. Session details as a definition list, rendering only non-empty fields. If all are empty, render nothing (no empty heading).
-4. Primary button: **Start** (→ `#/intake`) when there are no answers; **Back to the course** (→ `#/course`) when answers exist.
-5. Keep the whole page readable in about 1 minute.
-
-### Subtask T015 – Intake view `js/views/intake-view.js`
-
-**Steps**:
-1. One `<form>` with five `<fieldset>`s, one per question from `QUESTIONS`. Each uses `.choice-group` with radio `.choice` cards (label plus optional hint).
-2. Chip fieldset: shown only when `askIf(answersSoFar)` is true, updating live as the OS changes. Include the `CHIP_HINTS[os]` "How do I check?" line inside a `details` element.
-3. Pre-fill from `store.getAnswers()` when present (FR-005). A heading reads "Tell us about your setup" the first time and "Change your answers" when editing.
-4. Submit (handle `submit`, `preventDefault`):
-   - Run `normalizeAnswers(formValues)`. If it returns `null`, show which question is missing, inline next to that fieldset, and move focus there.
-   - Otherwise `store.setAnswers(answers)` and then `navigate("/course")`. The overview shows the early-stop banner when it applies (FR-006, "right after the intake").
-5. Tool question: list the tools in `QUESTIONS` order (Claude Code first, marked "used in the demo"), then "Other tool" and "Help me choose". Show the cost hint for each tool in muted text.
-6. Keep it compact: no step-by-step wizard. One page, with questions visible top to bottom (NFR-002).
-7. Every radio is reachable by keyboard, and each fieldset has a `legend`.
-
-### Subtask T016 – Module registry `js/data/modules/index.js`
-
-```js
-export const MODULES = [
-  { id: "terminal", optional: true, load: () => import("./terminal.js") },
-  { id: "words", load: () => import("./words.js") },
-  { id: "spec-driven", load: () => import("./spec-driven.js") },
-  { id: "setup", load: () => import("./setup.js") },
-  { id: "ready", load: () => import("./ready.js") },
-];
-export async function loadModule(id) { /* returns module object or null on missing/failed import */ }
-export async function loadAll() { /* resolves to [{ id, optional, module | null }] in order */ }
-```
-
-`loadModule` must catch import failures and return `null`. Those files come from WP05, WP07 and WP08.
-
-### Subtask T017 – Course overview `js/views/overview-view.js`
-
-**Steps**:
-1. Load all modules with `loadAll()`. Render them as a **bento grid where cell size encodes importance** (Bento Grid reference, research R0-09):
-   - `setup`: `.hero-cell` (2x2), the memorable cell. Its title, then a large readout of the attendee's machine in display type (e.g. "macOS, Apple Silicon, Cursor"), then the summary, minutes and status chip.
-   - `words`, `spec-driven`: 1x1 `.cell--link` cells.
-   - progress: a 1x1 `.stat` cell ("2 of 4", "modules done", and a `.progress-bar`).
-   - "Your setup": a 1x1 cell with the short answer labels and a "Change" link (step 5).
-   - `ready`: a `.span-2` cell.
-   - `terminal`: a 1x1 cell with a `.chip--optional` "Optional" chip.
-   Each module cell shows its title, summary, minutes and a status `.chip` ("Done" or "In progress"; none when not started). A module whose file is missing renders as a muted, non-link cell labelled "Coming soon".
-2. Progress: "N of 4 modules done", counting only non-optional modules, plus a `.progress-bar`.
-3. Suggested next (FR-021): `suggestedNext(answers, progress)` gives that cell a `.chip--next` "Suggested next" chip and a 1.5px `--blue` outline, and puts a primary pill button above the grid. The terminal primer card appears only as "Optional", and it's highlighted when the suggestion is `terminal`.
-4. Early stop (FR-006): if `earlyStop(answers)` is not `null`, show a `.banner--stop` above everything:
-   - `mobile`: "This setup needs a laptop or desktop. You can still read the modules here, but please tell your trainer before the session so they can help."
-   - `work-locked`: "Your laptop doesn't let you install software. Ask your IT department for Git, Python 3.11+ and an AI coding tool, or use a personal laptop, and tell your trainer before the session."
-   - Append the trainer contact as selectable text when `welcome.session.trainerContact` is set. Otherwise say "your trainer".
-5. A small "Your setup" line showing the answers in short labels (reuse `ANSWER_LABELS` from WP01), with "Change" (→ `#/intake`).
-6. Re-render on `store.subscribe`. Return the unsubscribe as the cleanup.
-
-## Definition of Done
-
-- Fresh browser: `#/` → welcome → Start → intake → submit → overview. Verified in the preview, with screenshots of each screen at 360 px in the activity log.
-- Chip question appears for Windows, macOS and Linux and is hidden for ChromeOS and tablet/phone.
-- Intake with tablet/phone, and again with a locked work laptop, shows the right banner, and the suggestion is never `setup` or `ready` for those.
-- Changing answers pre-fills, and the overview reflects the change without a reload.
-- With module files missing (expected now), the overview shows "Coming soon" cards and no console errors.
-
-## Risks & Edge Cases
-
-- A returning attendee with corrupt or old answers: `getAnswers()` returns `null`, the guard sends them to the intake, and pre-fill shows whatever is valid.
-- Don't show tool cost as a hard price. Use the `costNote` text from `tools.js`.
-
-## Review Guidance
-
-- Time yourself filling in the intake (target under 2 minutes).
-- Read the welcome copy for tone: short, plain, no hype.
-- Check `suggestedNext` behaviour for all three experience values and both early-stop cases.
-
-## Activity Log
-
-- 2026-10-26T11:38:51Z – system – Prompt generated via /spec-kitty.tasks
+---
+work_package_id: WP03
+title: Welcome, intake & overview
+dependencies:
+- WP01
+- WP02
+requirement_refs:
+- C-004
+- FR-001
+- FR-002
+- FR-003
+- FR-005
+- FR-006
+- FR-007
+- FR-021
+- FR-025
+- NFR-002
+planning_base_branch: feat/spec-kitty-class-prep-track
+merge_target_branch: feat/spec-kitty-class-prep-track
+branch_strategy: Planning artifacts for this mission were generated on feat/spec-kitty-class-prep-track. During /spec-kitty.implement this WP may branch from a dependency-specific base, but completed changes must merge back into feat/spec-kitty-class-prep-track unless the human explicitly redirects the landing branch.
+subtasks:
+- T013
+- T014
+- T015
+- T016
+- T017
+phase: Phase 3 - Views
+history:
+- at: '2026-10-26T11:38:51Z'
+  actor: system
+  action: Prompt generated via /spec-kitty.tasks
+agent_profile: frontend-freddy
+agent: claude
+authoritative_surface: js/views/
+create_intent:
+- js/data/welcome.js
+- js/data/modules/index.js
+- js/views/welcome-view.js
+- js/views/intake-view.js
+- js/views/overview-view.js
+execution_mode: code_change
+model: ''
+owned_files:
+- js/data/welcome.js
+- js/data/modules/index.js
+- js/views/welcome-view.js
+- js/views/intake-view.js
+- js/views/overview-view.js
+role: implementer
+tags: []
+task_type: implement
+tracker_refs: []
+---
+
+# Work Package Prompt: WP03 – Welcome, intake & overview
+
+## ⚡ Do This First: Load Agent Profile
+
+Use the `/ad-hoc-profile-load` skill to load the agent profile specified in the frontmatter, and behave according to its guidance before parsing the rest of this prompt.
+
+- **Profile**: see `agent_profile` in the frontmatter | **Role**: `implementer` | **Agent/tool**: see `agent`
+
+## ⚠️ IMPORTANT: Review Feedback
+
+Check the `review_ref` field in the event log before starting. Address all feedback before your work is complete.
+
+## Markdown Formatting
+
+Wrap HTML/XML tags in backticks. Use language identifiers in code blocks.
+
+---
+
+## Objectives & Success Criteria
+
+Build the attendee's first three screens and the module registry:
+
+- **Welcome** (FR-001, FR-025): what Spec Kitty is, the session agenda, what to bring, that Spec Kitty itself is installed together in the session, that the trainer demos in Claude Code, and optional session details. "Start" goes to the intake.
+- **Intake** (FR-002, FR-003, FR-005, FR-006; NFR-002): five questions on **one page**, chip asked only when relevant, pre-filled when changing answers, answerable in under 2 minutes.
+- **Overview** (FR-007, FR-021, FR-006, FR-023): modules with status and progress, a suggested next step, the early-stop banner with the trainer contact, and "Change my answers" / "Start fresh" entry points.
+- **Registry** (content schema): lazy `{ id, load }` entries, so missing module files don't break the app.
+
+## Context & Constraints
+
+- Read first: [spec.md](../spec.md) User Stories 1, 3, 5 and 6, plus the Edge Cases; [contracts/content-schema.md](../contracts/content-schema.md) (Welcome, Modules); [contracts/tailoring-contract.md](../contracts/tailoring-contract.md) (`earlyStop`, `suggestedNext`); [data-model.md](../data-model.md).
+- Imports: `store` (WP01); `QUESTIONS`, `CHIP_HINTS` and `normalizeAnswers` from `js/data/intake.js` (WP01); `earlyStop` and `suggestedNext` from `js/lib/tailor.js` (WP01); `navigate` from `js/app.js` (WP02).
+- **View contract** (set by WP02): each view exports `render(main, params, ctx)` and may return a cleanup function. Use WP02's CSS class names (listed in `css/style.css`). Don't add new global styles. If you need a small view-specific style, put it in `css/style.css` with a one-line rationale in the activity log (out-of-map edit).
+- Content is English, light and "for your information" in tone. Write plainly and briefly.
+
+## Branch Strategy
+
+- Planning base and final merge target: `feat/spec-kitty-class-prep-track`.
+- Execution worktrees are allocated per computed lane from `lanes.json`. Implement with:
+
+```bash
+spec-kitty agent action implement WP03 --agent <name>
+```
+
+## Subtasks & Detailed Guidance
+
+### Subtask T013 – Welcome content `js/data/welcome.js`
+
+Export per the content schema:
+
+- `whatIsIt`: 2-3 short sentences. Spec Kitty is an open-source tool that makes AI coding more structured. Instead of "vibe coding" from loose prompts, you work in a fixed flow: spec → plan → tasks → build → review → accept → merge. Specs, plans and decisions live in your Git repo, so the AI agent never loses track of what to build. Link: `https://github.com/spec-kitty/spec-kitty`.
+- `agenda`, in this order:
+  1. Intro: why spec-driven instead of pure vibe coding
+  2. Install Spec Kitty together
+  3. Demo repo walkthrough
+  4. Hands-on: we spec an idea together and build it, everyone following the same steps
+  5. Zoom in on what the Bright Factory is
+  6. Wrap-up and questions
+- `goal`: "You go home understanding the Bright Factory, so your vibe coding gets a lot better."
+- `bring`: "Your laptop and charger"; "Git, Python 3.11+ and an AI coding agent, installed using this course"; "An account for your AI coding agent, logged in once".
+- `installedInSession`: "We install Spec Kitty itself together during the session, so you don't need to do that here."
+- `demoNote`: "The trainer demos in Claude Code. Using another tool is fine: commands may look slightly different, and the course shows you how they look in yours."
+- `session`: `{ date: "", time: "", place: "", trainerContact: "" }`. Empty by design: the trainer fills these in (plan risk R-06).
+
+### Subtask T014 – Welcome view `js/views/welcome-view.js`
+
+**Steps**:
+1. Hero, as in the Bento Grid reference: `.hero-title` "Spec Kitty Class Prep" (the one gradient on the site), then one line in `--text-2`, "Get ready for the Spec Kitty class in about 30 minutes." Left-aligned on desktop; center it only if that looks clearly better in the preview.
+   Below the hero, a `.bento` grid of cells: "What Spec Kitty is" (`.span-2 .tall`), "The session" (`.span-2 .tall`, the agenda as an ordered list because the order is real), "What to bring" (`.span-2`) and "Session details" (`.span-2`, only if any field is filled). The demo and install-in-session notes go in one `.span-4` note cell. WP02's breakpoints handle the collapse to 2 and 1 columns.
+2. Sections: what Spec Kitty is, the agenda (an ordered list: the order is real), what to bring, and the install-in-session and demo notes.
+3. Session details as a definition list, rendering only non-empty fields. If all are empty, render nothing (no empty heading).
+4. Primary button: **Start** (→ `#/intake`) when there are no answers; **Back to the course** (→ `#/course`) when answers exist.
+5. Keep the whole page readable in about 1 minute.
+
+### Subtask T015 – Intake view `js/views/intake-view.js`
+
+**Steps**:
+1. One `<form>` with five `<fieldset>`s, one per question from `QUESTIONS`. Each uses `.choice-group` with radio `.choice` cards (label plus optional hint).
+2. Chip fieldset: shown only when `askIf(answersSoFar)` is true, updating live as the OS changes. Include the `CHIP_HINTS[os]` "How do I check?" line inside a `details` element.
+3. Pre-fill from `store.getAnswers()` when present (FR-005). A heading reads "Tell us about your setup" the first time and "Change your answers" when editing.
+4. Submit (handle `submit`, `preventDefault`):
+   - Run `normalizeAnswers(formValues)`. If it returns `null`, show which question is missing, inline next to that fieldset, and move focus there.
+   - Otherwise `store.setAnswers(answers)` and then `navigate("/course")`. The overview shows the early-stop banner when it applies (FR-006, "right after the intake").
+5. Tool question: list the tools in `QUESTIONS` order (Claude Code first, marked "used in the demo"), then "Other tool" and "Help me choose". Show the cost hint for each tool in muted text.
+6. Keep it compact: no step-by-step wizard. One page, with questions visible top to bottom (NFR-002).
+7. Every radio is reachable by keyboard, and each fieldset has a `legend`.
+
+### Subtask T016 – Module registry `js/data/modules/index.js`
+
+```js
+export const MODULES = [
+  { id: "terminal", optional: true, load: () => import("./terminal.js") },
+  { id: "words", load: () => import("./words.js") },
+  { id: "spec-driven", load: () => import("./spec-driven.js") },
+  { id: "setup", load: () => import("./setup.js") },
+  { id: "ready", load: () => import("./ready.js") },
+];
+export async function loadModule(id) { /* returns module object or null on missing/failed import */ }
+export async function loadAll() { /* resolves to [{ id, optional, module | null }] in order */ }
+```
+
+`loadModule` must catch import failures and return `null`. Those files come from WP05, WP07 and WP08.
+
+### Subtask T017 – Course overview `js/views/overview-view.js`
+
+**Steps**:
+1. Load all modules with `loadAll()`. Render them as a **bento grid where cell size encodes importance** (Bento Grid reference, research R0-09):
+   - `setup`: `.hero-cell` (2x2), the memorable cell. Its title, then a large readout of the attendee's machine in display type (e.g. "macOS, Apple Silicon, Cursor"), then the summary, minutes and status chip.
+   - `words`, `spec-driven`: 1x1 `.cell--link` cells.
+   - progress: a 1x1 `.stat` cell ("2 of 4", "modules done", and a `.progress-bar`).
+   - "Your setup": a 1x1 cell with the short answer labels and a "Change" link (step 5).
+   - `ready`: a `.span-2` cell.
+   - `terminal`: a 1x1 cell with a `.chip--optional` "Optional" chip.
+   Each module cell shows its title, summary, minutes and a status `.chip` ("Done" or "In progress"; none when not started). A module whose file is missing renders as a muted, non-link cell labelled "Coming soon".
+2. Progress: "N of 4 modules done", counting only non-optional modules, plus a `.progress-bar`.
+3. Suggested next (FR-021): `suggestedNext(answers, progress)` gives that cell a `.chip--next` "Suggested next" chip and a 1.5px `--blue` outline, and puts a primary pill button above the grid. The terminal primer card appears only as "Optional", and it's highlighted when the suggestion is `terminal`.
+4. Early stop (FR-006): if `earlyStop(answers)` is not `null`, show a `.banner--stop` above everything:
+   - `mobile`: "This setup needs a laptop or desktop. You can still read the modules here, but please tell your trainer before the session so they can help."
+   - `work-locked`: "Your laptop doesn't let you install software. Ask your IT department for Git, Python 3.11+ and an AI coding tool, or use a personal laptop, and tell your trainer before the session."
+   - Append the trainer contact as selectable text when `welcome.session.trainerContact` is set. Otherwise say "your trainer".
+5. A small "Your setup" line showing the answers in short labels (reuse `ANSWER_LABELS` from WP01), with "Change" (→ `#/intake`).
+6. Re-render on `store.subscribe`. Return the unsubscribe as the cleanup.
+
+## Definition of Done
+
+- Fresh browser: `#/` → welcome → Start → intake → submit → overview. Verified in the preview, with screenshots of each screen at 360 px in the activity log.
+- Chip question appears for Windows, macOS and Linux and is hidden for ChromeOS and tablet/phone.
+- Intake with tablet/phone, and again with a locked work laptop, shows the right banner, and the suggestion is never `setup` or `ready` for those.
+- Changing answers pre-fills, and the overview reflects the change without a reload.
+- With module files missing (expected now), the overview shows "Coming soon" cards and no console errors.
+
+## Risks & Edge Cases
+
+- A returning attendee with corrupt or old answers: `getAnswers()` returns `null`, the guard sends them to the intake, and pre-fill shows whatever is valid.
+- Don't show tool cost as a hard price. Use the `costNote` text from `tools.js`.
+
+## Review Guidance
+
+- Time yourself filling in the intake (target under 2 minutes).
+- Read the welcome copy for tone: short, plain, no hype.
+- Check `suggestedNext` behaviour for all three experience values and both early-stop cases.
+
+## Activity Log
+
+- 2026-10-26T11:38:51Z – system – Prompt generated via /spec-kitty.tasks

@@ -14,9 +14,8 @@
   "accepted_by": "jrutt",
   "accepted_from_commit": "83a0db3434b40ce60afaeb1897442c2999e8a960",
   "baseline_merge_commit": "3264411dfb6f2bd1d23c23ce2e773b2ff09bfca1",
-  "coordination_branch": "kitty/mission-spec-kitty-class-prep-track-01M5VY73",
   "created_at": "2026-10-26T11:06:04.236615+00:00",
-  "flattened": false,
+  "flattened": true,
   "friendly_name": "Spec Kitty Class Prep Track",
   "mission_id": "01M5VY73A9X474Q43WCVE1RFDD",
   "mission_number": null,
@@ -28,6 +27,5 @@
   "source_description": "Light, standalone pre-session e-learning for the Spec Kitty class: intake-tailored setup for any OS, hardware and AI coding tool, per-attendee isolated, hosted on GitHub Pages.",
   "status_phase": "1",
   "target_branch": "feat/spec-kitty-class-prep-track",
-  "topology": "coord",
   "vcs": "git"
 }

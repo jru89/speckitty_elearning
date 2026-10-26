@@ -30,6 +30,7 @@ history:
   actor: system
   action: Prompt generated via /spec-kitty.tasks
 agent_profile: frontend-freddy
+agent: claude
 authoritative_surface: js/views/
 create_intent:
 - js/data/welcome.js

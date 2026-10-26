@@ -34,6 +34,7 @@ history:
   actor: system
   action: Prompt generated via /spec-kitty.tasks
 agent_profile: implementer-ivan
+agent: claude
 authoritative_surface: js/lib/
 create_intent:
 - tests/index.html

@@ -27,6 +27,7 @@ history:
   actor: system
   action: Prompt generated via /spec-kitty.tasks
 agent_profile: scribe-sally
+agent: claude
 authoritative_surface: js/data/modules/words.js
 create_intent:
 - js/data/modules/words.js

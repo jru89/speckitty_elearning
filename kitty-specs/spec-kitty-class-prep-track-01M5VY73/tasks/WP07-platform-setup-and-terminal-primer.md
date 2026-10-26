@@ -24,6 +24,7 @@ history:
   actor: system
   action: Prompt generated via /spec-kitty.tasks
 agent_profile: scribe-sally
+agent: claude
 authoritative_surface: js/data/setup/platform-blocks.js
 create_intent:
 - js/data/setup/platform-blocks.js

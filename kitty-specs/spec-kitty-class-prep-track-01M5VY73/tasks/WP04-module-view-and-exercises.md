@@ -27,6 +27,7 @@ history:
   actor: system
   action: Prompt generated via /spec-kitty.tasks
 agent_profile: frontend-freddy
+agent: claude
 authoritative_surface: js/views/module-view.js
 create_intent:
 - js/views/module-view.js

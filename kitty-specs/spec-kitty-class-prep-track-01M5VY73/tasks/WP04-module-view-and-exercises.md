@@ -1,163 +1,163 @@
----
-work_package_id: WP04
-title: Module view & exercises
-dependencies:
-- WP01
-- WP02
-- WP03
-requirement_refs:
-- FR-004
-- FR-009
-- FR-011
-- FR-015
-- FR-019
-- FR-020
-- FR-025
-planning_base_branch: feat/spec-kitty-class-prep-track
-merge_target_branch: feat/spec-kitty-class-prep-track
-branch_strategy: Planning artifacts for this mission were generated on feat/spec-kitty-class-prep-track. During /spec-kitty.implement this WP may branch from a dependency-specific base, but completed changes must merge back into feat/spec-kitty-class-prep-track unless the human explicitly redirects the landing branch.
-subtasks:
-- T018
-- T019
-- T020
-- T021
-phase: Phase 3 - Views
-history:
-- at: '2026-10-26T11:38:51Z'
-  actor: system
-  action: Prompt generated via /spec-kitty.tasks
-agent_profile: frontend-freddy
-agent: claude
-authoritative_surface: js/views/module-view.js
-create_intent:
-- js/views/module-view.js
-- js/views/exercises/match.js
-- js/views/exercises/judge.js
-- js/views/exercises/checklist.js
-execution_mode: code_change
-model: ''
-owned_files:
-- js/views/module-view.js
-- js/views/exercises/match.js
-- js/views/exercises/judge.js
-- js/views/exercises/checklist.js
-role: implementer
-tags: []
-task_type: implement
-tracker_refs: []
----
-
-# Work Package Prompt: WP04 – Module view & exercises
-
-## ⚡ Do This First: Load Agent Profile
-
-Use the `/ad-hoc-profile-load` skill to load the agent profile specified in the frontmatter, and behave according to its guidance before parsing the rest of this prompt.
-
-- **Profile**: see `agent_profile` in the frontmatter | **Role**: `implementer` | **Agent/tool**: see `agent`
-
-## ⚠️ IMPORTANT: Review Feedback
-
-Check the `review_ref` field in the event log before starting. Address all feedback before your work is complete.
-
-## Markdown Formatting
-
-Wrap HTML/XML tags in backticks. Use language identifiers in code blocks.
-
----
-
-## Objectives & Success Criteria
-
-Build the generic module page and the three exercise engines. Every module (terminal, words, spec-driven, setup, ready) renders through `module-view.js`. Content files only describe blocks.
-
-Done means:
-
-- `#/m/:id` renders the module's **tailored** blocks (`visibleBlocks`), with chip labels when the chip answer is "not sure", and updates live when answers change (FR-004, FR-005).
-- The interactive block kinds work: `tool-chooser` (FR-015) and `command-style` (FR-025). See [data-model.md](../data-model.md#content-block-static).
-- Module status goes `in_progress` on open and `done` when its exercise completes, or on open if it has none. It never goes backwards (data-model).
-- Match, judge and checklist engines meet [contracts/exercise-engine-contract.md](../contracts/exercise-engine-contract.md). The checklist renders "Copy my setup summary" (FR-019, FR-020).
-- Keyboard-only and 360 px usable.
-
-## Context & Constraints
-
-- Read first: [contracts/exercise-engine-contract.md](../contracts/exercise-engine-contract.md), [contracts/content-schema.md](../contracts/content-schema.md), [contracts/tailoring-contract.md](../contracts/tailoring-contract.md), [data-model.md](../data-model.md), spec User Stories 1, 2 and 4.
-- Imports:
-  - `store`, `visibleBlocks` and `appliesTo` (WP01); `buildSummary` (WP01); `tools` and `toolById` (WP01)
-  - `copyText` and `enhanceCodeBlocks` (WP02); `navigate` (WP02)
-  - `loadModule` and `MODULES` (WP03)
-- Content modules don't exist yet (WP05, WP07, WP08). Test with a **local scratch module** you don't commit, for example a temporary `js/data/modules/words.js` stub that you delete before committing. Note in the activity log that you did this.
-- Block `body` is trusted HTML authored in the repo, so `innerHTML` is acceptable for it. Anything built from answers or tool names uses `textContent`.
-
-## Branch Strategy
-
-- Planning base and final merge target: `feat/spec-kitty-class-prep-track`.
-- Execution worktrees are allocated per computed lane from `lanes.json`. Implement with:
-
-```bash
-spec-kitty agent action implement WP04 --agent <name>
-```
-
-## Subtasks & Detailed Guidance
-
-### Subtask T018 – Module view `js/views/module-view.js`
-
-**Steps**:
-1. `render(main, { id }, ctx)`: `const mod = await loadModule(id)`. If it's `null`, show "This module isn't available yet" with a link back to `#/course`.
-2. Header: title, minutes estimate, an "Optional" tag if `mod.optional`, and the summary.
-3. Blocks: for each block in `visibleBlocks(mod, answers)`, render a `section.block.block--<kind>` with an optional `h2` heading and the `body`. When `answers.chip === "unsure"` and the block has `chipLabel`, add a `.chip-label` ("For ARM chips").
-4. Interactive kinds:
-   - **`tool-chooser`**: a list of `tools` with name, `costNote` and a "Use this tool" button. Clicking calls `store.setAnswers({ ...answers, tool: id })`. The view re-renders from the store subscription, which replaces the chooser with that tool's block.
-   - **`command-style`**: "In {tool name}, Spec Kitty commands look like `{commandStyle}`. The trainer uses Claude Code (`/spec-kitty.specify`)." For `other` or `undecided`, say "Commands look slightly different in each tool; the trainer will show the Claude Code form." Build it with `textContent` and `code` elements.
-5. Call `enhanceCodeBlocks(main)` after rendering blocks.
-6. Status: on render, `store.setModuleStatus(id, "in_progress")`. If `mod.exercise` is `null`, set it to `done` immediately. Otherwise watch for `progress.exercises[exercise.id].completed`, or for the checklist's completion through the store, and set it to `done`.
-7. Exercise: `const engine = await import("./exercises/" + type + ".js")`, then `engine.mount(container, mod.exercise, { store, answers })`. Unmount on cleanup or re-render.
-8. Pager: previous and next among the **non-optional** modules in `MODULES` order. On the terminal primer, "next" goes to `words`. Also a "Back to the course" link.
-9. Re-render on `store.subscribe` (answers can change via the chooser or another tab). Preserve the scroll position on a re-render triggered by the chooser, so the attendee doesn't lose their place.
-
-### Subtask T019 – Match exercise `js/views/exercises/match.js`
-
-**Interaction** (must work without drag-and-drop):
-1. Show the terms as a list. Each has a `select` (or a set of buttons) listing all definitions in shuffled order. Use a seeded shuffle based on `exercise.id`, so reloads keep the same order.
-2. "Check" evaluates all pairs:
-   - Correct pairs lock as `.feedback--right`.
-   - Wrong pairs show `.feedback--wrong`, with that pair's `whyWrong` when provided, or "Not quite — this term means something else."
-3. Persist `{ matched: [term…], completed }`. `completed: true` once every term has been matched correctly at least once (contract). Retries are unlimited and nothing locks out.
-4. On mount, restore the locked pairs from the store.
-
-### Subtask T020 – Judge exercise `js/views/exercises/judge.js`
-
-1. For each statement, two buttons: **Testable criterion** / **Not testable**.
-2. After a choice, show `why` regardless of correctness, with a right/wrong marker. Allow changing the answer.
-3. Persist `{ answers: { [index]: boolean }, completed }`. `completed: true` once every statement has been judged once.
-4. Show a short tally at the end ("You spotted 4 of 6"). There's no pass mark.
-
-### Subtask T021 – Checklist exercise with setup summary `js/views/exercises/checklist.js`
-
-1. Items: `config.items.filter(i => appliesTo(i.when, answers))`. Render each as a checkbox with its label (label HTML is trusted). Persist via `store.setChecklistItem(id, checked)`.
-2. Completion: every visible item checked. Then call `store.setExerciseState(exercise.id, { completed: true })`, and set it back to `completed: false` if one is unchecked. This is the one engine whose completion can be undone. The module status itself stays `done` once reached (forward-only rule in data-model).
-3. When `config.summary` is true, render below the list:
-   - a read-only `textarea` (1-2 rows) with `buildSummary(answers, progress, visibleIds)`, updating live as items change;
-   - a **Copy my setup summary** button calling `copyText(text, textarea)`. The result shows "Copied, paste it in a message to your trainer" or "Selected, press Ctrl+C / Cmd+C to copy".
-   - one line: "Nothing is sent automatically. Share it only if you want to."
-
-## Definition of Done
-
-- Using a scratch module with one block of each kind, both interactive kinds and all three exercises: everything renders, persists across a reload, and completes per the contract. Screenshots at 360 px in the activity log.
-- Changing the OS in the intake and returning to the module shows the other OS's blocks without a manual reload.
-- `tool-chooser` → pick a tool → the chooser is replaced by that tool's block (with a scratch tool block).
-- The scratch content was deleted before the commit, and `git status` shows only the owned files.
-
-## Risks & Edge Cases
-
-- Re-render loops: the store subscription plus `setModuleStatus` on render can loop. Only write status when it actually changes.
-- The clipboard is refused in some contexts (R-04), which is handled by the fallback.
-- A long `pre` on a phone: the `.code` wrapper scrolls on its own (WP02 styles).
-
-## Review Guidance
-
-- Use every engine with the keyboard only.
-- Check that no answer-derived string goes through `innerHTML`.
-- Check the module status never regresses after unchecking a ready item.
-
-## Activity Log
-
-- 2026-10-26T11:38:51Z – system – Prompt generated via /spec-kitty.tasks
+---
+work_package_id: WP04
+title: Module view & exercises
+dependencies:
+- WP01
+- WP02
+- WP03
+requirement_refs:
+- FR-004
+- FR-009
+- FR-011
+- FR-015
+- FR-019
+- FR-020
+- FR-025
+planning_base_branch: feat/spec-kitty-class-prep-track
+merge_target_branch: feat/spec-kitty-class-prep-track
+branch_strategy: Planning artifacts for this mission were generated on feat/spec-kitty-class-prep-track. During /spec-kitty.implement this WP may branch from a dependency-specific base, but completed changes must merge back into feat/spec-kitty-class-prep-track unless the human explicitly redirects the landing branch.
+subtasks:
+- T018
+- T019
+- T020
+- T021
+phase: Phase 3 - Views
+history:
+- at: '2026-10-26T11:38:51Z'
+  actor: system
+  action: Prompt generated via /spec-kitty.tasks
+agent_profile: frontend-freddy
+agent: claude
+authoritative_surface: js/views/module-view.js
+create_intent:
+- js/views/module-view.js
+- js/views/exercises/match.js
+- js/views/exercises/judge.js
+- js/views/exercises/checklist.js
+execution_mode: code_change
+model: ''
+owned_files:
+- js/views/module-view.js
+- js/views/exercises/match.js
+- js/views/exercises/judge.js
+- js/views/exercises/checklist.js
+role: implementer
+tags: []
+task_type: implement
+tracker_refs: []
+---
+
+# Work Package Prompt: WP04 – Module view & exercises
+
+## ⚡ Do This First: Load Agent Profile
+
+Use the `/ad-hoc-profile-load` skill to load the agent profile specified in the frontmatter, and behave according to its guidance before parsing the rest of this prompt.
+
+- **Profile**: see `agent_profile` in the frontmatter | **Role**: `implementer` | **Agent/tool**: see `agent`
+
+## ⚠️ IMPORTANT: Review Feedback
+
+Check the `review_ref` field in the event log before starting. Address all feedback before your work is complete.
+
+## Markdown Formatting
+
+Wrap HTML/XML tags in backticks. Use language identifiers in code blocks.
+
+---
+
+## Objectives & Success Criteria
+
+Build the generic module page and the three exercise engines. Every module (terminal, words, spec-driven, setup, ready) renders through `module-view.js`. Content files only describe blocks.
+
+Done means:
+
+- `#/m/:id` renders the module's **tailored** blocks (`visibleBlocks`), with chip labels when the chip answer is "not sure", and updates live when answers change (FR-004, FR-005).
+- The interactive block kinds work: `tool-chooser` (FR-015) and `command-style` (FR-025). See [data-model.md](../data-model.md#content-block-static).
+- Module status goes `in_progress` on open and `done` when its exercise completes, or on open if it has none. It never goes backwards (data-model).
+- Match, judge and checklist engines meet [contracts/exercise-engine-contract.md](../contracts/exercise-engine-contract.md). The checklist renders "Copy my setup summary" (FR-019, FR-020).
+- Keyboard-only and 360 px usable.
+
+## Context & Constraints
+
+- Read first: [contracts/exercise-engine-contract.md](../contracts/exercise-engine-contract.md), [contracts/content-schema.md](../contracts/content-schema.md), [contracts/tailoring-contract.md](../contracts/tailoring-contract.md), [data-model.md](../data-model.md), spec User Stories 1, 2 and 4.
+- Imports:
+  - `store`, `visibleBlocks` and `appliesTo` (WP01); `buildSummary` (WP01); `tools` and `toolById` (WP01)
+  - `copyText` and `enhanceCodeBlocks` (WP02); `navigate` (WP02)
+  - `loadModule` and `MODULES` (WP03)
+- Content modules don't exist yet (WP05, WP07, WP08). Test with a **local scratch module** you don't commit, for example a temporary `js/data/modules/words.js` stub that you delete before committing. Note in the activity log that you did this.
+- Block `body` is trusted HTML authored in the repo, so `innerHTML` is acceptable for it. Anything built from answers or tool names uses `textContent`.
+
+## Branch Strategy
+
+- Planning base and final merge target: `feat/spec-kitty-class-prep-track`.
+- Execution worktrees are allocated per computed lane from `lanes.json`. Implement with:
+
+```bash
+spec-kitty agent action implement WP04 --agent <name>
+```
+
+## Subtasks & Detailed Guidance
+
+### Subtask T018 – Module view `js/views/module-view.js`
+
+**Steps**:
+1. `render(main, { id }, ctx)`: `const mod = await loadModule(id)`. If it's `null`, show "This module isn't available yet" with a link back to `#/course`.
+2. Header: title, minutes estimate, an "Optional" tag if `mod.optional`, and the summary.
+3. Blocks: for each block in `visibleBlocks(mod, answers)`, render a `section.block.block--<kind>` with an optional `h2` heading and the `body`. When `answers.chip === "unsure"` and the block has `chipLabel`, add a `.chip-label` ("For ARM chips").
+4. Interactive kinds:
+   - **`tool-chooser`**: a list of `tools` with name, `costNote` and a "Use this tool" button. Clicking calls `store.setAnswers({ ...answers, tool: id })`. The view re-renders from the store subscription, which replaces the chooser with that tool's block.
+   - **`command-style`**: "In {tool name}, Spec Kitty commands look like `{commandStyle}`. The trainer uses Claude Code (`/spec-kitty.specify`)." For `other` or `undecided`, say "Commands look slightly different in each tool; the trainer will show the Claude Code form." Build it with `textContent` and `code` elements.
+5. Call `enhanceCodeBlocks(main)` after rendering blocks.
+6. Status: on render, `store.setModuleStatus(id, "in_progress")`. If `mod.exercise` is `null`, set it to `done` immediately. Otherwise watch for `progress.exercises[exercise.id].completed`, or for the checklist's completion through the store, and set it to `done`.
+7. Exercise: `const engine = await import("./exercises/" + type + ".js")`, then `engine.mount(container, mod.exercise, { store, answers })`. Unmount on cleanup or re-render.
+8. Pager: previous and next among the **non-optional** modules in `MODULES` order. On the terminal primer, "next" goes to `words`. Also a "Back to the course" link.
+9. Re-render on `store.subscribe` (answers can change via the chooser or another tab). Preserve the scroll position on a re-render triggered by the chooser, so the attendee doesn't lose their place.
+
+### Subtask T019 – Match exercise `js/views/exercises/match.js`
+
+**Interaction** (must work without drag-and-drop):
+1. Show the terms as a list. Each has a `select` (or a set of buttons) listing all definitions in shuffled order. Use a seeded shuffle based on `exercise.id`, so reloads keep the same order.
+2. "Check" evaluates all pairs:
+   - Correct pairs lock as `.feedback--right`.
+   - Wrong pairs show `.feedback--wrong`, with that pair's `whyWrong` when provided, or "Not quite — this term means something else."
+3. Persist `{ matched: [term…], completed }`. `completed: true` once every term has been matched correctly at least once (contract). Retries are unlimited and nothing locks out.
+4. On mount, restore the locked pairs from the store.
+
+### Subtask T020 – Judge exercise `js/views/exercises/judge.js`
+
+1. For each statement, two buttons: **Testable criterion** / **Not testable**.
+2. After a choice, show `why` regardless of correctness, with a right/wrong marker. Allow changing the answer.
+3. Persist `{ answers: { [index]: boolean }, completed }`. `completed: true` once every statement has been judged once.
+4. Show a short tally at the end ("You spotted 4 of 6"). There's no pass mark.
+
+### Subtask T021 – Checklist exercise with setup summary `js/views/exercises/checklist.js`
+
+1. Items: `config.items.filter(i => appliesTo(i.when, answers))`. Render each as a checkbox with its label (label HTML is trusted). Persist via `store.setChecklistItem(id, checked)`.
+2. Completion: every visible item checked. Then call `store.setExerciseState(exercise.id, { completed: true })`, and set it back to `completed: false` if one is unchecked. This is the one engine whose completion can be undone. The module status itself stays `done` once reached (forward-only rule in data-model).
+3. When `config.summary` is true, render below the list:
+   - a read-only `textarea` (1-2 rows) with `buildSummary(answers, progress, visibleIds)`, updating live as items change;
+   - a **Copy my setup summary** button calling `copyText(text, textarea)`. The result shows "Copied, paste it in a message to your trainer" or "Selected, press Ctrl+C / Cmd+C to copy".
+   - one line: "Nothing is sent automatically. Share it only if you want to."
+
+## Definition of Done
+
+- Using a scratch module with one block of each kind, both interactive kinds and all three exercises: everything renders, persists across a reload, and completes per the contract. Screenshots at 360 px in the activity log.
+- Changing the OS in the intake and returning to the module shows the other OS's blocks without a manual reload.
+- `tool-chooser` → pick a tool → the chooser is replaced by that tool's block (with a scratch tool block).
+- The scratch content was deleted before the commit, and `git status` shows only the owned files.
+
+## Risks & Edge Cases
+
+- Re-render loops: the store subscription plus `setModuleStatus` on render can loop. Only write status when it actually changes.
+- The clipboard is refused in some contexts (R-04), which is handled by the fallback.
+- A long `pre` on a phone: the `.code` wrapper scrolls on its own (WP02 styles).
+
+## Review Guidance
+
+- Use every engine with the keyboard only.
+- Check that no answer-derived string goes through `innerHTML`.
+- Check the module status never regresses after unchecking a ready item.
+
+## Activity Log
+
+- 2026-10-26T11:38:51Z – system – Prompt generated via /spec-kitty.tasks

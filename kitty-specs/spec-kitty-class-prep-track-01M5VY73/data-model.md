@@ -1,99 +1,99 @@
-# Data Model: Spec Kitty Class Prep Track
-
-Phase 1 output for [plan.md](plan.md). There is no server. All entities are either static content shipped with the app or one per-browser record.
-
-## Answers (per attendee, persisted)
-
-| Field | Values | Notes |
-|-------|--------|-------|
-| `os` | `windows` · `macos` · `linux` · `chromeos` · `mobile` | `mobile` = tablet or phone |
-| `chip` | `x64` · `arm` · `unsure` | asked only for `windows`, `macos`, `linux`; set to `unsure` otherwise |
-| `device` | `personal` · `work-can-install` · `work-locked` | |
-| `tool` | one id from `tools.js` · `other` · `undecided` | `undecided` = "help me choose" |
-| `experience` | `terminal-new` · `codes-no-agents` · `agents-daily` | |
-
-**Validation**: every field must hold one of its listed values. A record with an unknown value is treated as "intake not completed", so the attendee is sent back to the intake with their known answers pre-filled.
-
-**Derived states** (computed by `tailor.js`, never stored):
-
-- `earlyStop` = `os === "mobile"` or `device === "work-locked"`. Shown on the overview and setup module (FR-006).
-- `suggestedNext`:
-  - `agents-daily` → `ready`
-  - `terminal-new` → `terminal`
-  - otherwise the first module not done in order `words → spec-driven → setup → ready` (FR-021)
-
-## Progress (per attendee, persisted)
-
-| Field | Shape | Notes |
-|-------|-------|-------|
-| `modules` | `{ [moduleId]: "not_started" \| "in_progress" \| "done" }` | |
-| `exercises` | `{ [exerciseId]: { completed: boolean, ...engineState } }` | engine-specific state (e.g. match pairs, judge picks) |
-| `checklist` | `{ [itemId]: boolean }` | ready-check items |
-
-**Module status transitions**: `not_started` → `in_progress` (module opened) → `done` (exercise completed, or opened when the module has no exercise). Never moves backwards, except through "Start fresh", which removes everything.
-
-## Stored record (the only thing persisted)
-
-Key `skcp:v1`, JSON:
-
-```json
-{
-  "schemaVersion": 1,
-  "answers": { "os": "macos", "chip": "arm", "device": "personal", "tool": "cursor", "experience": "agents-daily" },
-  "progress": { "modules": {}, "exercises": {}, "checklist": {} },
-  "updatedAt": "2026-10-26T12:00:00.000Z"
-}
-```
-
-`answers` is `null` until the intake is completed. See [contracts/store-contract.md](contracts/store-contract.md).
-
-## Content block (static)
-
-```js
-{
-  id: "git-install-windows",          // unique within a module
-  heading: "Install Git",             // optional
-  body: "<p>…</p>",                   // trusted HTML authored in the repo
-  when: { os: ["windows"] },          // optional; see tailoring contract
-  topic: "git",                       // setup blocks only: git | python | tool | agent-check | work-device | head-start | intro
-  chipLabel: "ARM",                   // optional; shown when chip is "unsure"
-  kind: "step" | "note" | "warning" | "check"   // optional styling hint
-        | "tool-chooser" | "command-style"       // interactive kinds, rendered by module-view (body ignored)
-}
-```
-
-**Interactive kinds**: `tool-chooser` renders the tool list from `tools.js` with cost labels. Picking one saves `answers.tool` and re-renders the module (FR-015). `command-style` renders "In <tool name>, Spec Kitty commands look like `<commandStyle>`" for the attendee's tool (FR-025). Content files only place these blocks; `module-view.js` owns their behaviour.
-
-## Module (static)
-
-```js
-{
-  id: "setup",
-  title: "Get set up",
-  summary: "…",
-  optional: false,                    // true only for "terminal"
-  minutes: 15,                        // estimate shown on the overview
-  blocks: [ /* content blocks */ ],
-  exercise: { id, type: "match" | "judge" | "checklist", config } | null
-}
-```
-
-## Tool entry (static)
-
-```js
-{
-  id: "cursor",
-  name: "Cursor",
-  cost: "free" | "free-tier" | "paid" | "api-key",
-  costNote: "Free Hobby plan; paid plans for more usage",
-  installUrl: "https://…",            // official docs only (C-006)
-  commandStyle: "/spec-kitty.specify", // how Spec Kitty commands look in this tool
-  demo: true                          // optional; only on the tool the trainer demos with (Claude Code)
-}
-```
-
-`tools.js` also exports `checkedOn: "YYYY-MM-DD"` (research R0-04).
-
-## Setup summary (derived, never stored)
-
-`buildSummary(answers, progress, visibleChecklistIds)` returns one line (the caller passes the ready-check item ids visible for these answers): labels for OS · chip (omitted when `unsure` or not asked) · device · tool name · experience · `"all checks passed"` or `"N of M checks done"`. Example: `macOS · Apple Silicon · personal · Cursor · uses AI daily · all checks passed`. It contains no free text, names or identifiers.
+# Data Model: Spec Kitty Class Prep Track
+
+Phase 1 output for [plan.md](plan.md). There is no server. All entities are either static content shipped with the app or one per-browser record.
+
+## Answers (per attendee, persisted)
+
+| Field | Values | Notes |
+|-------|--------|-------|
+| `os` | `windows` · `macos` · `linux` · `chromeos` · `mobile` | `mobile` = tablet or phone |
+| `chip` | `x64` · `arm` · `unsure` | asked only for `windows`, `macos`, `linux`; set to `unsure` otherwise |
+| `device` | `personal` · `work-can-install` · `work-locked` | |
+| `tool` | one id from `tools.js` · `other` · `undecided` | `undecided` = "help me choose" |
+| `experience` | `terminal-new` · `codes-no-agents` · `agents-daily` | |
+
+**Validation**: every field must hold one of its listed values. A record with an unknown value is treated as "intake not completed", so the attendee is sent back to the intake with their known answers pre-filled.
+
+**Derived states** (computed by `tailor.js`, never stored):
+
+- `earlyStop` = `os === "mobile"` or `device === "work-locked"`. Shown on the overview and setup module (FR-006).
+- `suggestedNext`:
+  - `agents-daily` → `ready`
+  - `terminal-new` → `terminal`
+  - otherwise the first module not done in order `words → spec-driven → setup → ready` (FR-021)
+
+## Progress (per attendee, persisted)
+
+| Field | Shape | Notes |
+|-------|-------|-------|
+| `modules` | `{ [moduleId]: "not_started" \| "in_progress" \| "done" }` | |
+| `exercises` | `{ [exerciseId]: { completed: boolean, ...engineState } }` | engine-specific state (e.g. match pairs, judge picks) |
+| `checklist` | `{ [itemId]: boolean }` | ready-check items |
+
+**Module status transitions**: `not_started` → `in_progress` (module opened) → `done` (exercise completed, or opened when the module has no exercise). Never moves backwards, except through "Start fresh", which removes everything.
+
+## Stored record (the only thing persisted)
+
+Key `skcp:v1`, JSON:
+
+```json
+{
+  "schemaVersion": 1,
+  "answers": { "os": "macos", "chip": "arm", "device": "personal", "tool": "cursor", "experience": "agents-daily" },
+  "progress": { "modules": {}, "exercises": {}, "checklist": {} },
+  "updatedAt": "2026-10-26T12:00:00.000Z"
+}
+```
+
+`answers` is `null` until the intake is completed. See [contracts/store-contract.md](contracts/store-contract.md).
+
+## Content block (static)
+
+```js
+{
+  id: "git-install-windows",          // unique within a module
+  heading: "Install Git",             // optional
+  body: "<p>…</p>",                   // trusted HTML authored in the repo
+  when: { os: ["windows"] },          // optional; see tailoring contract
+  topic: "git",                       // setup blocks only: git | python | tool | agent-check | work-device | head-start | intro
+  chipLabel: "ARM",                   // optional; shown when chip is "unsure"
+  kind: "step" | "note" | "warning" | "check"   // optional styling hint
+        | "tool-chooser" | "command-style"       // interactive kinds, rendered by module-view (body ignored)
+}
+```
+
+**Interactive kinds**: `tool-chooser` renders the tool list from `tools.js` with cost labels. Picking one saves `answers.tool` and re-renders the module (FR-015). `command-style` renders "In <tool name>, Spec Kitty commands look like `<commandStyle>`" for the attendee's tool (FR-025). Content files only place these blocks; `module-view.js` owns their behaviour.
+
+## Module (static)
+
+```js
+{
+  id: "setup",
+  title: "Get set up",
+  summary: "…",
+  optional: false,                    // true only for "terminal"
+  minutes: 15,                        // estimate shown on the overview
+  blocks: [ /* content blocks */ ],
+  exercise: { id, type: "match" | "judge" | "checklist", config } | null
+}
+```
+
+## Tool entry (static)
+
+```js
+{
+  id: "cursor",
+  name: "Cursor",
+  cost: "free" | "free-tier" | "paid" | "api-key",
+  costNote: "Free Hobby plan; paid plans for more usage",
+  installUrl: "https://…",            // official docs only (C-006)
+  commandStyle: "/spec-kitty.specify", // how Spec Kitty commands look in this tool
+  demo: true                          // optional; only on the tool the trainer demos with (Claude Code)
+}
+```
+
+`tools.js` also exports `checkedOn: "YYYY-MM-DD"` (research R0-04).
+
+## Setup summary (derived, never stored)
+
+`buildSummary(answers, progress, visibleChecklistIds)` returns one line (the caller passes the ready-check item ids visible for these answers): labels for OS · chip (omitted when `unsure` or not asked) · device · tool name · experience · `"all checks passed"` or `"N of M checks done"`. Example: `macOS · Apple Silicon · personal · Cursor · uses AI daily · all checks passed`. It contains no free text, names or identifiers.

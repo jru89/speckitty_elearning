@@ -118,7 +118,8 @@ Export per the content schema:
 ### Subtask T014 – Welcome view `js/views/welcome-view.js`
 
 **Steps**:
-1. Hero: the course name ("Spec Kitty Class Prep") and one line, "Get ready for the Spec Kitty class in about 30 minutes."
+1. Hero, as in the Bento Grid reference: `.hero-title` "Spec Kitty Class Prep" (the one gradient on the site), then one line in `--text-2`, "Get ready for the Spec Kitty class in about 30 minutes." Left-aligned on desktop; center it only if that looks clearly better in the preview.
+   Below the hero, a `.bento` grid of cells: "What Spec Kitty is" (`.span-2 .tall`), "The session" (`.span-2 .tall`, the agenda as an ordered list because the order is real), "What to bring" (`.span-2`) and "Session details" (`.span-2`, only if any field is filled). The demo and install-in-session notes go in one `.span-4` note cell. WP02's breakpoints handle the collapse to 2 and 1 columns.
 2. Sections: what Spec Kitty is, the agenda (an ordered list: the order is real), what to bring, and the install-in-session and demo notes.
 3. Session details as a definition list, rendering only non-empty fields. If all are empty, render nothing (no empty heading).
 4. Primary button: **Start** (→ `#/intake`) when there are no answers; **Back to the course** (→ `#/course`) when answers exist.
@@ -156,9 +157,16 @@ export async function loadAll() { /* resolves to [{ id, optional, module | null 
 ### Subtask T017 – Course overview `js/views/overview-view.js`
 
 **Steps**:
-1. Load all modules with `loadAll()`. Render a `.module-card` per available module: title, summary, minutes estimate, and status from `store.getProgress().modules`. A module whose file is missing renders as "Coming soon" (muted, not a link).
+1. Load all modules with `loadAll()`. Render them as a **bento grid where cell size encodes importance** (Bento Grid reference, research R0-09):
+   - `setup`: `.hero-cell` (2x2), the memorable cell. Its title, then a large readout of the attendee's machine in display type (e.g. "macOS, Apple Silicon, Cursor"), then the summary, minutes and status chip.
+   - `words`, `spec-driven`: 1x1 `.cell--link` cells.
+   - progress: a 1x1 `.stat` cell ("2 of 4", "modules done", and a `.progress-bar`).
+   - "Your setup": a 1x1 cell with the short answer labels and a "Change" link (step 5).
+   - `ready`: a `.span-2` cell.
+   - `terminal`: a 1x1 cell with a `.chip--optional` "Optional" chip.
+   Each module cell shows its title, summary, minutes and a status `.chip` ("Done" or "In progress"; none when not started). A module whose file is missing renders as a muted, non-link cell labelled "Coming soon".
 2. Progress: "N of 4 modules done", counting only non-optional modules, plus a `.progress-bar`.
-3. Suggested next (FR-021): `suggestedNext(answers, progress)` highlights that card with "Suggested next" and puts a primary button at the top. The terminal primer card appears only as "Optional", and it's highlighted when the suggestion is `terminal`.
+3. Suggested next (FR-021): `suggestedNext(answers, progress)` gives that cell a `.chip--next` "Suggested next" chip and a 1.5px `--blue` outline, and puts a primary pill button above the grid. The terminal primer card appears only as "Optional", and it's highlighted when the suggestion is `terminal`.
 4. Early stop (FR-006): if `earlyStop(answers)` is not `null`, show a `.banner--stop` above everything:
    - `mobile`: "This setup needs a laptop or desktop. You can still read the modules here, but please tell your trainer before the session so they can help."
    - `work-locked`: "Your laptop doesn't let you install software. Ask your IT department for Git, Python 3.11+ and an AI coding tool, or use a personal laptop, and tell your trainer before the session."

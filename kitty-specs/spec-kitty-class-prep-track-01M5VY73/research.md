@@ -62,3 +62,17 @@ Phase 0 output for [plan.md](plan.md). Each entry gives the decision, why, and w
 - **Decision**: precache the app shell and all content on install. Serve cache-first with a background refresh (stale-while-revalidate). On a cache miss, go to the network and store the response. Use a versioned cache name `skcp-v<N>`, bumped on each release.
 - **Rationale**: it meets NFR-009, keeps the course fast, and recovers automatically if another app wipes the cache (R0-02).
 - **Alternatives considered**: network-first (slower, and offline still needs a cache); no service worker (fails NFR-009).
+
+## R0-09 — Visual style
+
+- **Decision**: follow the GG Prompts **Bento Grid** style (https://ggprompts.com/styles/bento-grid.html), chosen by the trainer on 2026-10-26. It's a single dark theme by choice, matching the reference.
+  - **Ground and cells**: page `#000000`; cells `#1c1c1e`, hover and elevated `#2c2c2e`; 28px cell radius, 16px for inputs, full-pill buttons.
+  - **Text**: `#f5f5f7`, secondary at 70%. Muted is raised from the reference's 40% to 55% so small text passes WCAG AA on `#1c1c1e`.
+  - **Colours**: Apple system colours. Accent blue `#0A84FF` for actions and focus; green `#30D158` for done; orange `#FF9F0A` for warnings; pink `#FF375F` for the early-stop banner. The blue → purple gradient (`#0A84FF` → `#BF5AF2`) is used **once**, as fill on the welcome headline, as in the reference.
+  - **Type**: the reference's Inter at 800 weight for display, with tight tracking (−2 to −3px at hero size, −1.5px at section size); body 400 at line-height 1.6.
+  - **Grid**: 16px bento gap (12px under 768px); 4 → 2 → 1 columns at 768px and 480px. Cell size encodes importance.
+- **Font delivery**: the stack is `Inter, -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI Variable", "Segoe UI", Roboto, sans-serif`, with no web-font download. This keeps zero third-party requests (NFR-005) and offline (NFR-009). On macOS and iOS it renders SF Pro, and on Windows Segoe UI Variable: both are close to the reference look. Self-hosting Inter later is a one-file change in `css/style.css` plus `fonts/`.
+- **Adaptations for this course** (where the reference is a style showcase and this is a course):
+  - No tracked-caps overline above every heading. Small sentence-case chips (the reference's `card-chip`) carry real status only: "Optional", "Suggested next", "Done".
+  - Hover lift only on cells that are links. No scroll-triggered entrance animations; respect `prefers-reduced-motion`.
+- **Alternatives considered**: the plan's earlier "workshop checklist" direction, replaced by the trainer's choice.

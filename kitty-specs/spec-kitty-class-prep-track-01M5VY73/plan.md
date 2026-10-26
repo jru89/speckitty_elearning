@@ -22,7 +22,7 @@ The technical approach is deliberately small. It uses vanilla HTML/CSS/JS with n
 ## Technical Context
 
 **Language/Version**: JavaScript ES2022 (native ES modules), HTML5, CSS3. No transpilation.
-**Primary Dependencies**: none. No framework, no npm packages, no CDN scripts. Fonts are self-hosted or a system stack (decided at implementation; no third-party font CDN, to keep NFR-005's "no requests carry data" trivially true and the app offline-capable).
+**Primary Dependencies**: none. No framework, no npm packages, no CDN scripts or fonts. Visual style: GG Prompts Bento Grid, using a system font stack led by Inter (research R0-09).
 **Storage**: the browser's `localStorage`, exactly one key, `skcp:v1`, holding one JSON record (see [contracts/store-contract.md](contracts/store-contract.md)). Memory-only fallback when storage is unavailable.
 **Testing**: `tests/index.html`, an in-browser test page with no framework. It runs assertions against the pure modules (`tailor.js`, `summary.js`, `store.js` with an injected fake storage) and reports pass/fail on the page. It includes exhaustive coverage of every intake combination for NFR-006 and SC-003. Everything else is verified manually against [quickstart.md](quickstart.md) in the browser preview.
 **Target Platform**: current evergreen browsers (Chrome, Edge, Firefox, Safari) on desktop and phone. Hosted at `https://<user>.github.io/<repo>/` (sub-path), so every URL is relative.

@@ -79,7 +79,7 @@ Done means:
 - **Route guard**: with no valid answers, `#/course` and `#/m/<anything>` redirect to `#/intake`.
 - The header shows the course name and a menu with "Change my answers" (→ `#/intake`) and "Start fresh", which uses an in-page confirm (never `window.confirm`) and then calls `store.startFresh()` and goes to `#/intake`.
 - When `store.isPersistent()` is false, a one-line notice says answers won't be remembered on this device.
-- No horizontal scroll at 360 px. Light and dark themes both legible. Visible keyboard focus everywhere.
+- No horizontal scroll at 360 px. The Bento Grid look (research R0-09) matches the reference when compared side by side in the preview. Visible keyboard focus everywhere.
 
 ## Context & Constraints
 
@@ -118,40 +118,67 @@ spec-kitty agent action implement WP02 --agent <name>
    { "version": "0.0.1", "configurations": [ { "name": "prep", "runtimeExecutable": "python", "runtimeArgs": ["-m", "http.server", "8533"], "port": 8533 } ] }
    ```
 
-### Subtask T009 – Design tokens, typography, layout
+### Subtask T009 – Design tokens, typography, bento layout
 
-**Purpose**: a light, deliberate look that fits the subject: a factory-floor or workshop checklist feel for a class about building software in a structured flow. Avoid generic AI-looking defaults (purple gradients, everything centred, emoji section markers).
+**Purpose**: implement the trainer's chosen style, the **GG Prompts Bento Grid** (https://ggprompts.com/styles/bento-grid.html), as specified in [research.md](../research.md) R0-09. Open the reference in the browser preview before you start and keep it beside your work. Follow it closely; the only deviations are the ones R0-09 lists.
 
 **Steps**:
-1. At the top of `css/style.css`, put a one-line layout comment, then the tokens on `:root`:
-   - colours: `--bg`, `--surface`, `--fg`, `--muted`, `--line`, `--accent`, `--accent-fg`, plus semantic `--ok`, `--warn` and `--stop`
-   - fonts: `--font-display`, `--font-body`, `--font-mono`
-   - a type scale (`--step-0` … `--step-4`) and spacing (`--space-1` … `--space-6`)
-2. Dark theme: redefine colour tokens only, under `@media (prefers-color-scheme: dark)`. Set `color-scheme: light dark` on `:root`. `body` uses `background: var(--bg); color: var(--fg)`.
-3. Layout: a single reading column, `max-width: 42rem` for text and `min(100%, 60rem)` for the overview grid. Side gutter `padding-inline: max(16px, env(safe-area-inset-left))` and the right equivalent. Use flex/grid with `gap`, not margins between siblings.
-4. Text: body around 17-18px, line-height 1.55, `text-wrap: balance` on headings, and slight letter-spacing on uppercase labels.
-5. `:focus-visible` outline using `--accent`, 2px, with offset.
-6. `@media (prefers-reduced-motion: reduce)` disables transitions.
+1. At the top of `css/style.css`, put a one-line layout comment, then these tokens on `:root` (values from the reference):
+   ```css
+   :root {
+     color-scheme: dark;
+     --bg: #000000; --cell: #1c1c1e; --cell-hover: #2c2c2e; --elevated: #2c2c2e;
+     --text: #f5f5f7; --text-2: rgba(245,245,247,.7); --text-3: rgba(245,245,247,.55);
+     --line: rgba(255,255,255,.1);
+     --blue: #0A84FF; --purple: #BF5AF2; --green: #30D158; --orange: #FF9F0A; --pink: #FF375F; --indigo: #5E5CE6;
+     --gradient-signature: linear-gradient(135deg, #0A84FF, #BF5AF2);
+     --font: Inter, -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI Variable", "Segoe UI", Roboto, sans-serif;
+     --font-mono: ui-monospace, "SF Mono", "Cascadia Code", Consolas, monospace;
+     --space-xs: 4px; --space-sm: 8px; --space-md: 16px; --space-lg: 24px; --space-xl: 32px; --space-2xl: 48px; --space-3xl: 64px;
+     --radius-sm: 12px; --radius-md: 16px; --radius-lg: 20px; --radius-xl: 28px; --radius-full: 9999px;
+     --bento-gap: 16px;
+     --ease: cubic-bezier(.25,.1,.25,1);
+   }
+   ```
+   This is a **single dark theme by choice** (R0-09): no light-mode block. `body { background: var(--bg); color: var(--text); }`.
+2. Type scale (reference values):
+   - hero headline `clamp(2.5rem, 8vw, 5.5rem)`, weight 800, `letter-spacing: -3px` (-2px under 768px), line-height 1.05
+   - page title `clamp(2rem, 4vw, 3rem)`, weight 700, -1.5px
+   - cell title 1.125-1.5rem, weight 700, -0.25 to -0.75px
+   - body 1rem-1.0625rem, weight 400, line-height 1.6, colour `--text-2`
+   - caption 0.8125rem, `--text-3`
+   Use `text-wrap: balance` on headings. Keep running text at 70ch or less inside cells.
+3. Layout:
+   - `.container { max-width: 1200px; margin-inline: auto; padding-block: var(--space-3xl); }`, with the side gutter `padding-left: max(16px, env(safe-area-inset-left))` and `padding-right: max(16px, env(safe-area-inset-right))`.
+   - `.bento { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--bento-gap); }`, with span helpers `.span-2`, `.span-4`, `.tall` (row span 2) and `.hero-cell` (2x2).
+   - Below 768px: 2 columns, `--bento-gap: 12px`, `.hero-cell` spans the full width. Below 480px: 1 column, all spans reset.
+   - Reading pages (module, intake) use a narrower column: `max-width: 760px`.
+4. Focus: `:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }`, plus the reference's 3px blue focus ring on inputs.
+5. Motion: hover lift (`translateY(-2px)` with a darker shadow) **only** on cells that are links. Transitions use `--ease`. `@media (prefers-reduced-motion: reduce)` removes transforms and transitions. No scroll-triggered entrance animations.
 
 ### Subtask T010 – Component styles
 
-Style these classes. Views in WP03 and WP04 will use exactly these names, so list them in a comment block at the top of the components section:
+Style these classes in the reference's manner. Views in WP03 and WP04 use exactly these names, so list them in a comment block at the top of the components section:
 
-| Class | Use |
-|-------|-----|
-| `.btn`, `.btn--primary`, `.btn--quiet` | actions |
-| `.choice-group`, `.choice` (radio cards, input visually hidden but focusable, `:checked` state clear) | intake |
-| `.block`, `.block--step`, `.block--note`, `.block--warning`, `.block--check` | module content blocks (from data-model `kind`) |
-| `.chip-label` | small tag on blocks when chip is "not sure" |
-| `.code` wrapper around `pre`, with `.copy-btn` | command blocks. The `pre` scrolls horizontally on its own (`overflow-x: auto`); the page never does. |
-| `.module-card`, `.status`, `.status--done`, `.status--in_progress` | overview |
-| `.banner`, `.banner--stop`, `.banner--info` | early stop, non-persistent notice |
-| `.progress-bar` | overall progress |
-| `.exercise`, `.feedback--right`, `.feedback--wrong` | exercises |
-| `.menu` | header menu (a `details`/`summary` element is fine) |
-| `.confirm` | the in-page confirm for "Start fresh" |
+| Class | Use | Reference look |
+|-------|-----|----------------|
+| `.cell` (+ `.cell--link`) | every bento box | `--cell` background, `--radius-xl`, `--space-xl` padding; `.cell--link` gets the hover lift and `--cell-hover` |
+| `.hero-title` | welcome headline | hero scale; text filled with `--gradient-signature` (`background-clip: text`). This is the **only** gradient use. |
+| `.btn`, `.btn--primary`, `.btn--secondary`, `.btn--ghost` | actions | pill (`--radius-full`), 12px 28px padding, weight 600; primary `--blue`; secondary `--elevated` with a `--line` border; ghost text-blue |
+| `.chip`, `.chip--done`, `.chip--next`, `.chip--optional` | real status only | the reference's `card-chip`: pill, 6px 14px, 0.75rem/600, tinted background (15-20% of the colour) with full-colour text; sentence case, no tracking |
+| `.choice-group`, `.choice` | intake radio cards | the reference's radio style inside a `.cell`-like option (`--elevated`, `--radius-md`); checked state gets a `--blue` border and the reference's radio dot; whole card clickable |
+| `.block`, `.block--step`, `.block--note`, `.block--warning`, `.block--check` | module content blocks | `.cell` look; `--warning` and `--check` use the reference's alert treatment (6% tint background, 15% tint border, coloured title): orange for warning, green for check, blue for note |
+| `.chip-label` | "For ARM chips" tag | `.chip` in indigo |
+| `.code` (wraps `pre`), `.copy-btn` | command blocks | `#000` background inside the cell, `--radius-md`, `--font-mono`, `pre { overflow-x: auto }`; `.copy-btn` is a small secondary pill at top right |
+| `.stat`, `.stat__value`, `.stat__label` | progress cell | the reference's `card-stat`: value 2rem/800/-1px; label 0.8125rem `--text-3` |
+| `.progress-bar` | progress | 8px tall, `--elevated` track, `--blue` fill, full radius |
+| `.banner`, `.banner--stop`, `.banner--info` | early stop, non-persistent notice | the reference's alert: stop = pink, info = blue |
+| `.exercise`, `.feedback--right`, `.feedback--wrong` | exercises | right = green alert tint, wrong = orange alert tint, always with text, never colour alone |
+| `.checkbox` | ready check | the reference's custom checkbox (22px, 6px radius, blue when checked) |
+| `.menu` | header menu | the reference's nav bar: sticky, `rgba(0,0,0,.72)` with `backdrop-filter: saturate(180%) blur(20px)`, bottom hairline `--line`; menu items `--text-2`, turning `--text` on hover |
+| `.confirm` | "Start fresh" confirm | `.cell` with the pink alert treatment and two buttons |
 
-Make every semantic state readable in both themes. Feedback and status use text plus colour, never colour alone.
+The header is sticky with `top: env(safe-area-inset-top, 0px)`, plus a fixed `body::before` band in `#000` the height of the top inset.
 
 ### Subtask T011 – Router, route guard, header menu, notices in `js/app.js`
 
@@ -202,7 +229,7 @@ Make every semantic state readable in both themes. Feedback and status use text 
 ## Review Guidance
 
 - Check every URL is relative. Grep for `href="/` and `src="/`.
-- Toggle the OS dark mode and check contrast on banners and feedback.
+- Open the reference (https://ggprompts.com/styles/bento-grid.html) next to the app and compare cells, buttons, chips, alerts and type. Check that `--text-3` small text is readable on `--cell`.
 - Tab through the header menu and confirm panel with the keyboard only.
 
 ## Activity Log

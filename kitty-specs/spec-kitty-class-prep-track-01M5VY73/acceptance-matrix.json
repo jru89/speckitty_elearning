@@ -1,0 +1,284 @@
+{
+  "mission_slug": "spec-kitty-class-prep-track-01M5VY73",
+  "mission_number": "",
+  "mission_type": "software-dev",
+  "overall_verdict": "pass",
+  "criteria": [
+    {
+      "criterion_id": "FR-001",
+      "description": "A first-time visitor sees a welcome (what Spec Kitty is, agenda, what to bring, install-in-session note) with Start.",
+      "proof_type": "operator_acceptance",
+      "evidence": "WP03 review: welcome copy matches the WP prompt word for word; Start leads to the intake. WP09 quickstart step 1 PASS on the integrated app.",
+      "pass_fail": "pass",
+      "verified_by": "claude:opus-5.5:reviewer-renata:reviewer (WP03)",
+      "verified_at": "2026-10-26T15:00:00Z",
+      "notes": ""
+    },
+    {
+      "criterion_id": "FR-002",
+      "description": "Five intake questions answered before the modules.",
+      "proof_type": "operator_acceptance",
+      "evidence": "WP03 review: one-page intake with 5 fieldsets and legends; WP09 quickstart step 2 PASS.",
+      "pass_fail": "pass",
+      "verified_by": "claude:opus-5.5:reviewer-renata:reviewer (WP03)",
+      "verified_at": "2026-10-26T15:00:00Z",
+      "notes": ""
+    },
+    {
+      "criterion_id": "FR-003",
+      "description": "Intake covers Windows, macOS, Linux, ChromeOS, tablet/phone and chip x64/ARM/not sure.",
+      "proof_type": "operator_acceptance",
+      "evidence": "intake.js ENUMS + QUESTIONS (WP01 review); chip shown only for windows/macos/linux (WP03 review, WP09 step 2).",
+      "pass_fail": "pass",
+      "verified_by": "claude:opus-5.5:reviewer-renata:reviewer (WP01/WP03)",
+      "verified_at": "2026-10-26T15:00:00Z",
+      "notes": ""
+    },
+    {
+      "criterion_id": "FR-004",
+      "description": "Each module shows only content matching the attendee's answers.",
+      "proof_type": "operator_acceptance",
+      "evidence": "tests/coverage.test.js rules 2-3 over 1,485 combinations (WP08 review, 0 failures); WP09 quickstart step 3 on four combinations.",
+      "pass_fail": "pass",
+      "verified_by": "claude:opus-5.5:reviewer-renata:reviewer (WP08/WP09)",
+      "verified_at": "2026-10-26T15:00:00Z",
+      "notes": ""
+    },
+    {
+      "criterion_id": "FR-005",
+      "description": "Answers can be changed at any time and content updates immediately.",
+      "proof_type": "operator_acceptance",
+      "evidence": "WP03 review: pre-fill and live overview; WP04 review: module page swaps Windows to macOS blocks without reload; WP09 step 4 PASS.",
+      "pass_fail": "pass",
+      "verified_by": "claude:opus-5.5:reviewer-renata:reviewer (WP03/WP04)",
+      "verified_at": "2026-10-26T15:00:00Z",
+      "notes": ""
+    },
+    {
+      "criterion_id": "FR-006",
+      "description": "Tablet/phone or locked work laptop are told to contact the trainer right after the intake.",
+      "proof_type": "operator_acceptance",
+      "evidence": "WP03 review: both stop banners, suggestion never setup/ready; coverage rule 1 + ready rule 5 (WP08); WP09 step 5 PASS.",
+      "pass_fail": "pass",
+      "verified_by": "claude:opus-5.5:reviewer-renata:reviewer (WP03/WP08)",
+      "verified_at": "2026-10-26T15:00:00Z",
+      "notes": ""
+    },
+    {
+      "criterion_id": "FR-007",
+      "description": "Overview of modules with progress and a suggested next step.",
+      "proof_type": "operator_acceptance",
+      "evidence": "WP03 review: bento overview, progress counts 4 non-optional modules, suggested-next chip; orchestrator fix hides the suggestion once all modules are done.",
+      "pass_fail": "pass",
+      "verified_by": "claude:opus-5.5:reviewer-renata:reviewer (WP03)",
+      "verified_at": "2026-10-26T15:00:00Z",
+      "notes": ""
+    },
+    {
+      "criterion_id": "FR-008",
+      "description": "Tool-neutral explanations of the listed vocabulary terms.",
+      "proof_type": "operator_acceptance",
+      "evidence": "WP05 review: all FR-008 terms present and accurate to research R0-03; no when conditions; tool names only as examples.",
+      "pass_fail": "pass",
+      "verified_by": "claude:opus-5.5:reviewer-renata:reviewer (WP05)",
+      "verified_at": "2026-10-26T15:00:00Z",
+      "notes": ""
+    },
+    {
+      "criterion_id": "FR-009",
+      "description": "Matching exercise with explanations for wrong matches.",
+      "proof_type": "operator_acceptance",
+      "evidence": "WP05 review (8 pairs with whyWrong) and WP04 review (keyboard-operable, seeded shuffle, persistence). Note: the match covers 8 of the 10 terms, per WP scope.",
+      "pass_fail": "pass",
+      "verified_by": "claude:opus-5.5:reviewer-renata:reviewer (WP04/WP05)",
+      "verified_at": "2026-10-26T15:00:00Z",
+      "notes": ""
+    },
+    {
+      "criterion_id": "FR-010",
+      "description": "Vibe coding vs spec-driven: seven steps with outputs, work packages, worktrees, one Bright Factory line, command note.",
+      "proof_type": "operator_acceptance",
+      "evidence": "WP05 review: seven-step table with outputs and owners, exactly one Bright Factory line, command-style block.",
+      "pass_fail": "pass",
+      "verified_by": "claude:opus-5.5:reviewer-renata:reviewer (WP05)",
+      "verified_at": "2026-10-26T15:00:00Z",
+      "notes": ""
+    },
+    {
+      "criterion_id": "FR-011",
+      "description": "Acceptance-criterion judging exercise with explanations.",
+      "proof_type": "operator_acceptance",
+      "evidence": "WP05 review (6 statements, each with why) and WP04 review (why always shown, tally, persistence).",
+      "pass_fail": "pass",
+      "verified_by": "claude:opus-5.5:reviewer-renata:reviewer (WP04/WP05)",
+      "verified_at": "2026-10-26T15:00:00Z",
+      "notes": ""
+    },
+    {
+      "criterion_id": "FR-012",
+      "description": "Git install, identity and verify steps per platform.",
+      "proof_type": "operator_acceptance",
+      "evidence": "WP07 review (cycle 2): commands checked against git-scm.com; coverage completeness rule requires >=3 git blocks with step and check for every combination (WP08).",
+      "pass_fail": "pass",
+      "verified_by": "claude:opus-5.5:reviewer-renata:reviewer (WP07/WP08)",
+      "verified_at": "2026-10-26T15:00:00Z",
+      "notes": ""
+    },
+    {
+      "criterion_id": "FR-013",
+      "description": "Python 3.11+ install and verify per platform, with traps.",
+      "proof_type": "operator_acceptance",
+      "evidence": "WP07 review (cycle 2): brew install python3 fix, Windows Store alias warning, uv fallback guidance; sources python.org, Microsoft Learn, winget-pkgs.",
+      "pass_fail": "pass",
+      "verified_by": "claude:opus-5.5:reviewer-renata:reviewer (WP07)",
+      "verified_at": "2026-10-26T15:00:00Z",
+      "notes": ""
+    },
+    {
+      "criterion_id": "FR-014",
+      "description": "Chosen tool: cost model, official install link, log-in reminder.",
+      "proof_type": "operator_acceptance",
+      "evidence": "WP06 review: one block per tool from tools.js (costs checked on official sites 2026-10-26), official links with rel=noopener, no copied commands.",
+      "pass_fail": "pass",
+      "verified_by": "claude:opus-5.5:reviewer-renata:reviewer (WP01/WP06)",
+      "verified_at": "2026-10-26T15:00:00Z",
+      "notes": ""
+    },
+    {
+      "criterion_id": "FR-015",
+      "description": "'Help me choose' lists supported tools with cost and lets the attendee pick.",
+      "proof_type": "operator_acceptance",
+      "evidence": "WP06 tool-chooser block + WP04 review: picking saves answers.tool and swaps in that tool's block.",
+      "pass_fail": "pass",
+      "verified_by": "claude:opus-5.5:reviewer-renata:reviewer (WP04/WP06)",
+      "verified_at": "2026-10-26T15:00:00Z",
+      "notes": ""
+    },
+    {
+      "criterion_id": "FR-016",
+      "description": "One agent check that works for any tool.",
+      "proof_type": "operator_acceptance",
+      "evidence": "WP06 review: tool-neutral agent-check steps with success criteria and troubleshooting; coverage rule 1 requires it for every non-stopped combination.",
+      "pass_fail": "pass",
+      "verified_by": "claude:opus-5.5:reviewer-renata:reviewer (WP06/WP08)",
+      "verified_at": "2026-10-26T15:00:00Z",
+      "notes": ""
+    },
+    {
+      "criterion_id": "FR-017",
+      "description": "Work-device guidance on admin rights, IT policy and blocked AI tools.",
+      "proof_type": "operator_acceptance",
+      "evidence": "WP06 review: work-can-install note, work-locked warning, mobile warning with correct when values.",
+      "pass_fail": "pass",
+      "verified_by": "claude:opus-5.5:reviewer-renata:reviewer (WP06)",
+      "verified_at": "2026-10-26T15:00:00Z",
+      "notes": ""
+    },
+    {
+      "criterion_id": "FR-018",
+      "description": "Optional pipx/uv head start.",
+      "proof_type": "operator_acceptance",
+      "evidence": "WP06 review: per-OS pipx commands checked against pipx.pypa.io, verify step, uv linked.",
+      "pass_fail": "pass",
+      "verified_by": "claude:opus-5.5:reviewer-renata:reviewer (WP06)",
+      "verified_at": "2026-10-26T15:00:00Z",
+      "notes": ""
+    },
+    {
+      "criterion_id": "FR-019",
+      "description": "Ready-check checklist.",
+      "proof_type": "operator_acceptance",
+      "evidence": "WP08 review: 9 tailored items, rule 5 (no dead items) over 1,485 combinations; WP04 review: checklist engine; WP09 step 8 PASS.",
+      "pass_fail": "pass",
+      "verified_by": "claude:opus-5.5:reviewer-renata:reviewer (WP04/WP08)",
+      "verified_at": "2026-10-26T15:00:00Z",
+      "notes": ""
+    },
+    {
+      "criterion_id": "FR-020",
+      "description": "Copy my setup summary, with manual-selection fallback.",
+      "proof_type": "operator_acceptance",
+      "evidence": "WP01 summary tests; WP04 review: live summary, clipboard and selected-text fallback; WP09 step 8 and network audit (nothing sent).",
+      "pass_fail": "pass",
+      "verified_by": "claude:opus-5.5:reviewer-renata:reviewer (WP01/WP04)",
+      "verified_at": "2026-10-26T15:00:00Z",
+      "notes": ""
+    },
+    {
+      "criterion_id": "FR-021",
+      "description": "Experience answer changes the suggested next step without locking modules.",
+      "proof_type": "operator_acceptance",
+      "evidence": "tailor.suggestedNext unit tests (WP01); WP03 review verified all three experience values; WP09 step 6 PASS.",
+      "pass_fail": "pass",
+      "verified_by": "claude:opus-5.5:reviewer-renata:reviewer (WP01/WP03)",
+      "verified_at": "2026-10-26T15:00:00Z",
+      "notes": ""
+    },
+    {
+      "criterion_id": "FR-022",
+      "description": "Optional 'Terminal in 5 minutes' per OS.",
+      "proof_type": "operator_acceptance",
+      "evidence": "WP07 review: six topics, per-OS variants, optional: true; suggested first for terminal-new (WP09 step 6).",
+      "pass_fail": "pass",
+      "verified_by": "claude:opus-5.5:reviewer-renata:reviewer (WP07)",
+      "verified_at": "2026-10-26T15:00:00Z",
+      "notes": ""
+    },
+    {
+      "criterion_id": "FR-023",
+      "description": "'Not you? Start fresh' clears only this course's data and shows the intake.",
+      "proof_type": "operator_acceptance",
+      "evidence": "WP01 store foreign-key test; WP02/WP03 reviews and WP09 step 10: only skcp:v1 removed, ccol:progress:v1 kept.",
+      "pass_fail": "pass",
+      "verified_by": "claude:opus-5.5:reviewer-renata:reviewer (WP01/WP02/WP03)",
+      "verified_at": "2026-10-26T15:00:00Z",
+      "notes": ""
+    },
+    {
+      "criterion_id": "FR-024",
+      "description": "Answers and progress remembered on return.",
+      "proof_type": "operator_acceptance",
+      "evidence": "WP09 step 9: reload and full browser relaunch with the same profile keep answers and module progress.",
+      "pass_fail": "pass",
+      "verified_by": "claude:opus-5.5:reviewer-renata:reviewer (WP09)",
+      "verified_at": "2026-10-26T15:00:00Z",
+      "notes": ""
+    },
+    {
+      "criterion_id": "FR-025",
+      "description": "Course says the trainer demos in Claude Code and commands may differ per tool.",
+      "proof_type": "operator_acceptance",
+      "evidence": "Welcome demo note (WP03 review) and command-style block per tool, e.g. $spec-kitty-specify for Codex (WP04 review).",
+      "pass_fail": "pass",
+      "verified_by": "claude:opus-5.5:reviewer-renata:reviewer (WP03/WP04)",
+      "verified_at": "2026-10-26T15:00:00Z",
+      "notes": ""
+    }
+  ],
+  "negative_invariants": [
+    {
+      "invariant_id": "NI-001",
+      "description": "The app never clears or enumerates browser storage outside its own skcp:v1 key (NFR-003, NFR-004).",
+      "verification_method": "grep_absence",
+      "verification_command": "git grep -nE \"localStorage\\.clear|localStorage\\.key\\(|localStorage\\.length\" -- js",
+      "result": "confirmed_absent",
+      "evidence": "grep found zero matches; store foreign-key isolation test passes (tests 33/0)."
+    },
+    {
+      "invariant_id": "NI-002",
+      "description": "The service worker never deletes a cache without the skcp- prefix (R-02, NFR-004).",
+      "verification_method": "custom_command",
+      "verification_command": "Headless Chrome run with seeded foreign caches (onboarding-lab-v7, random-thing): activate kept both and deleted only skcp-v0.",
+      "result": "confirmed_absent",
+      "evidence": "WP09 review results (scratchpad review-wp09/out/rv-results.json)."
+    },
+    {
+      "invariant_id": "NI-003",
+      "description": "No request carries answers or progress, and there are no third-party hosts (NFR-005).",
+      "verification_method": "custom_command",
+      "verification_command": "Quickstart step 15 network audit over intake, exercises, ready check and summary copy.",
+      "result": "confirmed_absent",
+      "evidence": "85 requests, all GET to the site's own origin, no query strings or bodies (WP09 implementation and review)."
+    }
+  ]
+}

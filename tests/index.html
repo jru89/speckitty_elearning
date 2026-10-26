@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Running tests…</title>
+</head>
+<body style="font-family: system-ui, sans-serif; margin: 16px;">
+  <h1 style="font-size: 1.2rem;">Spec Kitty class prep: unit tests</h1>
+  <p id="summary" style="padding: 8px; font-weight: bold;">Running…</p>
+  <table id="results" style="border-collapse: collapse; width: 100%;"></table>
+  <script type="module">
+    import { run, test } from "./runner.js";
+    import "./store.test.js";
+    import "./tailor.test.js";
+    import "./summary.test.js";
+
+    // Optional coverage test: skip quietly only when the file itself is missing (404).
+    // Any other import error (syntax error, broken import inside it) is reported as a failure.
+    let coverageMissing = false;
+    try {
+      const res = await fetch("./coverage.test.js", { method: "HEAD", cache: "no-store" });
+      coverageMissing = res.status === 404;
+    } catch {
+      // fetch unavailable: fall through to import and report whatever happens
+    }
+    if (!coverageMissing) {
+      try {
+        await import("./coverage.test.js");
+      } catch (err) {
+        test("coverage.test.js loads", () => {
+          throw err;
+        });
+      }
+    }
+
+    const { passed, failed, results } = await run();
+    const summary = document.getElementById("summary");
+    summary.textContent = `${passed} passed, ${failed} failed`;
+    summary.style.background = failed === 0 ? "#c8f7c5" : "#f7c5c5";
+    document.title = failed === 0 ? "PASS" : "FAIL";
+
+    const table = document.getElementById("results");
+    for (const r of results) {
+      const row = table.insertRow();
+      row.style.borderBottom = "1px solid #ddd";
+      row.insertCell().textContent = r.ok ? "ok" : "FAIL";
+      row.insertCell().textContent = r.name;
+      row.insertCell().textContent = r.error || "";
+      if (!r.ok) row.style.background = "#fbe3e3";
+    }
+  </script>
+</body>
+</html>

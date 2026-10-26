@@ -1,0 +1,60 @@
+// Ready check (FR-019) with the copyable setup summary (FR-020). Shape: data-model.md "Module (static)".
+// Checklist items are tailored so every visible item can be completed (tailoring contract rule 5).
+// `when` dimensions AND together, so "mobile OR work-locked" needs two told-trainer items.
+
+import { ENUMS } from "../intake.js";
+
+const DESKTOP_OS = ["windows", "macos", "linux", "chromeos"];
+const CAN_INSTALL = ["personal", "work-can-install"];
+const CHOSEN_TOOLS = ENUMS.tool.filter((t) => t !== "undecided");
+
+const installable = { os: DESKTOP_OS, device: CAN_INSTALL };
+
+export default {
+  id: "ready",
+  title: "Ready check",
+  summary: "Tick off your setup, then send your trainer a one-line summary if you like.",
+  minutes: 3,
+  optional: false,
+  blocks: [
+    {
+      id: "ready-intro",
+      kind: "note",
+      body: "<p>Go through this list on the laptop you'll bring. If something doesn't work, the setup module has the fix, or tell your trainer before the session.</p>",
+    },
+  ],
+  exercise: {
+    id: "ready-check",
+    type: "checklist",
+    config: {
+      summary: true,
+      items: [
+        { id: "git-version", label: "git --version prints a version", when: installable },
+        { id: "git-identity", label: "I set my Git name and email", when: installable },
+        {
+          id: "python-version",
+          label: "Python reports 3.11 or higher (py --version on Windows, python3 --version elsewhere)",
+          when: installable,
+        },
+        { id: "tool-picked", label: "I picked an AI coding tool", when: { tool: ["undecided"] } },
+        {
+          id: "tool-login",
+          label: "My AI coding tool is installed and I logged in once",
+          when: { ...installable, tool: CHOSEN_TOOLS },
+        },
+        {
+          id: "agent-check",
+          label: "The agent listed my test folder and created hello.txt",
+          when: { ...installable, tool: CHOSEN_TOOLS },
+        },
+        { id: "told-trainer-mobile", label: "I told my trainer I can't install on this device", when: { os: ["mobile"] } },
+        {
+          id: "told-trainer-locked",
+          label: "I told my trainer I can't install on this device",
+          when: { device: ["work-locked"] },
+        },
+        { id: "laptop", label: "Laptop and charger packed" },
+      ],
+    },
+  },
+};

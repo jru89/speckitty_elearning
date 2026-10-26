@@ -1,31 +1,31 @@
 {
-  "event_count": 16,
-  "last_event_id": "01M5W290QRSB46NSN0A24MFAZW",
-  "materialized_at": "2026-10-26T12:17:01.111307+00:00",
-  "mission_number": "",
+  "event_count": 68,
+  "last_event_id": "01M5W9NSR0NG5215K664NSJHCG",
+  "materialized_at": "2026-10-26T14:26:20.032612+00:00",
+  "mission_number": "1",
   "mission_slug": "spec-kitty-class-prep-track-01M5VY73",
-  "mission_type": "",
+  "mission_type": "software-dev",
   "summary": {
-    "approved": 1,
+    "approved": 0,
     "blocked": 0,
     "canceled": 0,
     "claimed": 0,
-    "done": 0,
+    "done": 9,
     "for_review": 0,
-    "in_progress": 1,
+    "in_progress": 0,
     "in_review": 0,
-    "planned": 7
+    "planned": 0
   },
   "work_packages": {
     "WP01": {
-      "actor": "user",
+      "actor": "merge",
       "agent": "claude",
       "agent_profile": "__resolved_profile_absent__",
       "agent_profile_version": "__resolved_profile_version_absent__",
       "force_count": 0,
-      "lane": "approved",
-      "last_event_id": "01M5W210QHXS5NVHKTGB7HEPDQ",
-      "last_transition_at": "2026-10-26T12:12:39.025405+00:00",
+      "lane": "done",
+      "last_event_id": "01M5W9N66BVCYFD26B2KZB520B",
+      "last_transition_at": "2026-10-26T14:26:00.011349+00:00",
       "model": "__resolved_model_absent__",
       "notes": [
         "Ready for review: core data and logic, test page 26/0",
@@ -52,68 +52,256 @@
       }
     },
     "WP02": {
-      "actor": "finalize-tasks",
+      "actor": "merge",
+      "agent": "claude",
+      "agent_profile": "__resolved_profile_absent__",
+      "agent_profile_version": "__resolved_profile_version_absent__",
       "force_count": 0,
-      "lane": "planned",
-      "last_event_id": "01M5W0HNEFXWA7HZQJS06CAPWF",
-      "last_transition_at": "2026-10-26T11:46:47.375355+00:00"
+      "lane": "done",
+      "last_event_id": "01M5W9N8NGPXEQ3P3YWNP6VM7Z",
+      "last_transition_at": "2026-10-26T14:26:02.544336+00:00",
+      "model": "__resolved_model_absent__",
+      "notes": [
+        "Ready for review: shell, router + guard, menu with in-page Start fresh confirm, bento visual system per R0-09, clipboard/enhance; verified routes, guard, 360px, notice",
+        "Review passed (reviewer-renata): routes/guard match plan; missing views degrade cleanly; keyboard-operable menu with in-page confirm, startFresh removes only skcp:v1; non-persistent notice works; tokens/type/cells/pills/chips/alerts match the Bento Grid reference with R0-09 deviations; 4/2/1 cols, no h-scroll at 360px; relative URLs. Orchestrator applied both low notes: copy-button strip above code, accessible name matches visible label."
+      ],
+      "provider": "__resolved_provider_absent__",
+      "review_result": {
+        "feedback_path": "A:\\_code\\spec-kitty-class-prep\\kitty-specs\\spec-kitty-class-prep-track-01M5VY73\\tasks\\WP02-app-shell-and-visual-system\\review-cycle-1.md",
+        "reference": "review-cycle://spec-kitty-class-prep-track-01M5VY73/WP02-app-shell-and-visual-system/review-cycle-1.md",
+        "reviewer": "user",
+        "verdict": "approved"
+      },
+      "role": "reviewer",
+      "shell_pid": 20052,
+      "shell_pid_created_at": "1793017490.069758",
+      "subtasks": {
+        "T008": "done",
+        "T009": "done",
+        "T010": "done",
+        "T011": "done",
+        "T012": "done"
+      }
     },
     "WP03": {
-      "actor": "finalize-tasks",
+      "actor": "merge",
+      "agent": "claude",
+      "agent_profile": "__resolved_profile_absent__",
+      "agent_profile_version": "__resolved_profile_version_absent__",
       "force_count": 0,
-      "lane": "planned",
-      "last_event_id": "01M5W0HP4XBV695HQJGCBDYPFZ",
-      "last_transition_at": "2026-10-26T11:46:48.093805+00:00"
+      "lane": "done",
+      "last_event_id": "01M5W9NG3RJFQESTPBVBEAKSC5",
+      "last_transition_at": "2026-10-26T14:26:10.168752+00:00",
+      "model": "__resolved_model_absent__",
+      "notes": [
+        "Ready for review: welcome, intake (one page, live chip question, inline errors), bento overview with suggested next, early-stop banner, Start fresh cell; verified in browser incl. 360px",
+        "Review passed (reviewer-renata): welcome copy exact; intake 5 fieldsets with legends, chip only for windows/macos/linux, inline errors, pre-fill; overview live, progress counts 4 non-optional modules, early-stop never suggests setup/ready; Start fresh removes only skcp:v1; 360px OK; keyboard OK. Orchestrator fixed two low notes: no forced-chip pre-fill; overview stops redrawing after navigation."
+      ],
+      "provider": "__resolved_provider_absent__",
+      "review_result": {
+        "feedback_path": "A:\\_code\\spec-kitty-class-prep\\kitty-specs\\spec-kitty-class-prep-track-01M5VY73\\tasks\\WP03-welcome-intake-overview\\review-cycle-1.md",
+        "reference": "review-cycle://spec-kitty-class-prep-track-01M5VY73/WP03-welcome-intake-overview/review-cycle-1.md",
+        "reviewer": "user",
+        "verdict": "approved"
+      },
+      "role": "reviewer",
+      "shell_pid": 25288,
+      "shell_pid_created_at": "1793022125.7973585",
+      "subtasks": {
+        "T013": "done",
+        "T014": "done",
+        "T015": "done",
+        "T016": "done",
+        "T017": "done"
+      }
     },
     "WP04": {
-      "actor": "finalize-tasks",
+      "actor": "merge",
+      "agent": "claude",
+      "agent_profile": "__resolved_profile_absent__",
+      "agent_profile_version": "__resolved_profile_version_absent__",
       "force_count": 0,
-      "lane": "planned",
-      "last_event_id": "01M5W0HPV9DK8RXFAFS8EJJEP1",
-      "last_transition_at": "2026-10-26T11:46:48.809160+00:00"
+      "lane": "done",
+      "last_event_id": "01M5W9NMX3BYSDPCJNYYHQHXGY",
+      "last_transition_at": "2026-10-26T14:26:15.075393+00:00",
+      "model": "__resolved_model_absent__",
+      "notes": [
+        "Ready for review: module view (tailored blocks, chip labels, tool-chooser, command-style, forward-only status, pager) and match/judge/checklist engines with setup summary; verified in browser with real module content as untracked scratch (deleted before commit)",
+        "Review passed (reviewer-renata), tested with real WP05-WP08 content: live tailoring, tool-chooser, command-style per tool, forward-only status, match/judge/checklist per contract with persistence, live summary with copy fallback, no outbound requests, innerHTML only for trusted content, no redraw loop, 360px OK. Orchestrator applied: summary box 3 rows."
+      ],
+      "provider": "__resolved_provider_absent__",
+      "review_result": {
+        "feedback_path": "A:\\_code\\spec-kitty-class-prep\\kitty-specs\\spec-kitty-class-prep-track-01M5VY73\\tasks\\WP04-module-view-and-exercises\\review-cycle-1.md",
+        "reference": "review-cycle://spec-kitty-class-prep-track-01M5VY73/WP04-module-view-and-exercises/review-cycle-1.md",
+        "reviewer": "user",
+        "verdict": "approved"
+      },
+      "role": "reviewer",
+      "shell_pid": 2496,
+      "shell_pid_created_at": "1793022947.5185857",
+      "subtasks": {
+        "T018": "done",
+        "T019": "done",
+        "T020": "done",
+        "T021": "done"
+      }
     },
     "WP05": {
-      "actor": "finalize-tasks",
+      "actor": "merge",
+      "agent": "claude",
+      "agent_profile": "__resolved_profile_absent__",
+      "agent_profile_version": "__resolved_profile_version_absent__",
       "force_count": 0,
-      "lane": "planned",
-      "last_event_id": "01M5W0HQJ08QR98NC25A480Z8H",
-      "last_transition_at": "2026-10-26T11:46:49.536367+00:00"
+      "lane": "done",
+      "last_event_id": "01M5W9NB3FD0VAY7BRP719WEYC",
+      "last_transition_at": "2026-10-26T14:26:05.039394+00:00",
+      "model": "__resolved_model_absent__",
+      "notes": [
+        "Ready for review: words.js (11 blocks, 8-pair match) and spec-driven.js (8 blocks incl. command-style, 6-statement judge, 3 criteria). No when conditions; one Bright Factory line; tool names only as examples; all blocks <=60 words. T026 checks passed.",
+        "Review passed (reviewer-renata): shapes, FR-008 coverage, R0-03 accuracy, C-005 single Bright Factory line, NFR-007 tool neutrality all met. Review notes applied by orchestrator: minutes 4/3, doctrine 'includes', US spelling. Spec note: FR-009 match limited to 8 terms per WP scope."
+      ],
+      "provider": "__resolved_provider_absent__",
+      "review_result": {
+        "feedback_path": "A:\\_code\\spec-kitty-class-prep\\kitty-specs\\spec-kitty-class-prep-track-01M5VY73\\tasks\\WP05-vocabulary-modules\\review-cycle-1.md",
+        "reference": "review-cycle://spec-kitty-class-prep-track-01M5VY73/WP05-vocabulary-modules/review-cycle-1.md",
+        "reviewer": "user",
+        "verdict": "approved"
+      },
+      "role": "reviewer",
+      "shell_pid": 18836,
+      "shell_pid_created_at": "1793017297.1003027",
+      "subtasks": {
+        "T022": "done",
+        "T023": "done",
+        "T024": "done",
+        "T025": "done",
+        "T026": "done"
+      }
     },
     "WP06": {
-      "actor": "claude",
+      "actor": "merge",
       "agent": "claude",
-      "agent_profile": "scribe-sally",
-      "agent_profile_version": "1.0",
+      "agent_profile": "__resolved_profile_absent__",
+      "agent_profile_version": "__resolved_profile_version_absent__",
       "force_count": 0,
-      "lane": "in_progress",
-      "last_event_id": "01M5W290QRSB46NSN0A24MFAZW",
-      "last_transition_at": "2026-10-26T12:17:01.111307+00:00",
+      "lane": "done",
+      "last_event_id": "01M5W9NDMDYC2HYREHBJTH4VWY",
+      "last_transition_at": "2026-10-26T14:26:07.629948+00:00",
       "model": "__resolved_model_absent__",
+      "notes": [
+        "Ready for review: 13 tool blocks + tool-chooser + other; agent-check, work-device, head-start support blocks; all when values in ENUMS; pipx commands checked against pipx.pypa.io",
+        "Review passed (reviewer-renata): 15 tool-topic blocks (1 per ENUMS.tool), undecided=tool-chooser, other=note; costNote escaped; official installUrl links; no copied install commands; support blocks match T028-T030; when values in ENUMS; pipx commands match docs, py -m pipx ensurepath verified on Windows. Orchestrator applied review note: Fedora command now copyable."
+      ],
       "provider": "__resolved_provider_absent__",
-      "role": "implementer",
-      "shell_pid": 9984,
-      "shell_pid_created_at": "1793017015.811503"
+      "review_result": {
+        "feedback_path": "A:\\_code\\spec-kitty-class-prep\\kitty-specs\\spec-kitty-class-prep-track-01M5VY73\\tasks\\WP06-tool-and-support-setup-blocks\\review-cycle-1.md",
+        "reference": "review-cycle://spec-kitty-class-prep-track-01M5VY73/WP06-tool-and-support-setup-blocks/review-cycle-1.md",
+        "reviewer": "user",
+        "verdict": "approved"
+      },
+      "role": "reviewer",
+      "shell_pid": 2172,
+      "shell_pid_created_at": "1793017338.4014964",
+      "subtasks": {
+        "T027": "done",
+        "T028": "done",
+        "T029": "done",
+        "T030": "done"
+      }
     },
     "WP07": {
-      "actor": "finalize-tasks",
-      "force_count": 0,
-      "lane": "planned",
-      "last_event_id": "01M5W0HRZQCFCS2F74Y5HSMQ2M",
-      "last_transition_at": "2026-10-26T11:46:50.999098+00:00"
+      "actor": "merge",
+      "agent": "claude",
+      "agent_profile": "__resolved_profile_absent__",
+      "agent_profile_version": "__resolved_profile_version_absent__",
+      "force_count": 1,
+      "lane": "done",
+      "last_event_id": "01M5W9NJHTFV3B4JPHC15SH4EZ",
+      "last_transition_at": "2026-10-26T14:26:12.666573+00:00",
+      "model": "__resolved_model_absent__",
+      "notes": [
+        "Ready for review: platform-blocks (Git+Python per OS/chip, Store alias warning, older-Python notes), setup composer in content-schema order, terminal primer; coverage table all PASS; sources in file header",
+        "Cycle 2: brew install python3; uv fallback guidance; xcode-select note. Coverage all PASS.",
+        "Review passed (cycle 2, reviewer-renata): brew install python3 replaces python@3.14; macOS old-Python note covers Homebrew users; uv fallback explains old python3, ~/.local/bin and --python python3.12; xcode-select note added. Coverage re-run all PASS."
+      ],
+      "provider": "__resolved_provider_absent__",
+      "review": null,
+      "review_result": {
+        "feedback_path": "A:\\_code\\spec-kitty-class-prep\\kitty-specs\\spec-kitty-class-prep-track-01M5VY73\\tasks\\WP07-platform-setup-and-terminal-primer\\review-cycle-2.md",
+        "reference": "review-cycle://spec-kitty-class-prep-track-01M5VY73/WP07-platform-setup-and-terminal-primer/review-cycle-2.md",
+        "reviewer": "user",
+        "verdict": "approved"
+      },
+      "role": "reviewer",
+      "shell_pid": 29360,
+      "shell_pid_created_at": "1793018219.0530665",
+      "subtasks": {
+        "T031": "done",
+        "T032": "done",
+        "T033": "done",
+        "T034": "done"
+      }
     },
     "WP08": {
-      "actor": "finalize-tasks",
+      "actor": "merge",
+      "agent": "claude",
+      "agent_profile": "__resolved_profile_absent__",
+      "agent_profile_version": "__resolved_profile_version_absent__",
       "force_count": 0,
-      "lane": "planned",
-      "last_event_id": "01M5W0HSPGADHXM3HNNV5RN4Q6",
-      "last_transition_at": "2026-10-26T11:46:51.728238+00:00"
+      "lane": "done",
+      "last_event_id": "01M5W9NQAWXXDMC3NEPK5VTCQN",
+      "last_transition_at": "2026-10-26T14:26:17.564901+00:00",
+      "model": "__resolved_model_absent__",
+      "notes": [
+        "Ready for review: ready.js (9 tailored items, summary on), coverage.test.js over 1,485 combinations (rules 1-5 + git/python completeness), test page 33/0, deliberate break caught; tests/index.html now distinguishes missing vs broken coverage file",
+        "Review passed (reviewer-renata): ready.js matches WP table (told-trainer split, summary:true); coverage.test.js implements rules 1-5 + Git/Python completeness over 1,485 combos (verified count); tests 33/0; three deliberate breaks each caught. tests/index.html HEAD-404 skip verified for http.server and GitHub Pages (out-of-map edit to WP01 file: reviewer finding from WP01). Low: modules imported directly, keep in sync with registry."
+      ],
+      "provider": "__resolved_provider_absent__",
+      "review_result": {
+        "feedback_path": "A:\\_code\\spec-kitty-class-prep\\kitty-specs\\spec-kitty-class-prep-track-01M5VY73\\tasks\\WP08-ready-check-and-coverage-test\\review-cycle-1.md",
+        "reference": "review-cycle://spec-kitty-class-prep-track-01M5VY73/WP08-ready-check-and-coverage-test/review-cycle-1.md",
+        "reviewer": "user",
+        "verdict": "approved"
+      },
+      "role": "reviewer",
+      "shell_pid": 28256,
+      "shell_pid_created_at": "1793022518.7885382",
+      "subtasks": {
+        "T035": "done",
+        "T036": "done",
+        "T037": "done"
+      }
     },
     "WP09": {
-      "actor": "finalize-tasks",
+      "actor": "merge",
+      "agent": "claude",
+      "agent_profile": "__resolved_profile_absent__",
+      "agent_profile_version": "__resolved_profile_version_absent__",
       "force_count": 0,
-      "lane": "planned",
-      "last_event_id": "01M5W0HTDX0FQWJ8DKAP4R647J",
-      "last_transition_at": "2026-10-26T11:46:52.477586+00:00"
+      "lane": "done",
+      "last_event_id": "01M5W9NSR0NG5215K664NSJHCG",
+      "last_transition_at": "2026-10-26T14:26:20.032612+00:00",
+      "model": "__resolved_model_absent__",
+      "notes": [
+        "Ready for review: service worker (skcp- caches only, SWR, full re-precache after foreign wipe), icons, manifest, README; full quickstart 1-16 PASS incl. headless-Chrome offline with server stopped; tests 33/0",
+        "Review passed (reviewer-renata): SW deletes only skcp- caches (foreign caches kept); PRECACHE == git ls-files minus exclusions; offline with server down under /repo/ sub-path; R-02 wipe rebuilds 32 entries in one reload; README accurate; icons installable; tests 33/0; quickstart spot-checks and full-app pass, no integration bugs. Orchestrator applied: 60s refill cooldown; no suggested-next once all modules done."
+      ],
+      "provider": "__resolved_provider_absent__",
+      "review_result": {
+        "feedback_path": "A:\\_code\\spec-kitty-class-prep\\kitty-specs\\spec-kitty-class-prep-track-01M5VY73\\tasks\\WP09-offline-deploy-and-end-to-end\\review-cycle-1.md",
+        "reference": "review-cycle://spec-kitty-class-prep-track-01M5VY73/WP09-offline-deploy-and-end-to-end/review-cycle-1.md",
+        "reviewer": "user",
+        "verdict": "approved"
+      },
+      "role": "reviewer",
+      "shell_pid": 10460,
+      "shell_pid_created_at": "1793024017.5240777",
+      "subtasks": {
+        "T038": "done",
+        "T039": "done",
+        "T040": "done",
+        "T041": "done"
+      }
     }
   }
 }

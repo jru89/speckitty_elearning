@@ -4,26 +4,26 @@ artifact_type: spec-kitty.analysis-report
 command: /spec-kitty.analyze
 mission_slug: spec-kitty-class-prep-track-01M5VY73
 mission_id: 01M5VY73A9X474Q43WCVE1RFDD
-generated_at: '2026-10-26T12:13:37.610762+00:00'
+generated_at: '2026-10-26T12:14:47.749511+00:00'
 analyzer_agent: unknown
 input_artifacts:
   spec.md:
     path: kitty-specs\spec-kitty-class-prep-track-01M5VY73\spec.md
-    sha256: e9c8285b2ed8ec626d81e573a21a36e23779089ebad29880552a5be0b125377e
+    sha256: c27a81bba03f372f5740349289951546824ac001e3a396726bfdebdb92b9f7a6
   plan.md:
     path: kitty-specs\spec-kitty-class-prep-track-01M5VY73\plan.md
-    sha256: 6fca9e31963e73df13daa15fb15b1558608319988ae101ba5502a1cf2e33224d
+    sha256: 717e650ea8dbb5359321874a12ac98c7c85cd3058bc28cf49e32b97118263485
   tasks.md:
     path: kitty-specs\spec-kitty-class-prep-track-01M5VY73\tasks.md
-    sha256: a961999bae374ee1293720f842500019c9070f89bff33d3a1d4eecb51b4d2a9d
+    sha256: 96e911f3c85599cbd3edec31f9224319abacee463301d1aae2525ff556f102c0
   charter:
     path:
     sha256:
 verdict: ready
 issue_counts:
   medium: 0
-  critical: 0
   low: 2
+  critical: 0
   high: 0
   info: 0
 findings:

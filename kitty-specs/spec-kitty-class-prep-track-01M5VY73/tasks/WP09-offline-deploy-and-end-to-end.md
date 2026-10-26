@@ -39,7 +39,9 @@ model: ''
 owned_files:
 - service-worker.js
 - README.md
-- icons/**
+- icons/icon.svg
+- icons/icon-192.png
+- icons/icon-512.png
 role: implementer
 tags: []
 task_type: implement

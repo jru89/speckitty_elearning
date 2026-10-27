@@ -3,7 +3,7 @@
 // Isolation (research R0-02, plan R-02): this worker only ever touches caches named "skcp-*".
 // Another app on the same github.io origin may delete our cache; we then refill it from the network.
 
-const CACHE = "skcp-v3";
+const CACHE = "skcp-v4";
 const PREFIX = "skcp-";
 
 // Built from `git ls-files`, minus tests/, kitty-specs/, .kittify/, .claude/, dotfiles and README.md.
@@ -38,6 +38,7 @@ const PRECACHE = [
   "./js/views/exercises/judge.js",
   "./js/views/exercises/quiz.js",
   "./js/views/widgets/agent-loop.js",
+  "./js/views/widgets/tools-mcp.js",
   "./js/views/intake-view.js",
   "./js/views/module-view.js",
   "./js/views/overview-view.js",

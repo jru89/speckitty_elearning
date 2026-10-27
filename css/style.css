@@ -779,3 +779,32 @@ progress.progress-bar::-moz-progress-bar { background: var(--blue); border-radiu
   .agent-loop__line { animation: none; }
   .agent-loop__node.is-active circle { transform: none; }
 }
+
+/* ------------------------------------------------------------------ Animated tools + MCP (widgets/tools-mcp.js)
+   Terminal with the current call/result on the left, Agent ↔ MCP ↔ tools on the right; the active route lights up. */
+.mcp { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-md); margin-top: var(--space-md); }
+.mcp__pic { order: -1; }
+.mcp__svg { width: 100%; overflow: visible; }
+.mcp__wire { fill: none; stroke: rgba(100,210,255,.45); stroke-width: 2.5; stroke-dasharray: 5 7; transition: stroke .3s ease, stroke-width .3s ease; }
+.mcp__wire.is-active { stroke: #30D158; stroke-width: 4; stroke-dasharray: none; filter: drop-shadow(0 0 6px rgba(48,209,88,.7)); }
+.mcp__box rect, .mcp__box circle { fill: #0b1220; stroke: rgba(100,210,255,.6); stroke-width: 2.5; transition: fill .3s ease, stroke .3s ease, filter .3s ease; }
+.mcp__box text { fill: #fff; font-family: var(--font); font-weight: 800; font-size: 24px; text-anchor: middle; }
+.mcp__tool text { font-size: 22px; }
+.mcp__hub circle { stroke: #30D158; stroke-width: 3; fill: #0b2a18; }
+.mcp__hub .mcp__hub-title { font-size: 22px; }
+.mcp__hub .mcp__hub-sub { font-size: 12px; font-weight: 600; font-family: var(--font-mono); fill: rgba(255,255,255,.75); }
+.mcp__box.is-active rect, .mcp__box.is-active circle { stroke: #30D158; filter: drop-shadow(0 0 12px rgba(48,209,88,.75)); }
+.mcp__tool.is-active rect { fill: #0d7a3d; }
+.mcp__hub.is-active circle { fill: #0d7a3d; }
+.mcp__pulse { fill: #b8ffcb; filter: drop-shadow(0 0 8px #30D158) drop-shadow(0 0 16px #30D158); transition: opacity .2s ease; }
+
+.mcp__term { background: #05070b; border: 1px solid var(--line); border-radius: var(--radius-lg); padding: var(--space-md) var(--space-lg); font-family: var(--font-mono); font-size: .8125rem; line-height: 1.55; min-height: 116px; min-width: 0; }
+.mcp__term p { color: #e8e8f0; overflow-wrap: anywhere; font-size: inherit; line-height: inherit; }
+.mcp__arrow { font-weight: 800; margin-right: 8px; }
+.mcp__call .mcp__arrow { color: #30D158; }
+.mcp__result { min-height: 1.55em; color: #b9c2d0; }
+.mcp__result .mcp__arrow { color: #64D2FF; }
+.mcp__rule { border: 0; border-top: 1px dashed var(--line); margin: var(--space-md) 0; }
+.mcp .agent-loop__controls { grid-column: 1 / -1; }
+
+

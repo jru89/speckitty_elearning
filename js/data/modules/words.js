@@ -83,10 +83,21 @@ export default {
     },
     {
       id: "tools",
-      heading: "Tools",
+      heading: "Tools and MCP",
+      // kind "tools-mcp": module-view renders the animated Agent → MCP → tool diagram (js/views/widgets/tools-mcp.js).
+      kind: "tools-mcp",
       body:
-        "<p><strong>Tools</strong> are the actions an agent is allowed to take: read files, write files, run terminal commands, search the web.</p>" +
-        "<p>Your AI tool usually asks your permission before using one, especially for anything that changes files or runs commands.</p>",
+        "<p class=\"lead-in\"><strong>Tools let it act. MCP lets it plug in.</strong> A <strong>tool</strong> is an action the agent may take: read a file, run a command, search the web, create a ticket. Your AI tool usually asks your permission first, especially for anything that changes files or runs commands.</p>" +
+        "<p>The <strong>Model Context Protocol (MCP)</strong> is an open standard that packages tools as plug-ins (\"servers\"), so one agent can use Jira, Confluence, a database or Git without custom glue.</p>",
+      after:
+        "<p>You won't set up MCP in the class, but you'll hear the word: it's how agents get connected to the systems your team already uses.</p>",
+      tools: ["Jira", "Confluence", "Database", "Git"],
+      calls: [
+        { tool: "Jira", call: "jira.search {\"jql\": \"project = SHOP AND status = Open\"}", result: "14 issues · 3 blocked" },
+        { tool: "Confluence", call: "confluence.get_page {\"title\": \"Release checklist\"}", result: "12 steps · last edited 2 days ago" },
+        { tool: "Database", call: "sql.query {\"sql\": \"select count(*) from orders where paid_at is null\"}", result: "37 unpaid orders" },
+        { tool: "Git", call: "git.log {\"limit\": 3}", result: "3 commits · latest: \"Fix the login button\"" },
+      ],
     },
     {
       id: "context-window",
@@ -206,6 +217,17 @@ export default {
           ],
           answer: 1,
           why: "Models read and write in tokens. You pay per token, and memory is measured in tokens too.",
+        },
+        {
+          question: "What does MCP (the Model Context Protocol) do?",
+          options: [
+            "It makes the model think harder",
+            "It lets an agent plug into tools like Jira, a database or Git through one standard",
+            "It stores your passwords",
+            "It's Spec Kitty's name for a work package",
+          ],
+          answer: 1,
+          why: "MCP packages tools as plug-in servers, so any agent that speaks MCP can use them without custom glue.",
         },
         {
           question: "Why does Spec Kitty keep specs and plans in your project folder?",

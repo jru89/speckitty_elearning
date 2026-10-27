@@ -7,6 +7,9 @@ import { recommendedTools, otherTools, toolById } from "../data/tools.js";
 import { visibleBlocks } from "../lib/tailor.js";
 import { enhanceCodeBlocks } from "../lib/enhance.js";
 import { render as renderAgentLoop } from "./widgets/agent-loop.js";
+import { render as renderToolsMcp } from "./widgets/tools-mcp.js";
+
+const WIDGETS = { "agent-loop": renderAgentLoop, "tools-mcp": renderToolsMcp };
 
 export function title(params) {
   const id = params && params.id;
@@ -139,9 +142,9 @@ function renderBlock(block, index, answers, ctx, onPick) {
 
   if (kind === "tool-chooser") {
     section.append(...toolChooser(onPick));
-  } else if (kind === "agent-loop") {
+  } else if (WIDGETS[kind]) {
     if (typeof block.body === "string") section.append(html(block.body));
-    section.append(renderAgentLoop(block));
+    section.append(WIDGETS[kind](block));
     if (typeof block.after === "string") section.append(html(block.after));
   } else if (kind === "command-style") {
     section.append(...commandStyle(answers));

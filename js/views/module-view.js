@@ -8,8 +8,15 @@ import { visibleBlocks } from "../lib/tailor.js";
 import { enhanceCodeBlocks } from "../lib/enhance.js";
 import { render as renderAgentLoop } from "./widgets/agent-loop.js";
 import { render as renderToolsMcp } from "./widgets/tools-mcp.js";
+import { render as renderSkills } from "./widgets/skills.js";
+import { render as renderContextStack } from "./widgets/context-stack.js";
 
-const WIDGETS = { "agent-loop": renderAgentLoop, "tools-mcp": renderToolsMcp };
+const WIDGETS = {
+  "agent-loop": renderAgentLoop,
+  "tools-mcp": renderToolsMcp,
+  skills: renderSkills,
+  "context-stack": renderContextStack,
+};
 
 export function title(params) {
   const id = params && params.id;

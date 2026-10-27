@@ -1,0 +1,90 @@
+// Shared timing for the step-by-step widgets (skills, context stack): plays one step at a time while on screen,
+// with Pause/Play and Restart. With reduced motion it never autoplays; the button becomes "Next step".
+// The widget supplies `count` steps, `show(i)` to draw step i, `reset()` before a new round, and `delay(i)`.
+
+function button(className, text) {
+  const b = document.createElement("button");
+  b.type = "button";
+  b.className = className;
+  b.textContent = text;
+  return b;
+}
+
+export function createPlayer(wrap, { count, show, reset, delay, nextLabel = "Next step", restMs = 2600 }) {
+  const reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const controls = document.createElement("div");
+  controls.className = "agent-loop__controls";
+  const toggle = button("btn btn--secondary", reduced ? nextLabel : "Pause");
+  const restart = button("btn btn--ghost", "Restart");
+  controls.append(toggle, restart);
+
+  let index = 0;
+  let playing = !reduced;
+  let visible = false;
+  let mounted = false;
+  let timer = null;
+
+  const gone = () => {
+    if (wrap.isConnected) mounted = true;
+    return mounted && !wrap.isConnected;
+  };
+
+  function advance() {
+    if (index >= count) {
+      index = 0;
+      reset();
+    }
+    show(index);
+    index += 1;
+  }
+
+  function schedule() {
+    clearTimeout(timer);
+    if (!playing || !visible) return;
+    const wait = index >= count ? restMs : delay(index - 1);
+    timer = setTimeout(() => {
+      if (gone()) return stop();
+      advance();
+      schedule();
+    }, wait);
+  }
+
+  function stop() {
+    clearTimeout(timer);
+    if (observer) observer.disconnect();
+  }
+
+  toggle.addEventListener("click", () => {
+    if (reduced) return advance();
+    playing = !playing;
+    toggle.textContent = playing ? "Pause" : "Play";
+    schedule();
+  });
+  restart.addEventListener("click", () => {
+    index = 0;
+    reset();
+    advance();
+    if (!reduced) {
+      playing = true;
+      toggle.textContent = "Pause";
+      schedule();
+    }
+  });
+
+  const observer =
+    "IntersectionObserver" in window
+      ? new IntersectionObserver((entries) => {
+          if (gone()) return stop();
+          visible = entries.some((e) => e.isIntersecting);
+          if (visible && playing && index === 0) advance();
+          schedule();
+        })
+      : null;
+  if (observer) observer.observe(wrap);
+  else visible = true;
+
+  // Always start with the first step drawn, so a still frame (or reduced motion) shows something real.
+  reset();
+  advance();
+  return controls;
+}

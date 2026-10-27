@@ -7,7 +7,7 @@ export default {
   id: "spec-driven",
   title: "Vibe coding vs spec-driven",
   summary: "Why loose prompting breaks down on bigger work, and the flow Spec Kitty uses instead.",
-  minutes: 4,
+  minutes: 6,
   optional: false,
   blocks: [
     {
@@ -61,6 +61,19 @@ export default {
         "<li>Not good: \"The app is easy to use.\" Easy for whom, and how would you check?</li>" +
         "</ul>" +
         "<p>The exercise below lets you practice telling them apart.</p>",
+    },
+    {
+      id: "habits",
+      heading: "Four habits that make the difference",
+      // Not a sequence, so not numbered: each habit names the Spec Kitty step where it lives.
+      body:
+        "<p>Spec Kitty builds these habits into the flow, so you don't have to remember them.</p>" +
+        "<div class=\"habits\">" +
+        "<article class=\"habit habit--blue\"><h3>Say what done looks like.</h3><p>A goal plus a check the agent can run beats a long description.</p><p class=\"habit__where\">In Spec Kitty: <strong>the spec and its acceptance criteria</strong></p></article>" +
+        "<article class=\"habit habit--purple\"><h3>Teach once, not every prompt.</h3><p>Lasting knowledge goes in AGENTS.md, the charter or a skill.</p><p class=\"habit__where\">In Spec Kitty: <strong>the charter</strong></p></article>" +
+        "<article class=\"habit habit--green\"><h3>Let it verify.</h3><p>Tests, checks and previews turn guesses into evidence.</p><p class=\"habit__where\">In Spec Kitty: <strong>build, with tests per work package</strong></p></article>" +
+        "<article class=\"habit habit--orange\"><h3>Review before it matters.</h3><p>The agent drafts; you own the result.</p><p class=\"habit__where\">In Spec Kitty: <strong>review and accept</strong></p></article>" +
+        "</div>",
     },
     {
       id: "bright-factory-teaser",

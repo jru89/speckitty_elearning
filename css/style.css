@@ -808,3 +808,104 @@ progress.progress-bar::-moz-progress-bar { background: var(--blue); border-radiu
 .mcp .agent-loop__controls { grid-column: 1 / -1; }
 
 
+
+/* ------------------------------------------------------------------ Skills demo (widgets/skills.js)
+   A request types into the "You" bar; the matching skill lights up, the rest step back. */
+.skills-demo { display: grid; gap: var(--space-md); margin-top: var(--space-md); }
+.skills-demo__ask {
+  display: flex; align-items: center; gap: var(--space-md);
+  min-height: 60px; padding: var(--space-md) var(--space-lg);
+  background: #05070b; border: 1px solid var(--line); border-radius: var(--radius-lg);
+  font-size: 1.0625rem; color: #fff;
+}
+.skills-demo__who { flex-shrink: 0; font-weight: 800; font-size: .8125rem; color: #000; background: var(--orange); border-radius: var(--radius-full); padding: 3px 10px; }
+.skills-demo__said { min-width: 0; }
+.skills-demo__caret { width: 2px; height: 1.2em; background: var(--orange); margin-left: -10px; animation: caret-blink 1s steps(1) infinite; }
+@keyframes caret-blink { 50% { opacity: 0; } }
+.skills-demo__grid { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-sm); }
+.skills-demo__grid li + li { margin-top: 0; }
+.skills-demo__card {
+  display: grid; gap: 4px; padding: var(--space-md) var(--space-lg);
+  background: var(--elevated); border: 2px solid transparent; border-radius: var(--radius-md);
+  transition: opacity .3s ease, border-color .3s ease, background .3s ease, transform .3s ease, box-shadow .3s ease;
+}
+.skills-demo__name { font-family: var(--font-mono); font-size: .875rem; font-weight: 700; color: #6cb6ff; background: none; padding: 0; overflow-wrap: anywhere; }
+.skills-demo__does { color: var(--text-2); font-size: .9375rem; }
+.skills-demo.is-choosing .skills-demo__card { opacity: .55; }
+.skills-demo:has(.is-match) .skills-demo__card:not(.is-match) { opacity: .4; }
+.skills-demo__card.is-match {
+  border-color: var(--green); background: rgba(48,209,88,.14);
+  box-shadow: 0 0 0 4px rgba(48,209,88,.15), 0 0 28px rgba(48,209,88,.35);
+  transform: scale(1.02);
+}
+.skills-demo__card.is-match .skills-demo__name { color: #5fe07f; }
+.skills-demo__card.is-match .skills-demo__does { color: #fff; }
+.skills-demo__status { display: flex; align-items: center; gap: var(--space-sm); min-height: 1.6em; font-family: var(--font-mono); font-size: .8125rem; color: #5fe07f; overflow-wrap: anywhere; }
+.skills-demo__dot { flex-shrink: 0; width: 10px; height: 10px; border-radius: 50%; background: var(--green); box-shadow: 0 0 10px var(--green); }
+
+/* Shaping an agent: summary table under the skills demo */
+.shaping { width: 100%; border-collapse: collapse; margin-top: var(--space-lg); font-size: .9375rem; }
+.shaping caption { text-align: left; font-weight: 700; color: var(--text); margin-bottom: var(--space-sm); }
+.shaping th, .shaping td { text-align: left; padding: var(--space-sm) var(--space-md); border-top: 1px solid var(--line); vertical-align: top; }
+.shaping thead th { border-top: 0; font-size: .8125rem; color: var(--text-3); font-weight: 600; }
+.shaping tbody th { font-weight: 400; color: var(--text-2); }
+.shaping tbody th strong { display: block; color: var(--text); }
+.shaping tbody th span { font-size: .875rem; color: var(--text-3); }
+.shaping td { color: var(--text-2); }
+
+/* ------------------------------------------------------------------ Context stack (widgets/context-stack.js)
+   Layers drop into the window bottom-up while the gauge fills; colour says what kind of knowledge it is. */
+.ctx-demo { margin-top: var(--space-md); display: grid; gap: var(--space-md); }
+.ctx-demo__window { background: #05070b; border: 1px solid var(--line); border-radius: var(--radius-lg); padding: var(--space-lg); max-width: 560px; width: 100%; margin-inline: auto; }
+.ctx-demo__title { font-size: .875rem; font-weight: 700; color: var(--text-3); margin-bottom: var(--space-md); }
+.ctx-demo__stack { list-style: none; padding: 0; display: grid; gap: var(--space-sm); }
+.ctx-demo__stack li + li { margin-top: 0; }
+.ctx-demo__layer {
+  padding: 12px var(--space-lg); border-radius: var(--radius-md); font-weight: 600; font-size: .9375rem;
+  color: var(--text-3); border: 1.5px dashed rgba(255,255,255,.12); background: transparent;
+  opacity: .5; transform: translateY(-6px);
+  transition: opacity .45s ease, transform .45s ease, background .45s ease, border-color .45s ease, color .45s ease;
+}
+.ctx-demo__layer.is-in { opacity: 1; transform: none; color: #fff; border-style: solid; }
+.ctx-demo__layer--base.is-in { background: rgba(10,132,255,.22); border-color: rgba(10,132,255,.7); }
+.ctx-demo__layer--always.is-in { background: rgba(48,209,88,.2); border-color: rgba(48,209,88,.8); }
+.ctx-demo__layer--skill.is-in { background: rgba(100,210,255,.16); border-color: rgba(100,210,255,.8); border-style: dashed; }
+.ctx-demo__layer--prompt.is-in { background: rgba(255,159,10,.2); border-color: rgba(255,159,10,.85); box-shadow: 0 0 22px rgba(255,159,10,.25); }
+.ctx-demo__gauge { height: 10px; margin-top: var(--space-md); border-radius: var(--radius-full); background: var(--elevated); overflow: hidden; }
+.ctx-demo__fill { display: block; height: 100%; width: 0; border-radius: inherit; background: linear-gradient(90deg, #30D158, #b5e61d 55%, #FF9F0A); transition: width .6s var(--ease); }
+.ctx-demo__caption { min-height: 1.6em; margin-top: var(--space-sm); font-size: .9375rem; color: var(--text-2); }
+
+/* ------------------------------------------------------------------ Which model when */
+h3.sub { font-size: 1.125rem; margin-top: var(--space-lg); color: var(--text); }
+.model-when { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: var(--space-sm); margin-top: var(--space-md); }
+.job { display: flex; flex-direction: column; gap: var(--space-xs); padding: var(--space-lg); border-radius: var(--radius-lg); color: #fff; min-height: 190px; }
+.job h3 { color: #fff; font-size: 1.125rem; margin: 0; }
+.job p { color: rgba(255,255,255,.88); font-size: .9375rem; line-height: 1.5; }
+.job__models { list-style: none; padding: var(--space-sm) 0 0; margin-top: auto; display: flex; flex-wrap: wrap; gap: 6px; border-top: 1px solid rgba(255,255,255,.25); }
+.job__models li + li { margin-top: 0; }
+.job__models li { font-size: .8125rem; font-weight: 700; padding: 3px 10px; border-radius: var(--radius-full); background: rgba(0,0,0,.28); color: #fff; }
+.job--blue { background: var(--tile-blue); }
+.job--purple { background: var(--tile-purple); }
+.job--green { background: var(--tile-green); }
+.job--orange { background: var(--tile-orange); }
+
+/* ------------------------------------------------------------------ Four habits: not a sequence, so not numbered */
+.habits { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-sm); margin-top: var(--space-md); }
+.habit { display: flex; flex-direction: column; gap: var(--space-xs); padding: var(--space-lg); border-radius: var(--radius-lg); color: #fff; }
+.habit h3 { color: #fff; font-size: 1.1875rem; margin: 0; letter-spacing: -.3px; }
+.habit p { color: rgba(255,255,255,.9); font-size: .9375rem; line-height: 1.5; }
+.habit .habit__where { margin-top: auto; padding-top: var(--space-sm); border-top: 1px solid rgba(255,255,255,.25); font-size: .8125rem; color: rgba(255,255,255,.8); }
+.habit__where strong { color: #fff; }
+.habit--blue { background: var(--tile-blue); }
+.habit--purple { background: var(--tile-purple); }
+.habit--green { background: var(--tile-green); }
+.habit--orange { background: var(--tile-orange); }
+
+@media (max-width: 560px) {
+  .skills-demo__grid, .habits { grid-template-columns: 1fr; }
+  .job { min-height: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .skills-demo__caret { animation: none; }
+  .ctx-demo__layer { transform: none; }
+}

@@ -10,11 +10,14 @@ const EFFORT_TILES = `
 <div class="tile tile--purple"><span class="tile__kicker">High effort</span><strong>Hard problems</strong><span>Plan a feature, hunt a tricky bug. Slower, uses more tokens, so it costs more.</span></div>
 </div>`;
 
-const MODEL_TILES = `
-<div class="tiles">
-<div class="tile tile--orange"><span class="tile__kicker">Anthropic · Claude</span><strong>Opus, Sonnet, Haiku</strong><span>Opus is the most capable and the slowest. Sonnet is the all-rounder. Haiku is the fastest and cheapest.</span></div>
-<div class="tile tile--pink"><span class="tile__kicker">xAI · Grok</span><strong>Grok and Grok fast</strong><span>The full Grok model for harder reasoning, and faster, cheaper variants for quick tasks.</span></div>
-</div>`;
+const MODEL_WHEN = `
+<div class="model-when">
+<article class="job job--blue"><h3>Plan and design</h3><p>Strongest reasoning. Pays off before any code is written.</p><ul class="job__models"><li>Opus 5.5</li><li>GPT-5.6 Sol</li></ul></article>
+<article class="job job--purple"><h3>Creative</h3><p>Writing, screens, naming, slides.</p><ul class="job__models"><li>Opus 5.5</li></ul></article>
+<article class="job job--green"><h3>Execute</h3><p>A clear plan or ticket: edits, tests, refactors. Fast.</p><ul class="job__models"><li>Composer 2.5</li><li>Grok 4.7</li></ul></article>
+<article class="job job--orange"><h3>Quick questions</h3><p>Look-ups and small explanations.</p><ul class="job__models"><li>Composer 2.5</li></ul></article>
+</div>
+<p class="caption">Model names as of October 2026. They change every few months; the jobs don't.</p>`;
 
 const CHARTER_EXAMPLE = `<pre><code># Charter: team-todo-app
 
@@ -31,7 +34,7 @@ export default {
   id: "words",
   title: "Words you'll hear",
   summary: "The handful of terms the trainer will use, in plain language, with examples.",
-  minutes: 8,
+  minutes: 12,
   optional: false,
   blocks: [
     {
@@ -75,8 +78,10 @@ export default {
       heading: "Model",
       body:
         "<p>The <strong>model</strong> is the AI \"brain\" inside your AI tool. The tool is the app you use; the model does the thinking. Many tools let you switch models.</p>" +
-        "<p><strong>Why it matters:</strong> models differ in how smart, how fast and how expensive they are. A bigger model makes fewer mistakes on hard work, but is slower and costs more. Companies offer a range, from big to small:</p>" +
-        MODEL_TILES +
+        "<p><strong>Why it matters:</strong> models differ in how smart, how fast and how expensive they are. A bigger model makes fewer mistakes on hard work, but is slower and costs more. Anthropic's Claude comes as Opus (most capable), Sonnet and Haiku (fastest); xAI's Grok and OpenAI's GPT have similar ranges.</p>" +
+        "<h3 class=\"sub\">Which model when</h3>" +
+        "<p>You don't need this on day one. When you want to choose, match the model to the job: plan with a strong model, then switch to a fast one to do the work.</p>" +
+        MODEL_WHEN +
         "<p><strong>Tokens.</strong> Models read and write in <em>tokens</em>: small pieces of text, roughly three-quarters of a word. You pay per token, longer answers take longer, and the agent's memory (the context window, below) is measured in tokens too.</p>" +
         "<p><strong>Effort.</strong> Many tools let you choose how hard the model thinks before it answers, often called low, medium or high effort (or \"thinking\"):</p>" +
         EFFORT_TILES,
@@ -100,11 +105,24 @@ export default {
       ],
     },
     {
-      id: "context-window",
-      heading: "Context window",
+      id: "context",
+      heading: "Context: what it always knows",
+      // kind "context-stack": module-view renders the animated context window (js/views/widgets/context-stack.js).
+      kind: "context-stack",
       body:
-        "<p>The <strong>context window</strong> is the agent's working memory for one session, measured in tokens. It's limited, and a new session starts empty: the agent remembers nothing from yesterday.</p>" +
-        "<p><strong>This is why Spec Kitty keeps specs and plans in your project folder.</strong> The next session, or another agent, can read them instead of relying on memory.</p>",
+        "<p class=\"lead-in\"><strong>Rules and AGENTS.md are what it always knows.</strong> The <strong>context window</strong> is everything the agent can see right now: its working memory for one session, measured in tokens. It's limited, and a new session starts empty.</p>" +
+        "<p>Some knowledge belongs on every turn: how the project is built, what never to do, who to ask. Put it in an <strong>agent instruction file</strong> such as <code>AGENTS.md</code> (or <code>CLAUDE.md</code>, <code>GEMINI.md</code>, depending on the tool), one per project or folder. Keep it short: every line costs attention on every prompt.</p>",
+      after:
+        "<div class=\"example\"><span class=\"example__label\">Example AGENTS.md</span><pre><code># AGENTS.md\n- Run the tests with: npm test\n- Never change the live database\n- Questions about payments: ask the shop team</code></pre></div>" +
+        "<p><strong>This is also why Spec Kitty keeps specs and plans in your project folder:</strong> the next session, or another agent, reads them instead of relying on memory.</p>",
+      layers: [
+        { label: "Built-in instructions", kind: "base", size: 22, note: "The tool's own instructions come first." },
+        { label: "Always-on rules", kind: "base", size: 10, note: "Rules you've set for every project." },
+        { label: "AGENTS.md · project", kind: "always", size: 9, note: "Your project's AGENTS.md: read on every turn." },
+        { label: "AGENTS.md · this folder", kind: "always", size: 6, note: "A folder can add its own, more specific file." },
+        { label: "Skill, when a task matches", kind: "skill", size: 11, note: "A skill's full playbook loads only when your task matches it." },
+        { label: "Your prompt", kind: "prompt", size: 6, note: "And finally, what you just asked. All of this shares one window." },
+      ],
     },
     {
       id: "git",
@@ -121,16 +139,35 @@ export default {
     },
     {
       id: "skills",
-      heading: "Skills and slash commands",
+      heading: "Skills: playbooks it loads when needed",
+      // kind "skills": module-view renders the animated request → matching skill demo (js/views/widgets/skills.js).
+      kind: "skills",
       body:
-        "<p>A <strong>skill</strong> is a saved set of instructions the agent loads when a task matches. You often start one with a command such as <code>/something</code>.</p>" +
-        "<p>Spec Kitty installs its commands this way, for example <code>/spec-kitty.specify</code> to start writing a spec. How they're typed differs per tool.</p>",
-    },
-    {
-      id: "instruction-files",
-      heading: "Agent instruction files",
-      body:
-        "<p>An <strong>agent instruction file</strong> is a file in your project that the agent always reads, for example to learn the project's conventions. Its name depends on the tool, such as <code>CLAUDE.md</code>, <code>AGENTS.md</code> or <code>GEMINI.md</code>.</p>",
+        "<p class=\"lead-in\"><strong>A skill is a playbook the agent loads when it's needed.</strong> It's a folder with a <code>SKILL.md</code>: when to use it, the steps, any scripts. Until a task matches, the agent only sees each skill's name and a one-line description. Then it reads the whole playbook: expert behaviour, without a giant prompt.</p>" +
+        "<p>Spec Kitty installs its workflow as skills, so you can ask in plain words, or start one with a command like <code>/spec-kitty.specify</code> (the exact form differs per tool).</p>",
+      after:
+        "<table class=\"shaping\"><caption>Shaping an agent</caption>" +
+        "<thead><tr><th scope=\"col\">What</th><th scope=\"col\">In context</th></tr></thead><tbody>" +
+        "<tr><th scope=\"row\"><strong>Always knows</strong><span>rules, AGENTS.md</span></th><td>Every turn</td></tr>" +
+        "<tr><th scope=\"row\"><strong>Loads when needed</strong><span>skills</span></th><td>When a task matches</td></tr>" +
+        "<tr><th scope=\"row\"><strong>Can do</strong><span>tools</span></th><td>Listed every turn, used when it acts</td></tr>" +
+        "</tbody></table>",
+      skills: [
+        { name: "spec-kitty.specify", does: "Turn an idea into a spec" },
+        { name: "spec-kitty.plan", does: "Decide how to build it" },
+        { name: "spec-kitty.tasks", does: "Split the plan into work packages" },
+        { name: "spec-kitty.implement", does: "Build one work package" },
+        { name: "spec-kitty.review", does: "Check work against the spec" },
+        { name: "spec-kitty.merge", does: "Bring finished work in" },
+      ],
+      requests: [
+        { text: "Write a spec for a simple to-do app", skill: "spec-kitty.specify" },
+        { text: "Plan how we're going to build it", skill: "spec-kitty.plan" },
+        { text: "Split the plan into work packages", skill: "spec-kitty.tasks" },
+        { text: "Build work package 2", skill: "spec-kitty.implement" },
+        { text: "Check WP02 against the spec", skill: "spec-kitty.review" },
+        { text: "Merge the finished work", skill: "spec-kitty.merge" },
+      ],
     },
     {
       id: "doctrine",
@@ -239,6 +276,17 @@ export default {
           ],
           answer: 1,
           why: "The agent forgets everything between sessions. Written specs and plans are how the next session knows what to build.",
+        },
+        {
+          question: "What's the difference between AGENTS.md and a skill?",
+          options: [
+            "There's no difference",
+            "AGENTS.md is read on every turn; a skill's full playbook loads only when a task matches",
+            "A skill is read on every turn; AGENTS.md loads only when needed",
+            "AGENTS.md is for people, skills are for agents",
+          ],
+          answer: 1,
+          why: "Put what it should always know in AGENTS.md, and keep it short. Put specialised how-to in a skill, which loads only when it's needed.",
         },
         {
           question: "What is a commit in Git?",

@@ -2,20 +2,10 @@
 // with Pause/Play and Restart. It plays on its own for everyone; reduced motion only drops the movement (CSS).
 // The widget supplies `count` steps, `show(i)` to draw step i, `reset()` before a new round, and `delay(i)`.
 
-function button(className, text) {
-  const b = document.createElement("button");
-  b.type = "button";
-  b.className = className;
-  b.textContent = text;
-  return b;
-}
+import { createControls } from "./controls.js";
 
 export function createPlayer(wrap, { count, show, reset, delay, restMs = 2600 }) {
-  const controls = document.createElement("div");
-  controls.className = "agent-loop__controls";
-  const toggle = button("btn btn--secondary", "Pause");
-  const restart = button("btn btn--ghost", "Restart");
-  controls.append(toggle, restart);
+  const { controls, toggle, restart, setPlaying } = createControls();
 
   let index = 0;
   let playing = true;
@@ -55,7 +45,7 @@ export function createPlayer(wrap, { count, show, reset, delay, restMs = 2600 })
 
   toggle.addEventListener("click", () => {
     playing = !playing;
-    toggle.textContent = playing ? "Pause" : "Play";
+    setPlaying(playing);
     schedule();
   });
   restart.addEventListener("click", () => {
@@ -63,7 +53,7 @@ export function createPlayer(wrap, { count, show, reset, delay, restMs = 2600 })
     reset();
     advance();
     playing = true;
-    toggle.textContent = "Pause";
+    setPlaying(true);
     schedule();
   });
 

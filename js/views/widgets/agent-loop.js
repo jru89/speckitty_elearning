@@ -3,6 +3,8 @@
 // again. Pauses off-screen and when the attendee pauses it. It plays on its own for everyone; reduced motion only drops the glow (CSS).
 // Content comes from the block's `trace` ([{ step: "goal"|"plan"|"act"|"observe"|"decide"|"done", text }]).
 
+import { createControls } from "./controls.js";
+
 const STEPS = [
   { id: "plan", label: "Plan", x: 200, y: 52, colour: "#0A84FF" },
   { id: "act", label: "Act", x: 348, y: 200, colour: "#64D2FF" },
@@ -64,12 +66,7 @@ export function render(block) {
   lines.setAttribute("aria-live", "polite");
   term.append(bar, lines);
 
-  const controls = el("div", "agent-loop__controls");
-  const toggle = el("button", "btn btn--secondary", "Pause");
-  toggle.type = "button";
-  const restart = el("button", "btn btn--ghost", "Restart");
-  restart.type = "button";
-  controls.append(toggle, restart);
+  const { controls, toggle, restart, setPlaying } = createControls();
 
   wrap.append(ringBox, term, controls);
 
@@ -131,13 +128,13 @@ export function render(block) {
 
   toggle.addEventListener("click", () => {
     playing = !playing;
-    toggle.textContent = playing ? "Pause" : "Play";
+    setPlaying(playing);
     schedule();
   });
   restart.addEventListener("click", () => {
     reset();
     playing = true;
-    toggle.textContent = "Pause";
+    setPlaying(true);
     step();
     schedule();
   });

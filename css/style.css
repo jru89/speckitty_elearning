@@ -909,3 +909,18 @@ h3.sub { font-size: 1.125rem; margin-top: var(--space-lg); color: var(--text); }
   .skills-demo__caret { animation: none; }
   .ctx-demo__layer { transform: none; }
 }
+
+/* Widget controls (widgets/controls.js): round icon buttons, play/pause is the main one */
+.media-btn {
+  display: inline-grid; place-items: center; width: 44px; height: 44px; padding: 0;
+  border-radius: 50%; border: 1px solid var(--line); background: var(--elevated); color: var(--text);
+  cursor: pointer; transition: background .2s ease, transform .2s ease, border-color .2s ease;
+}
+.media-btn svg { width: 20px; height: 20px; fill: currentColor; }
+.media-btn:hover { background: #3a3a3c; border-color: rgba(255,255,255,.25); }
+.media-btn:active { transform: scale(.94); }
+.media-btn:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
+.media-btn--main { width: 52px; height: 52px; background: #fff; color: #000; border-color: #fff; }
+.media-btn--main svg { width: 22px; height: 22px; }
+.media-btn--main:hover { background: #e5e5ea; border-color: #e5e5ea; }
+@media (prefers-reduced-motion: reduce) { .media-btn { transition: none; } .media-btn:active { transform: none; } }

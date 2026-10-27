@@ -3,6 +3,8 @@
 // Plays only while on screen; Pause/Play and Restart. It plays on its own for everyone; with reduced motion each call appears whole, without the travelling pulse.
 // Content comes from the block's `calls` ([{ tool: "Jira", call, result }]); `tools` lists the boxes on the right.
 
+import { createControls } from "./controls.js";
+
 const SVG_NS = "http://www.w3.org/2000/svg";
 const GO_MS = 1100;
 const AT_TOOL_MS = 450;
@@ -80,12 +82,7 @@ export function render(block) {
   term.setAttribute("aria-live", "polite");
   term.append(callLine, el("hr", "mcp__rule"), resultLine);
 
-  const controls = el("div", "agent-loop__controls");
-  const toggle = el("button", "btn btn--secondary", "Pause");
-  toggle.type = "button";
-  const restart = el("button", "btn btn--ghost", "Restart");
-  restart.type = "button";
-  controls.append(toggle, restart);
+  const { controls, toggle, restart, setPlaying } = createControls();
   wrap.append(term, pic, controls);
 
   let index = 0;
@@ -195,7 +192,7 @@ export function render(block) {
 
   toggle.addEventListener("click", () => {
     playing = !playing;
-    toggle.textContent = playing ? "Pause" : "Play";
+    setPlaying(playing);
     if (playing) loop();
     else stopMotion();
   });
@@ -203,7 +200,7 @@ export function render(block) {
     stopMotion();
     index = 0;
     playing = true;
-    toggle.textContent = "Pause";
+    setPlaying(true);
     loop();
   });
 

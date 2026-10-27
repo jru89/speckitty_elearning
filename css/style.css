@@ -920,7 +920,6 @@ h3.sub { font-size: 1.125rem; margin-top: var(--space-lg); color: var(--text); }
 .media-btn:hover { background: #3a3a3c; border-color: rgba(255,255,255,.25); }
 .media-btn:active { transform: scale(.94); }
 .media-btn:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
-.media-btn--main { width: 52px; height: 52px; background: #fff; color: #000; border-color: #fff; }
-.media-btn--main svg { width: 22px; height: 22px; }
+.media-btn--main { background: #fff; color: #000; border-color: #fff; }
 .media-btn--main:hover { background: #e5e5ea; border-color: #e5e5ea; }
 @media (prefers-reduced-motion: reduce) { .media-btn { transition: none; } .media-btn:active { transform: none; } }

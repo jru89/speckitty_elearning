@@ -681,3 +681,49 @@ progress.progress-bar::-moz-progress-bar { background: var(--blue); border-radiu
   .menu__toggle[aria-expanded="true"] svg { transform: rotate(180deg); }
 }
 .intake-form { counter-reset: q; }
+
+/* ------------------------------------------------------------------ Course path (overview)
+   The four main modules as numbered steps in one row (2 then 1 column on smaller screens),
+   the optional warm-up apart, and the quieter "About you" row below. */
+.path { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--bento-gap); counter-reset: none; }
+.path li + li { margin-top: 0; }
+.path__item { position: relative; display: flex; min-width: 0; }
+/* Arrow between steps on wide screens */
+.path__item:not(:last-child)::after {
+  content: "→"; position: absolute; right: calc(var(--bento-gap) / -2); top: 50%;
+  transform: translate(50%, -50%); z-index: 2;
+  width: 28px; height: 28px; display: grid; place-items: center;
+  border-radius: 50%; background: #000; color: var(--text-2); font-weight: 800; font-size: .9375rem;
+  border: 1px solid var(--line);
+}
+.path-step { flex: 1; display: flex; flex-direction: column; gap: var(--space-xs); min-height: 260px; }
+.path-step > * + * { margin-top: 0; }
+.path-step__top { display: flex; align-items: center; justify-content: space-between; gap: var(--space-sm); margin-bottom: var(--space-sm); }
+.path-step__num {
+  display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%;
+  background: rgba(255,255,255,.95); color: #000; font-size: 1.375rem; font-weight: 800;
+}
+.path-step.is-done .path-step__num { background: var(--green); color: #000; }
+.path-step__kicker { font-size: .8125rem; font-weight: 700; color: rgba(255,255,255,.8); }
+.path-step__machine { font-weight: 800; font-size: 1.0625rem; color: #fff; letter-spacing: -.25px; }
+.path-step .caption { margin-top: auto; padding-top: var(--space-sm); }
+.path-extra { display: grid; grid-template-columns: 1fr 3fr; gap: var(--bento-gap); align-items: center; }
+.path-extra .path-step { min-height: 0; }
+.path-extra__note { color: var(--text-2); font-weight: 600; }
+.section-label { font-size: 1rem; font-weight: 700; color: var(--text-3); margin-top: var(--space-xl); }
+.bento--quiet { grid-template-columns: repeat(4, 1fr); }
+.bento--quiet .cell { background: rgba(28,28,30,.7); }
+.btn--lg { min-height: 52px; padding: 14px 32px; font-size: 1.0625rem; }
+
+@media (max-width: 1023px) {
+  .path { grid-template-columns: repeat(2, 1fr); }
+  .path__item:nth-child(2n)::after { display: none; }
+}
+@media (max-width: 767px) {
+  .path-extra { grid-template-columns: 1fr; }
+}
+@media (max-width: 479px) {
+  .path { grid-template-columns: 1fr; }
+  .path__item:not(:last-child)::after { display: none; }
+  .path-step { min-height: 0; }
+}

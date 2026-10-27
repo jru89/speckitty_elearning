@@ -29,6 +29,9 @@ function link(href, className, text) {
 // ------------------------------------------------------------------ Pager
 
 // Previous/next among the main (non-optional) modules; the optional terminal primer leads into the first one.
+const MAIN_IDS = MODULES.filter((m) => !m.optional).map((m) => m.id);
+const stepNumber = (id) => (MAIN_IDS.includes(id) ? MAIN_IDS.indexOf(id) + 1 : null);
+
 function neighbours(id) {
   const main = MODULES.filter((m) => !m.optional).map((m) => m.id);
   const i = main.indexOf(id);
@@ -42,7 +45,9 @@ function pagerLink(id, mod, rel) {
   const a = link(`#/m/${encodeURIComponent(id)}`, rel === "next" ? "btn btn--primary" : "btn btn--secondary", "");
   a.rel = rel;
   a.append(el("span", "visually-hidden", `${label} module: `));
-  a.append(document.createTextNode(rel === "prev" ? `← ${mod.title}` : `${mod.title} →`));
+  const n = stepNumber(id);
+  const name = n ? `${n}. ${mod.title}` : mod.title;
+  a.append(document.createTextNode(rel === "prev" ? `← ${name}` : `Next: ${name} →`));
   return a;
 }
 
@@ -179,7 +184,9 @@ function header(mod) {
   head.append(h1);
   const meta = el("div", "row");
   meta.style.gap = "var(--space-sm)";
-  if (mod.optional) meta.append(el("span", "chip chip--optional", "Optional"));
+  const n = stepNumber(mod.id);
+  if (n) meta.append(el("span", "chip", `Step ${n} of ${MAIN_IDS.length}`));
+  if (mod.optional) meta.append(el("span", "chip chip--optional", "Optional warm-up"));
   if (Number.isFinite(mod.minutes)) meta.append(el("span", "chip", `About ${mod.minutes} min`));
   if (meta.childElementCount) head.append(meta);
   if (mod.summary) {

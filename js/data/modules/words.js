@@ -98,10 +98,10 @@ export default {
         "<p>You won't set up MCP in the class, but you'll hear the word: it's how agents get connected to the systems your team already uses.</p>",
       tools: ["Jira", "Confluence", "Database", "Git"],
       calls: [
-        { tool: "Jira", call: "jira.search {\"jql\": \"project = SHOP AND status = Open\"}", result: "14 issues · 3 blocked" },
-        { tool: "Confluence", call: "confluence.get_page {\"title\": \"Release checklist\"}", result: "12 steps · last edited 2 days ago" },
-        { tool: "Database", call: "sql.query {\"sql\": \"select count(*) from orders where paid_at is null\"}", result: "37 unpaid orders" },
-        { tool: "Git", call: "git.log {\"limit\": 3}", result: "3 commits · latest: \"Fix the login button\"" },
+        { tool: "Jira", call: "Ask Jira which tickets are still open", result: "14 open tickets, 3 of them blocked" },
+        { tool: "Confluence", call: "Open the \"Release checklist\" page in Confluence", result: "12 steps, last edited 2 days ago" },
+        { tool: "Database", call: "Count the orders that haven't been paid yet", result: "37 unpaid orders" },
+        { tool: "Git", call: "Look up the last 3 changes in Git", result: "Latest change: \"Fix the login button\"" },
       ],
     },
     {

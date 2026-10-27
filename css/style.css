@@ -798,7 +798,7 @@ progress.progress-bar::-moz-progress-bar { background: var(--blue); border-radiu
 .mcp__hub.is-active circle { fill: #0d7a3d; }
 .mcp__pulse { fill: #b8ffcb; filter: drop-shadow(0 0 8px #30D158) drop-shadow(0 0 16px #30D158); transition: opacity .2s ease; }
 
-.mcp__term { background: #05070b; border: 1px solid var(--line); border-radius: var(--radius-lg); padding: var(--space-md) var(--space-lg); font-family: var(--font-mono); font-size: .8125rem; line-height: 1.55; min-height: 116px; min-width: 0; }
+.mcp__term { background: #05070b; border: 1px solid var(--line); border-radius: var(--radius-lg); padding: var(--space-md) var(--space-lg); font-size: 1rem; line-height: 1.55; min-height: 116px; min-width: 0; }
 .mcp__term p { color: #e8e8f0; overflow-wrap: anywhere; font-size: inherit; line-height: inherit; }
 .mcp__arrow { font-weight: 800; margin-right: 8px; }
 .mcp__call .mcp__arrow { color: #30D158; }

@@ -6,6 +6,7 @@ import { loadModule, MODULES } from "../data/modules/index.js";
 import { recommendedTools, otherTools, toolById } from "../data/tools.js";
 import { visibleBlocks } from "../lib/tailor.js";
 import { enhanceCodeBlocks } from "../lib/enhance.js";
+import { render as renderAgentLoop } from "./widgets/agent-loop.js";
 
 export function title(params) {
   const id = params && params.id;
@@ -130,14 +131,22 @@ function renderBlock(block, index, answers, ctx, onPick) {
     section.append(h);
   }
 
+  const html = (markup) => {
+    const tpl = document.createElement("template");
+    tpl.innerHTML = markup.replaceAll("{{SITE}}", SITE); // trusted, repo-authored HTML
+    return tpl.content;
+  };
+
   if (kind === "tool-chooser") {
     section.append(...toolChooser(onPick));
+  } else if (kind === "agent-loop") {
+    if (typeof block.body === "string") section.append(html(block.body));
+    section.append(renderAgentLoop(block));
+    if (typeof block.after === "string") section.append(html(block.after));
   } else if (kind === "command-style") {
     section.append(...commandStyle(answers));
   } else if (typeof block.body === "string") {
-    const tpl = document.createElement("template");
-    tpl.innerHTML = block.body.replaceAll("{{SITE}}", SITE); // trusted, repo-authored HTML
-    section.append(tpl.content);
+    section.append(html(block.body));
   }
   return section;
 }

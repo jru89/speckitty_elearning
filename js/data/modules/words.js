@@ -1,42 +1,7 @@
 // Module 1: Words you'll hear (FR-008, FR-009). Shape: data-model.md "Module (static)".
 // Definitions follow research.md R0-03. Tool-neutral (NFR-007): tool names appear only as examples.
-// Pure data: no imports, no DOM, no `when` conditions. Diagrams are inline SVG/HTML styled by css/style.css.
-
-// The agentic loop as a circle: four steps around the goal (arcs on r=140 around 210,210).
-const LOOP_DIAGRAM = `
-<figure class="diagram">
-<svg class="loop" viewBox="0 0 420 420" role="img" aria-labelledby="loop-title loop-desc">
-<title id="loop-title">The agentic loop</title>
-<desc id="loop-desc">Four steps in a circle around your goal: 1 plan the next step, 2 act by using a tool, 3 observe the result, 4 adjust and repeat until the goal is reached.</desc>
-<defs>
-<marker id="loop-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#9aa0ff"/></marker>
-<radialGradient id="loop-core" cx="50%" cy="40%" r="60%"><stop offset="0%" stop-color="#7d6bff"/><stop offset="100%" stop-color="#3b2a9e"/></radialGradient>
-</defs>
-<g fill="none" stroke-width="5" stroke-linecap="round" marker-end="url(#loop-arrow)">
-<path d="M249 75 A140 140 0 0 1 345 171" stroke="#0A84FF"/>
-<path d="M345 249 A140 140 0 0 1 249 345" stroke="#64D2FF"/>
-<path d="M171 345 A140 140 0 0 1 75 249" stroke="#30D158"/>
-<path d="M75 171 A140 140 0 0 1 171 75" stroke="#FF9F0A"/>
-</g>
-<circle cx="210" cy="210" r="62" fill="url(#loop-core)"/>
-<text x="210" y="204" class="loop-core">Your</text>
-<text x="210" y="228" class="loop-core">goal</text>
-<circle cx="210" cy="70" r="30" fill="#0A84FF"/><text x="210" y="79" class="loop-num">1</text>
-<circle cx="350" cy="210" r="30" fill="#64D2FF"/><text x="350" y="219" class="loop-num loop-num--dark">2</text>
-<circle cx="210" cy="350" r="30" fill="#30D158"/><text x="210" y="359" class="loop-num loop-num--dark">3</text>
-<circle cx="70" cy="210" r="30" fill="#FF9F0A"/><text x="70" y="219" class="loop-num loop-num--dark">4</text>
-<text x="210" y="124" class="loop-label">Plan</text>
-<text x="292" y="215" class="loop-label" text-anchor="end">Act</text>
-<text x="210" y="306" class="loop-label">Observe</text>
-<text x="128" y="215" class="loop-label" text-anchor="start">Adjust</text>
-</svg>
-</figure>
-<ol class="legend">
-<li><span class="dot" style="background:#0A84FF"></span><strong>Plan:</strong> the model decides the next step towards your goal.</li>
-<li><span class="dot" style="background:#64D2FF"></span><strong>Act:</strong> it uses a tool: open a file, edit it, run a command.</li>
-<li><span class="dot" style="background:#30D158"></span><strong>Observe:</strong> it reads what happened: the output, an error, a test result.</li>
-<li><span class="dot" style="background:#FF9F0A"></span><strong>Adjust:</strong> it changes its plan if needed, and goes round again until the goal is reached.</li>
-</ol>`;
+// Pure data: no imports, no DOM, no `when` conditions. Tiles are HTML styled by css/style.css; the agentic loop
+// is an animated widget (kind "agent-loop").
 
 const EFFORT_TILES = `
 <div class="tiles">
@@ -80,11 +45,30 @@ export default {
     {
       id: "agentic-loop",
       heading: "The agentic loop",
+      // kind "agent-loop": module-view renders the animated ring and agent trace (js/views/widgets/agent-loop.js).
+      kind: "agent-loop",
       body:
-        "<p>An agent works in a loop until the job is done:</p>" +
-        LOOP_DIAGRAM +
-        "<div class=\"example\"><span class=\"example__label\">Example</span><p>You ask: \"the login button doesn't work, fix it\". It <strong>plans</strong> to look at the login code, <strong>acts</strong> by opening the file, <strong>observes</strong> a typo, and <strong>adjusts</strong>: fixes it, runs the app, checks again.</p></div>" +
+        "<p class=\"lead-in\"><strong>An agent is a model in a loop.</strong> A chatbot replies, then waits for you. An agent keeps going: it plans, uses a tool, looks at the result and decides what to do next, until the goal is met or it needs you.</p>",
+      after:
+        "<ul class=\"pills\">" +
+        "<li><strong>Model</strong> reasons</li>" +
+        "<li><strong>Tools</strong> act</li>" +
+        "<li><strong>Context</strong> what it knows about your work</li>" +
+        "</ul>" +
         "<p>This loop is what makes agents useful. It's also what lets them drift: each round builds on the last, so a small misunderstanding early on can grow. That's exactly what Spec Kitty helps with.</p>",
+      trace: [
+        { step: "goal", text: "Why does the login button do nothing?" },
+        { step: "plan", text: "Start with the login page code." },
+        { step: "act", text: "read_file src/login.js" },
+        { step: "observe", text: "The button calls submitForm(), which doesn't exist." },
+        { step: "decide", text: "Find out what the function is really called." },
+        { step: "act", text: "search \"function send\"" },
+        { step: "observe", text: "It's called sendForm()." },
+        { step: "decide", text: "Fix the call, then run the tests." },
+        { step: "act", text: "edit_file src/login.js · run_tests" },
+        { step: "observe", text: "All 12 tests pass." },
+        { step: "done", text: "Goal met: the button works. Tell you what changed." },
+      ],
     },
     {
       id: "model",
@@ -193,13 +177,13 @@ export default {
         {
           question: "Which describes the agentic loop?",
           options: [
-            "Plan, act with a tool, observe the result, adjust and repeat",
+            "Plan, act with a tool, observe the result, decide what's next, and repeat",
             "Write all the code first, then test it once at the end",
             "Ask the same question until you like the answer",
             "Copy code from a chatbot into your editor",
           ],
           answer: 0,
-          why: "The agent goes round plan, act, observe and adjust until the goal is reached.",
+          why: "The agent goes round plan, act, observe and decide until the goal is met, or until it needs you.",
         },
         {
           question: "Why would you choose a bigger model, or higher effort?",

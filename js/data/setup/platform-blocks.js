@@ -34,7 +34,7 @@ export const platformBlocks = [
       "<li>Next to <strong>Linux development environment</strong>, select <strong>Set up</strong> and follow the steps. This can take 10 minutes or more.</li>",
       "</ol>",
       "<p>When it's done, a <strong>Terminal</strong> window opens. Run every command below in that Linux terminal.</p>",
-      "<p>If the option is missing or blocked (a school or work Chromebook), tell your trainer before the session.</p>",
+      "<p>If the option is missing or blocked (a school or work Chromebook), say so in the WhatsApp group before the session.</p>",
     ].join("\n"),
   },
 
@@ -254,7 +254,7 @@ export const platformBlocks = [
     kind: "note",
     heading: "Still seeing an older Python?",
     when: { os: ["macos"] },
-    body: "<p>You're probably still getting Apple's <code>python3</code>. Open a new Terminal window after installing and check again. If it's still old and you used the python.org installer, run it again with its default options. If you used Homebrew, tell your trainer.</p>",
+    body: "<p>You're probably still getting Apple's <code>python3</code>. Open a new Terminal window after installing and check again. If it's still old and you used the python.org installer, run it again with its default options. If you used Homebrew, ask in the WhatsApp group.</p>",
   },
   {
     id: "python-old-linux",
@@ -269,7 +269,7 @@ export const platformBlocks = [
       cmd("python3.12 --version"),
       "<p><code>python3 --version</code> will still show the old version; that's expected.</p>",
       "<p>If <code>python3.12</code> isn't found, open a new terminal (uv puts it in <code>~/.local/bin</code>).</p>",
-      "<p>Tell your trainer, so Spec Kitty gets installed with <code>--python python3.12</code> in the session.</p>",
+      "<p>Say so in the WhatsApp group, so Spec Kitty gets installed with <code>--python python3.12</code> in the session.</p>",
     ].join("\n"),
   },
 ];

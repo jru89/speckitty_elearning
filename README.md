@@ -1,6 +1,6 @@
 # Spec Kitty Class Prep
 
-A short, self-paced prep course for people attending a [Spec Kitty](https://github.com/spec-kitty/spec-kitty) class. Attendees answer five quick questions about their laptop and AI coding tool, and the course shows only the setup steps for their machine (Git, Python 3.11+, their AI tool), plus two short vocabulary modules, an optional terminal primer and a ready check that ends with a one-line setup summary for the trainer. It's a static, no-build site: plain HTML, CSS and JavaScript modules, which works offline after the first visit and sends nothing anywhere. The full requirements are in the mission spec, `kitty-specs/spec-kitty-class-prep-track-01M5VY73/spec.md`.
+A short, self-paced prep course for people attending a [Spec Kitty](https://github.com/spec-kitty/spec-kitty) class. Attendees answer five quick questions about their laptop and AI coding tool, and the course shows only the setup steps for their machine (Git, Python 3.11+, their AI tool), in this order: what Spec Kitty is, get set up, words you'll hear, and a ready check, plus an optional terminal primer. Questions and class details go through the class WhatsApp group; a stuck attendee can copy a one-line setup summary to post there. It's a static, no-build site: plain HTML, CSS and JavaScript modules, which works offline after the first visit and sends nothing anywhere. The full requirements are in the mission spec, `kitty-specs/spec-kitty-class-prep-track-01M5VY73/spec.md`.
 
 ## Run locally
 
@@ -18,7 +18,7 @@ While you edit files locally, the service worker serves the previous version fir
 
 ## Before sharing the link
 
-1. Fill in `session` in `js/data/welcome.js`: `date`, `time`, `place` and `trainerContact`. Empty fields simply don't show. The trainer contact also appears in the "tell your trainer" messages for attendees who can't install software.
+1. Make sure everyone is in the class WhatsApp group: the course sends people there for the date, time, place and any questions (`groupNote` in `js/data/welcome.js`).
 2. Re-check the tool list in `js/data/tools.js` (names, cost labels, official links) and set `checkedOn` to today's date.
 3. Bump `CACHE` in `service-worker.js` (`skcp-v1` → `skcp-v2`, and so on) so returning attendees get the new content.
 
@@ -36,10 +36,10 @@ All course content lives in `js/data/`:
 
 | File | What it holds |
 |------|---------------|
-| `js/data/welcome.js` | Welcome page text, agenda and session details |
+| `js/data/welcome.js` | Welcome page text, agenda and the WhatsApp group note |
 | `js/data/intake.js` | The five intake questions and their answer labels |
 | `js/data/tools.js` | Supported AI coding tools, cost labels and links; `recommended` tools are shown first, and `ide` says whether a tool is a VS Code extension, its own editor, or runs in the terminal |
-| `js/data/modules/*.js` | The five modules (terminal, words, spec-driven, setup, ready) |
+| `js/data/modules/*.js` | The five modules (terminal, spec-driven, setup, words, ready) |
 | `js/data/setup/workflow-blocks.js` | The IDE-first setup flow: install VS Code, make the workspace, the per-OS prompt the AI tool runs, and the script option |
 | `js/data/setup/*.js` (other files) | Per-tool blocks, support blocks, and the hand-typed Git/Python steps shown under "Do it by hand instead" |
 | `scripts/setup-windows.ps1`, `scripts/setup-unix.sh` | The one-line setup scripts the setup page links to. They install what's missing, ask for a Git name and email, and create `Documents/spec-kitty-class`. Keep them in step with the prompt in `workflow-blocks.js`. They aren't cached for offline use, because they're downloaded by a terminal command. |

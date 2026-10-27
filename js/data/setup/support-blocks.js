@@ -13,7 +13,7 @@ export const supportBlocks = [
     kind: "note",
     heading: "Using a work laptop",
     when: { device: ["work-can-install", "work-unsure"] },
-    body: "<p>Work laptops sometimes block AI tools or sit behind a company proxy. If an install or log-in fails, try a personal device, or ask IT, and tell your trainer before the session.</p>",
+    body: "<p>Work laptops sometimes block AI tools or sit behind a company proxy. If an install or log-in fails, try a personal device, or ask IT, and say so in the WhatsApp group before the session.</p>",
   },
   {
     id: "work-unsure",
@@ -21,7 +21,7 @@ export const supportBlocks = [
     kind: "note",
     heading: "Not sure if you may install software?",
     when: { device: ["work-unsure"] },
-    body: "<p>Just try the first step. If your laptop asks for an administrator password you don't have, or says installing is blocked, stop there: ask IT, or bring a personal laptop, and tell your trainer before the session.</p>",
+    body: "<p>Just try the first step. If your laptop asks for an administrator password you don't have, or says installing is blocked, stop there: ask IT, or bring a personal laptop, and say so in the WhatsApp group before the session.</p>",
   },
   {
     id: "work-locked",
@@ -37,7 +37,7 @@ export const supportBlocks = [
       "<li>the AI coding tool you'll use in the class</li>",
       "</ul>",
       "<p>If IT can't do that in time, bring a personal laptop instead.</p>",
-      "<p>Either way, tell your trainer before the session.</p>",
+      "<p>Either way, say so in the WhatsApp group before the session.</p>",
     ].join("\n"),
   },
   {
@@ -46,7 +46,7 @@ export const supportBlocks = [
     kind: "warning",
     heading: "You'll need a laptop or desktop",
     when: { os: ["mobile"] },
-    body: "<p>These steps need a laptop or desktop. Read along here, and tell your trainer before the session.</p>",
+    body: "<p>These steps need a laptop or desktop. Read along here, and say so in the WhatsApp group before the session.</p>",
   },
 
   // Agent check: the setup prompt (workflow-blocks.js) is the check; this is the help when it fails.
@@ -61,7 +61,7 @@ export const supportBlocks = [
       "<li>The tool can't see the folder: open the workspace folder itself (File → Open Folder…), not the folder above it.</li>",
       "<li>It can't install something: run the script instead, or follow “Do it by hand instead” below.</li>",
       "<li>An error about your plan or quota: check your account.</li>",
-      "<li>Anything else: copy the error and send it to your trainer before the session.</li>",
+      "<li>Anything else: copy the error and post it in the WhatsApp group before the session.</li>",
       "</ul>",
     ].join("\n"),
   },

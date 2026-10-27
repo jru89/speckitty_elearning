@@ -77,7 +77,7 @@ export const QUESTIONS = [
       ...recommendedTools.map(toolOption),
       { value: "undecided", label: "Help me choose", hint: "We'll show the options with what they cost." },
       ...otherTools.map(toolOption),
-      { value: "other", label: "Another tool", hint: "Check with your trainer that Spec Kitty supports it.", more: true },
+      { value: "other", label: "Another tool", hint: "Ask in the WhatsApp group whether Spec Kitty supports it.", more: true },
     ],
   },
   {

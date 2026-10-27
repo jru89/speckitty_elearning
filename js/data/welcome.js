@@ -1,5 +1,5 @@
 // Welcome page content (FR-001, FR-025, C-004). Shape: contracts/content-schema.md "Welcome".
-// Pure data. The trainer fills in `session` before sharing the link (plan risk R-06); empty fields are not shown.
+// Pure data. Date, time and place live in the class WhatsApp group, so the course only points there.
 
 export const whatIsIt =
   '<p><a href="https://github.com/spec-kitty/spec-kitty" target="_blank" rel="noopener">Spec Kitty</a> is an open-source tool that makes AI coding more structured. ' +
@@ -28,4 +28,4 @@ export const installedInSession = "We install Spec Kitty itself together during 
 export const demoNote =
   "The trainer demos in Claude Code. Using another tool is fine: commands may look slightly different, and the course shows you how they look in yours.";
 
-export const session = { date: "", time: "", place: "", trainerContact: "" };
+export const groupNote = "Date, time and place are in the WhatsApp group. Stuck, or a question? Ask there.";

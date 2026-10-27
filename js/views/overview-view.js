@@ -5,7 +5,6 @@ import { loadAll } from "../data/modules/index.js";
 import { ANSWER_LABELS } from "../data/intake.js";
 import { toolById } from "../data/tools.js";
 import { earlyStop, suggestedNext, MAIN_ORDER } from "../lib/tailor.js";
-import { session } from "../data/welcome.js";
 
 export const title = "Course overview";
 
@@ -22,9 +21,9 @@ const FALLBACK = {
 };
 
 const STOP_TEXT = {
-  mobile: "This setup needs a laptop or desktop. You can still read the modules here, but please tell your trainer before the session so they can help.",
+  mobile: "This setup needs a laptop or desktop. You can still read the modules here, but please say so in the WhatsApp group before the session, so the trainer can help.",
   "work-locked":
-    "Your laptop doesn't let you install software. Ask your IT department for Git, Python 3.11+ and an AI coding tool, or use a personal laptop, and tell your trainer before the session.",
+    "Your laptop doesn't let you install software. Ask your IT department for Git, Python 3.11+ and an AI coding tool, or use a personal laptop, and say so in the WhatsApp group before the session.",
 };
 
 function el(tag, className, text) {
@@ -106,15 +105,8 @@ function stepTile(entry, { step, status, isNext, answers }) {
 function stopBanner(kind) {
   const banner = el("div", "banner banner--stop");
   banner.setAttribute("role", "alert");
-  banner.append(el("p", "banner__title", "Talk to your trainer before the session"));
+  banner.append(el("p", "banner__title", "Let the group know before the session"));
   const body = el("p", "banner__body", STOP_TEXT[kind]);
-  const contact = typeof session.trainerContact === "string" ? session.trainerContact.trim() : "";
-  if (contact) {
-    body.append(" Trainer contact: ");
-    const c = el("strong", "", contact);
-    c.style.userSelect = "all";
-    body.append(c);
-  }
   banner.append(body);
   return banner;
 }
@@ -239,8 +231,8 @@ function draw(main, entries, ctx) {
         "p",
         "path-extra__note",
         newToTerminal
-          ? "Never used a terminal? Do this short warm-up before step 3."
-          : "Optional: a short terminal warm-up, if you'd like one before step 3.",
+          ? "Never used a terminal? Do this short warm-up before step 2."
+          : "Optional: a short terminal warm-up, if you'd like one before step 2.",
       ),
     );
     warm.append(stepTile(byId.terminal, { step: null, status: statuses.terminal, isNext: next === "terminal", answers }));

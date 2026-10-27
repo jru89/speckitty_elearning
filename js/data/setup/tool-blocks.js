@@ -37,7 +37,7 @@ function toolBody(t) {
     lines.push(`<p>${escapeHtml(t.name)} runs in the terminal inside VS Code. Follow the ${guide(t)}. In VS Code, open a terminal with <strong>Terminal → New Terminal</strong> to run its commands.</p>`);
   }
   lines.push(`<p>Then sign in once, so it's ready on the day.</p>`);
-  lines.push(`<p class="caption"><strong>Cost:</strong> ${escapeHtml(t.costNote)}</p>`);
+  lines.push(`<p class="caption"><strong>Cost:</strong> ${escapeHtml(t.costNote)}. You don't need an expensive plan: the cheapest one is plenty for the class. A free plan can work too, but may hit its limit during the hands-on.</p>`);
   if (t.demo) lines.push(`<p class="caption">This is the tool the trainer demos with.</p>`);
   return lines.join("\n");
 }
@@ -77,6 +77,7 @@ export const toolBlocks = [
       "<li><strong>Want exactly what the trainer shows?</strong> Pick <strong>Claude Code</strong>. It needs a paid Claude plan.</li>",
       "<li><strong>Want free and simple?</strong> Pick <strong>GitHub Copilot</strong> (built into VS Code) or <strong>Cursor</strong>.</li>",
       "</ul>",
+      "<p>You don't need an expensive plan: the cheapest one is plenty for the class. A free plan can work too, but may hit its limit during the hands-on.</p>",
       "<p>Commands look slightly different per tool, but you'll follow the same steps in the session.</p>",
     ].join("\n"),
   },
@@ -93,7 +94,7 @@ export const toolBlocks = [
     kind: "note",
     heading: "Using another tool",
     when: { tool: ["other"] },
-    body: "<p>Spec Kitty supports many AI coding tools. Check with your trainer before the session that yours is one of them, and install it using its own guide.</p>",
+    body: "<p>Spec Kitty supports many AI coding tools. Ask in the WhatsApp group before the session whether yours is one of them, and install it using its own guide.</p>",
   },
   {
     id: "tool-terminal-hint",

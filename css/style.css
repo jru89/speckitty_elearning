@@ -519,17 +519,17 @@ progress.progress-bar::-moz-progress-bar { background: var(--blue); border-radiu
 .blocks > .block:not(.block--note):not(.block--warning):not(.block--check):not(.block--step) > h2 { color: var(--accent); }
 
 /* Folded groups ("Do it by hand instead") and folded choices ("More supported tools") */
-.block-group, .more-choices {
+.block-group, .more-choices, .deeper {
   border: 1px dashed var(--line);
   border-radius: var(--radius-lg);
   padding: var(--space-md) var(--space-lg);
   background: rgba(255,255,255,.02);
 }
-.block-group > summary, .more-choices > summary {
+.block-group > summary, .more-choices > summary, .deeper > summary {
   cursor: pointer; font-weight: 600; color: var(--text); min-height: 32px;
   display: flex; align-items: center;
 }
-.block-group[open] > summary, .more-choices[open] > summary { margin-bottom: var(--space-md); }
+.block-group[open] > summary, .more-choices[open] > summary, .deeper[open] > summary { margin-bottom: var(--space-md); }
 .block-group .block { padding: var(--space-lg); }
 .more-choices .choice-group { margin-top: var(--space-sm); }
 
@@ -923,3 +923,8 @@ h3.sub { font-size: 1.125rem; margin-top: var(--space-lg); color: var(--text); }
 .media-btn--main { background: #fff; color: #000; border-color: #fff; }
 .media-btn--main:hover { background: #e5e5ea; border-color: #e5e5ea; }
 @media (prefers-reduced-motion: reduce) { .media-btn { transition: none; } .media-btn:active { transform: none; } }
+
+/* "Want to go deeper?" folds inside a block: optional depth, closed by default */
+.deeper { margin-top: var(--space-lg); }
+.deeper > summary { color: var(--accent, var(--blue)); }
+.deeper > * + * { margin-top: var(--space-md); }

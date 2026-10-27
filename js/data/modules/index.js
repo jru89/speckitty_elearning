@@ -3,9 +3,9 @@
 
 export const MODULES = [
   { id: "terminal", optional: true, load: () => import("./terminal.js") },
-  { id: "words", load: () => import("./words.js") },
   { id: "spec-driven", load: () => import("./spec-driven.js") },
   { id: "setup", load: () => import("./setup.js") },
+  { id: "words", load: () => import("./words.js") },
   { id: "ready", load: () => import("./ready.js") },
 ];
 

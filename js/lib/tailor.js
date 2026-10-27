@@ -4,8 +4,9 @@
 export const KNOWN_DIMENSIONS = ["os", "chip", "device", "tool", "experience"];
 
 // Main module order for suggestions; "terminal" is optional and suggested only for terminal-new.
-export const MAIN_ORDER = ["words", "spec-driven", "setup", "ready"];
-const VOCABULARY = ["words", "spec-driven"];
+// Spec Kitty first, then setup early (it's the part that must be done before class), then the words.
+export const MAIN_ORDER = ["spec-driven", "setup", "words", "ready"];
+const VOCABULARY = ["spec-driven", "words"];
 
 export function appliesTo(when, answers) {
   if (!when) return true;
@@ -40,7 +41,7 @@ export function suggestedNext(answers, progress) {
 
   if (earlyStop(answers)) {
     // Setup and ready can't succeed on this device: point at vocabulary only.
-    // With every vocabulary module done, "words" stays the revisit target.
+    // With every vocabulary module done, the first one stays the revisit target.
     return VOCABULARY.find(notDone) || VOCABULARY[0];
   }
 

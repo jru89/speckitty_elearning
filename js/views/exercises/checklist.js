@@ -70,7 +70,7 @@ export function mount(container, exercise, ctx) {
   if (config.summary) {
     const part = el("div", "stack");
     part.style.marginTop = "var(--space-xl)";
-    const sh = el("h3", "cell-title--sm", "Your setup summary");
+    const sh = el("h3", "cell-title--sm", "Stuck? Share your setup");
     sh.id = `${prefix}-summary-title`;
     summaryBox = el("textarea", "input");
     summaryBox.readOnly = true;
@@ -84,7 +84,7 @@ export function mount(container, exercise, ctx) {
     copyStatus = el("p", "caption");
     copyStatus.setAttribute("role", "status");
     row.append(copy);
-    const note = el("p", "caption", "Nothing is sent automatically. Share it only if you want to.");
+    const note = el("p", "caption", "Post this in the WhatsApp group with your question, so the trainer sees your setup at a glance. Nothing is sent automatically.");
     part.append(sh, summaryBox, row, copyStatus, note);
     root.append(part);
 
@@ -94,7 +94,7 @@ export function mount(container, exercise, ctx) {
         const result = await copyText(summaryBox.value, summaryBox);
         if (signal.aborted) return;
         copyStatus.textContent =
-          result === "copied" ? "Copied, paste it in a message to your trainer." : "Selected, press Ctrl+C / Cmd+C to copy.";
+          result === "copied" ? "Copied, paste it in the WhatsApp group." : "Selected, press Ctrl+C / Cmd+C to copy.";
       },
       { signal },
     );

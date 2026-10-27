@@ -67,17 +67,17 @@ test("tailor: suggestedNext by experience", () => {
   const empty = progressWith({});
   assertEqual(suggestedNext({ ...base, experience: "agents-daily" }, empty), "ready", "agents-daily");
   assertEqual(suggestedNext({ ...base, experience: "terminal-new" }, empty), "terminal", "terminal-new");
-  assertEqual(suggestedNext(base, empty), "words", "codes-no-agents starts at words");
-  assertEqual(suggestedNext(base, progressWith({ words: "done" })), "spec-driven", "next not-done");
-  assertEqual(suggestedNext(base, progressWith({ words: "in_progress" })), "words", "in_progress is not done");
+  assertEqual(suggestedNext(base, empty), "spec-driven", "codes-no-agents starts at spec-driven");
+  assertEqual(suggestedNext(base, progressWith({ "spec-driven": "done" })), "setup", "next not-done");
+  assertEqual(suggestedNext(base, progressWith({ "spec-driven": "in_progress" })), "spec-driven", "in_progress is not done");
   assertEqual(
     suggestedNext({ ...base, experience: "terminal-new" }, progressWith({ terminal: "done" })),
-    "words",
+    "spec-driven",
     "terminal done → main order",
   );
   assertEqual(
     suggestedNext({ ...base, experience: "agents-daily" }, progressWith({ ready: "done" })),
-    "words",
+    "spec-driven",
     "agents-daily with ready done → first not-done",
   );
 });
@@ -92,7 +92,7 @@ test("tailor: suggestedNext never returns a done module, except ready when all d
     const next = suggestedNext({ ...base, experience }, partial);
     assert(partial.modules[next] !== "done", `${experience} got done module ${next}`);
   }
-  assertEqual(suggestedNext(base, partial), "setup", "setup after vocabulary");
+  assertEqual(suggestedNext(base, progressWith({ "spec-driven": "done", setup: "done" })), "words", "words after setup");
 });
 
 test("tailor: early stop never suggests setup or ready", () => {
@@ -102,7 +102,7 @@ test("tailor: early stop never suggests setup or ready", () => {
   ];
   const progresses = [
     progressWith({}),
-    progressWith({ words: "done" }),
+    progressWith({ "spec-driven": "done" }),
     progressWith({ words: "done", "spec-driven": "done" }),
   ];
   for (const a of stops) {
@@ -113,17 +113,17 @@ test("tailor: early stop never suggests setup or ready", () => {
       }
     }
   }
-  assertEqual(suggestedNext({ ...stops[0], experience: "agents-daily" }, progressWith({})), "words", "first vocabulary");
-  assertEqual(suggestedNext(stops[1], progressWith({ words: "done" })), "spec-driven", "next vocabulary");
+  assertEqual(suggestedNext({ ...stops[0], experience: "agents-daily" }, progressWith({})), "spec-driven", "first vocabulary");
+  assertEqual(suggestedNext(stops[1], progressWith({ "spec-driven": "done" })), "words", "next vocabulary");
 });
 
 test("tailor: suggestedNext with null answers or progress", () => {
-  assertEqual(suggestedNext(null, null), "words", "nothing known");
-  assertEqual(suggestedNext(base, undefined), "words", "no progress");
+  assertEqual(suggestedNext(null, null), "spec-driven", "nothing known");
+  assertEqual(suggestedNext(base, undefined), "spec-driven", "no progress");
 });
 
 test("tailor: exported constants", () => {
-  assertEqual(MAIN_ORDER, ["words", "spec-driven", "setup", "ready"], "MAIN_ORDER");
+  assertEqual(MAIN_ORDER, ["spec-driven", "setup", "words", "ready"], "MAIN_ORDER");
   assertEqual(KNOWN_DIMENSIONS, ["os", "chip", "device", "tool", "experience"], "KNOWN_DIMENSIONS");
   assertEqual(Object.keys(ENUMS), KNOWN_DIMENSIONS, "ENUMS keys match dimensions");
 });

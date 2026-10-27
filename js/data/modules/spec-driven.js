@@ -1,13 +1,26 @@
-// Module 2: Vibe coding vs spec-driven (FR-010, FR-011). Shape: data-model.md "Module (static)".
+// Module 1: What Spec Kitty is (FR-010, FR-011). Shape: data-model.md "Module (static)".
 // Tool-neutral (NFR-007). C-005: exactly one one-line teaser (block "bright-factory-teaser"), nothing more.
-// The command-style block has no body and no `when`: module-view renders it for the attendee's tool (FR-025).
-// Pure data: no imports, no DOM, no `when` conditions.
+// The Spec Kitty words (skills, charter, doctrine, profiles) are here at "recognise the word" depth: the class
+// teaches them properly. The command-style block has no body and no `when`: module-view renders it for the
+// attendee's tool (FR-025). Pure data: no imports, no DOM, no `when` conditions.
+
+const SPEC_KITTY_WORDS = `
+<div class="tiles">
+<div class="tile tile--blue"><span class="tile__kicker">Work package</span><strong>One small slice</strong><span>A piece of the work that can be built and reviewed on its own.</span></div>
+<div class="tile tile--teal"><span class="tile__kicker">Worktree</span><strong>A separate working folder</strong><span>Of the same repo, so agents can build different work packages at once.</span></div>
+<div class="tile tile--purple"><span class="tile__kicker">Charter</span><strong>How this project works</strong><span>Your project's own rules. The spec says what to build; the charter says how.</span></div>
+<div class="tile tile--green"><span class="tile__kicker">Doctrine</span><strong>The shared library</strong><span>Proven rules and routines that a charter picks from.</span></div>
+<div class="tile tile--pink"><span class="tile__kicker">Agent profile</span><strong>A role to play</strong><span>Implementer, reviewer, architect: the same AI tool in a different part.</span></div>
+</div>`;
+
+const habit = (colour, title, where) =>
+  `<article class="habit habit--${colour}"><h3>${title}</h3><p class="habit__where">In Spec Kitty: <strong>${where}</strong></p></article>`;
 
 export default {
   id: "spec-driven",
-  title: "Vibe coding vs spec-driven",
+  title: "What Spec Kitty is",
   summary: "Why loose prompting breaks down on bigger work, and the flow Spec Kitty uses instead.",
-  minutes: 6,
+  minutes: 7,
   optional: false,
   blocks: [
     {
@@ -22,7 +35,7 @@ export default {
       body:
         "<p>On bigger work, a few problems show up:</p>" +
         "<ul>" +
-        "<li>The agent forgets between sessions, because its context window starts empty.</li>" +
+        "<li>The agent forgets between sessions.</li>" +
         "<li>It drifts from what you meant.</li>" +
         "<li>There's no record of <em>why</em> something was built.</li>" +
         "<li>\"Done\" is never defined, so the result is hard to review.</li>" +
@@ -32,7 +45,7 @@ export default {
       id: "spec-driven",
       heading: "Spec-driven",
       body:
-        "<p><strong>Spec-driven</strong> development writes down your intent and acceptance criteria first, keeps them in Git next to the code, and lets the agent work from them.</p>",
+        "<p><strong>Spec-driven</strong> development writes down your intent and acceptance criteria first, keeps them in Git next to the code, and lets the agent work from them. Spec Kitty gives that a fixed flow.</p>",
     },
     {
       id: "seven-steps",
@@ -45,11 +58,51 @@ export default {
         "<p class=\"who-legend\"><span class=\"who who--you\">You lead</span><span class=\"who who--agent\">The agent leads</span><span class=\"who who--both\">Together</span></p>",
     },
     {
-      id: "work-packages-worktrees",
-      heading: "Work packages and worktrees",
+      id: "skills",
+      heading: "Each step is a skill",
+      // kind "skills": module-view renders the animated request → matching skill demo (js/views/widgets/skills.js).
+      kind: "skills",
       body:
-        "<p>A <strong>work package</strong> is one small, reviewable slice of the work.</p>" +
-        "<p>A <strong>worktree</strong> is a separate working folder of the same repo, so several agents can build different work packages at once without stepping on each other.</p>",
+        "<p class=\"lead-in\"><strong>A skill is a playbook your AI tool loads when it's needed.</strong> Spec Kitty installs each step as one, so you can ask in plain words, or start a step with a command like <code>/spec-kitty.specify</code>.</p>",
+      skills: [
+        { name: "spec-kitty.specify", does: "Turn an idea into a spec" },
+        { name: "spec-kitty.plan", does: "Decide how to build it" },
+        { name: "spec-kitty.tasks", does: "Split the plan into work packages" },
+        { name: "spec-kitty.implement", does: "Build one work package" },
+        { name: "spec-kitty.review", does: "Check work against the spec" },
+        { name: "spec-kitty.merge", does: "Bring finished work in" },
+      ],
+      requests: [
+        { text: "Write a spec for a simple to-do app", skill: "spec-kitty.specify" },
+        { text: "Plan how we're going to build it", skill: "spec-kitty.plan" },
+        { text: "Split the plan into work packages", skill: "spec-kitty.tasks" },
+        { text: "Build work package 2", skill: "spec-kitty.implement" },
+        { text: "Check WP02 against the spec", skill: "spec-kitty.review" },
+        { text: "Merge the finished work", skill: "spec-kitty.merge" },
+      ],
+    },
+    {
+      id: "command-style",
+      kind: "command-style",
+    },
+    {
+      id: "spec-kitty-words",
+      heading: "More words you'll hear in class",
+      body:
+        "<p>You only need to recognise these. The class shows them in action.</p>" + SPEC_KITTY_WORDS,
+    },
+    {
+      id: "habits",
+      heading: "Four habits that make the difference",
+      // Not a sequence, so not numbered: each habit names the Spec Kitty step where it lives.
+      body:
+        "<p>Spec Kitty builds these habits into the flow, so you don't have to remember them.</p>" +
+        "<div class=\"habits\">" +
+        habit("blue", "Say what done looks like.", "the spec and its acceptance criteria") +
+        habit("purple", "Teach once, not every prompt.", "the charter") +
+        habit("green", "Let it verify.", "build, with tests per work package") +
+        habit("orange", "Review before it matters.", "review and accept") +
+        "</div>",
     },
     {
       id: "acceptance-criteria",
@@ -63,27 +116,10 @@ export default {
         "<p>The exercise below lets you practice telling them apart.</p>",
     },
     {
-      id: "habits",
-      heading: "Four habits that make the difference",
-      // Not a sequence, so not numbered: each habit names the Spec Kitty step where it lives.
-      body:
-        "<p>Spec Kitty builds these habits into the flow, so you don't have to remember them.</p>" +
-        "<div class=\"habits\">" +
-        "<article class=\"habit habit--blue\"><h3>Say what done looks like.</h3><p>A goal plus a check the agent can run beats a long description.</p><p class=\"habit__where\">In Spec Kitty: <strong>the spec and its acceptance criteria</strong></p></article>" +
-        "<article class=\"habit habit--purple\"><h3>Teach once, not every prompt.</h3><p>Lasting knowledge goes in AGENTS.md, the charter or a skill.</p><p class=\"habit__where\">In Spec Kitty: <strong>the charter</strong></p></article>" +
-        "<article class=\"habit habit--green\"><h3>Let it verify.</h3><p>Tests, checks and previews turn guesses into evidence.</p><p class=\"habit__where\">In Spec Kitty: <strong>build, with tests per work package</strong></p></article>" +
-        "<article class=\"habit habit--orange\"><h3>Review before it matters.</h3><p>The agent drafts; you own the result.</p><p class=\"habit__where\">In Spec Kitty: <strong>review and accept</strong></p></article>" +
-        "</div>",
-    },
-    {
       id: "bright-factory-teaser",
       kind: "note",
       body:
         "<p>In the session we'll zoom in on the Bright Factory: humans define intent and acceptance criteria, agents build it in a traceable way.</p>",
-    },
-    {
-      id: "command-style",
-      kind: "command-style",
     },
   ],
   exercise: {

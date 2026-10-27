@@ -53,7 +53,7 @@ export default {
       body:
         "<p class=\"lead-in\"><strong>An agent is a model in a loop.</strong> It plans, uses a tool, looks at the result and decides what to do next, until the goal is met or it needs you.</p>",
       after:
-        "<p>Each round builds on the last, so a small misunderstanding early on can grow. That's exactly what Spec Kitty helps with.</p>",
+        "<p>Each round builds on the last, so a small misunderstanding early on can grow. Spec Kitty's spec and review steps catch that.</p>",
       trace: [
         { step: "goal", text: "Why does the login button do nothing?" },
         { step: "plan", text: "Start with the login page code." },
@@ -105,7 +105,7 @@ export default {
       // kind "context-stack": module-view renders the animated context window (js/views/widgets/context-stack.js).
       kind: "context-stack",
       body:
-        "<p class=\"lead-in\"><strong>The context window is everything the agent can see right now.</strong> It's its working memory for one session, measured in tokens. It's limited, and a new session starts empty.</p>",
+        "<p class=\"lead-in\"><strong>The context window is everything the agent can see right now.</strong> It's its working memory for one session, measured in tokens. It's limited, and a new session starts empty. Files like <code>AGENTS.md</code> give it standing instructions; skills add a playbook only when needed.</p>",
       after:
         "<p><strong>That's why Spec Kitty keeps specs and plans in your project folder:</strong> the next session reads them instead of relying on memory.</p>" +
         deeper(

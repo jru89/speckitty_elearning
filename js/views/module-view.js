@@ -115,6 +115,10 @@ function commandStyle(answers) {
   }
   p.append(`In ${t.name}, Spec Kitty commands look like `);
   p.append(el("code", "", t.commandStyle));
+  if (t.demo) {
+    p.append(". That's also what the trainer uses.");
+    return [p];
+  }
   p.append(". The trainer uses Claude Code (");
   p.append(el("code", "", "/spec-kitty.specify"));
   p.append(").");

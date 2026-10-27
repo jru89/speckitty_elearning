@@ -63,7 +63,7 @@ export default {
       // kind "skills": module-view renders the animated request → matching skill demo (js/views/widgets/skills.js).
       kind: "skills",
       body:
-        "<p class=\"lead-in\"><strong>A skill is a playbook your AI tool loads when it's needed.</strong> Spec Kitty installs each step as one, so you can ask in plain words, or start a step with a command like <code>/spec-kitty.specify</code>.</p>",
+        "<p class=\"lead-in\"><strong>A skill is a playbook your AI tool loads when it's needed.</strong> Spec Kitty installs each step as one, so you can just ask in plain words, or start a step with a command (see below).</p>",
       skills: [
         { name: "spec-kitty.specify", does: "Turn an idea into a spec" },
         { name: "spec-kitty.plan", does: "Decide how to build it" },
@@ -77,7 +77,7 @@ export default {
         { text: "Plan how we're going to build it", skill: "spec-kitty.plan" },
         { text: "Split the plan into work packages", skill: "spec-kitty.tasks" },
         { text: "Build work package 2", skill: "spec-kitty.implement" },
-        { text: "Check WP02 against the spec", skill: "spec-kitty.review" },
+        { text: "Check work package 2 against the spec", skill: "spec-kitty.review" },
         { text: "Merge the finished work", skill: "spec-kitty.merge" },
       ],
     },

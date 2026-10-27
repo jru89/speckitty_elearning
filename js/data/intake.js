@@ -84,7 +84,7 @@ export const QUESTIONS = [
     id: "experience",
     label: "How familiar are you with this kind of work?",
     options: [
-      { value: "no-code", label: "I don't write code", hint: "For example product, design or management." },
+      { value: "no-code", label: "I don't write code", hint: "Just curious, or you work with people who code." },
       { value: "terminal-new", label: "I code a little, but I'm new to the terminal" },
       { value: "codes-no-agents", label: "I write code, but haven't used AI agents" },
       { value: "agents-daily", label: "I use AI coding agents (almost) daily" },

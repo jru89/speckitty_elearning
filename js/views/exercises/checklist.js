@@ -112,7 +112,7 @@ export function mount(container, exercise, ctx) {
     const saved = store.getProgress().exercises[exercise.id];
     if (!saved || Boolean(saved.completed) !== completed) store.setExerciseState(exercise.id, { completed });
     const done = boxes.filter((b) => b.checked).length;
-    progressLine.textContent = completed ? "All checks done. You're ready." : `${done} of ${boxes.length} checked.`;
+    progressLine.textContent = completed ? "All checks done. You're ready! Drop a ✅ in the WhatsApp group so the trainer knows." : `${done} of ${boxes.length} checked.`;
   }
 
   function updateSummary() {

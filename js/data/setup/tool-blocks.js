@@ -75,7 +75,7 @@ export const toolBlocks = [
       "<ul>",
       "<li><strong>Already pay for or use ChatGPT?</strong> Pick <strong>Codex</strong>: it's included in your ChatGPT plan, even the free one.</li>",
       "<li><strong>Want exactly what the trainer shows?</strong> Pick <strong>Claude Code</strong>. It needs a paid Claude plan.</li>",
-      "<li><strong>Want free and simple?</strong> Pick <strong>GitHub Copilot</strong> (built into VS Code) or <strong>Cursor</strong>.</li>",
+      "<li><strong>Want to start free?</strong> Pick <strong>GitHub Copilot</strong> (built into VS Code) or <strong>Cursor</strong>, and upgrade if you hit the limit.</li>",
       "</ul>",
       "<p>You don't need an expensive plan: the cheapest one is plenty for the class. A free plan can work too, but may hit its limit during the hands-on.</p>",
       "<p>Commands look slightly different per tool, but you'll follow the same steps in the session.</p>",

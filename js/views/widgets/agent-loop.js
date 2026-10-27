@@ -1,6 +1,6 @@
 // Animated agentic loop: a ring of four steps around the goal, next to an "agent trace" that types out one line
 // at a time. Each trace line lights up its step on the ring; when the goal is met the centre lights up and it starts
-// again. Pauses off-screen and when the attendee pauses it. With reduced motion it doesn't autoplay: "Next step".
+// again. Pauses off-screen and when the attendee pauses it. It plays on its own for everyone; reduced motion only drops the glow (CSS).
 // Content comes from the block's `trace` ([{ step: "goal"|"plan"|"act"|"observe"|"decide"|"done", text }]).
 
 const STEPS = [
@@ -51,7 +51,6 @@ function ring() {
 
 export function render(block) {
   const trace = Array.isArray(block.trace) ? block.trace.filter((l) => l && LABELS[l.step] && l.text) : [];
-  const reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   const wrap = el("div", "agent-loop");
   const { root: ringSvg, nodes } = ring();
@@ -66,7 +65,7 @@ export function render(block) {
   term.append(bar, lines);
 
   const controls = el("div", "agent-loop__controls");
-  const toggle = el("button", "btn btn--secondary", reduced ? "Next step" : "Pause");
+  const toggle = el("button", "btn btn--secondary", "Pause");
   toggle.type = "button";
   const restart = el("button", "btn btn--ghost", "Restart");
   restart.type = "button";
@@ -75,7 +74,7 @@ export function render(block) {
   wrap.append(ringBox, term, controls);
 
   let index = 0; // next line to show
-  let playing = !reduced;
+  let playing = true;
   let timer = null;
   let visible = false;
   let mounted = false; // true once on the page; a later removal (the module redrew) stops it for good
@@ -131,20 +130,12 @@ export function render(block) {
   }
 
   toggle.addEventListener("click", () => {
-    if (reduced) {
-      step();
-      return;
-    }
     playing = !playing;
     toggle.textContent = playing ? "Pause" : "Play";
     schedule();
   });
   restart.addEventListener("click", () => {
     reset();
-    if (reduced) {
-      step();
-      return;
-    }
     playing = true;
     toggle.textContent = "Pause";
     step();
@@ -169,9 +160,6 @@ export function render(block) {
       schedule();
     }
   }
-
-  // Reduced motion: show the first line straight away, then step on demand.
-  if (reduced && trace.length) showLine(index++);
 
   return wrap;
 }

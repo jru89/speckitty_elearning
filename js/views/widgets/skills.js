@@ -91,7 +91,6 @@ export function render(block) {
         show,
         reset,
         delay: (i) => requests[i].text.length * TYPE_MS + 2400,
-        nextLabel: "Next request",
       }),
     );
   }

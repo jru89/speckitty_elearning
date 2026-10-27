@@ -1,5 +1,5 @@
 // Shared timing for the step-by-step widgets (skills, context stack): plays one step at a time while on screen,
-// with Pause/Play and Restart. With reduced motion it never autoplays; the button becomes "Next step".
+// with Pause/Play and Restart. It plays on its own for everyone; reduced motion only drops the movement (CSS).
 // The widget supplies `count` steps, `show(i)` to draw step i, `reset()` before a new round, and `delay(i)`.
 
 function button(className, text) {
@@ -10,16 +10,15 @@ function button(className, text) {
   return b;
 }
 
-export function createPlayer(wrap, { count, show, reset, delay, nextLabel = "Next step", restMs = 2600 }) {
-  const reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+export function createPlayer(wrap, { count, show, reset, delay, restMs = 2600 }) {
   const controls = document.createElement("div");
   controls.className = "agent-loop__controls";
-  const toggle = button("btn btn--secondary", reduced ? nextLabel : "Pause");
+  const toggle = button("btn btn--secondary", "Pause");
   const restart = button("btn btn--ghost", "Restart");
   controls.append(toggle, restart);
 
   let index = 0;
-  let playing = !reduced;
+  let playing = true;
   let visible = false;
   let mounted = false;
   let timer = null;
@@ -55,7 +54,6 @@ export function createPlayer(wrap, { count, show, reset, delay, nextLabel = "Nex
   }
 
   toggle.addEventListener("click", () => {
-    if (reduced) return advance();
     playing = !playing;
     toggle.textContent = playing ? "Pause" : "Play";
     schedule();
@@ -64,11 +62,9 @@ export function createPlayer(wrap, { count, show, reset, delay, nextLabel = "Nex
     index = 0;
     reset();
     advance();
-    if (!reduced) {
-      playing = true;
-      toggle.textContent = "Pause";
-      schedule();
-    }
+    playing = true;
+    toggle.textContent = "Pause";
+    schedule();
   });
 
   const observer =
@@ -83,7 +79,7 @@ export function createPlayer(wrap, { count, show, reset, delay, nextLabel = "Nex
   if (observer) observer.observe(wrap);
   else visible = true;
 
-  // Always start with the first step drawn, so a still frame (or reduced motion) shows something real.
+  // Always start with the first step drawn, so a still frame shows something real.
   reset();
   advance();
   return controls;

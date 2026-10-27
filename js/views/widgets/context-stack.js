@@ -51,7 +51,7 @@ export function render(block) {
   }
 
   if (layers.length) {
-    wrap.append(createPlayer(wrap, { count: layers.length, show, reset, delay: () => 1500, nextLabel: "Next layer", restMs: 3200 }));
+    wrap.append(createPlayer(wrap, { count: layers.length, show, reset, delay: () => 1500, restMs: 3200 }));
   }
   return wrap;
 }

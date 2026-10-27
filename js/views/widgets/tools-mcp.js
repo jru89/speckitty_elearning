@@ -1,6 +1,6 @@
 // Animated "tools and MCP" diagram: Agent ↔ MCP (one plug) ↔ tools. A pulse flows from the agent through MCP to one
 // tool and back; a terminal shows the call as it leaves (→) and the result as it returns (←), then the next tool.
-// Plays only while on screen; Pause/Play and Restart. With reduced motion it doesn't autoplay: "Next call".
+// Plays only while on screen; Pause/Play and Restart. It plays on its own for everyone; with reduced motion each call appears whole, without the travelling pulse.
 // Content comes from the block's `calls` ([{ tool: "Jira", call, result }]); `tools` lists the boxes on the right.
 
 const SVG_NS = "http://www.w3.org/2000/svg";
@@ -81,7 +81,7 @@ export function render(block) {
   term.append(callLine, el("hr", "mcp__rule"), resultLine);
 
   const controls = el("div", "agent-loop__controls");
-  const toggle = el("button", "btn btn--secondary", reduced ? "Next call" : "Pause");
+  const toggle = el("button", "btn btn--secondary", "Pause");
   toggle.type = "button";
   const restart = el("button", "btn btn--ghost", "Restart");
   restart.type = "button";
@@ -89,7 +89,7 @@ export function render(block) {
   wrap.append(term, pic, controls);
 
   let index = 0;
-  let playing = !reduced;
+  let playing = true;
   let visible = false;
   let mounted = false;
   let frame = null;
@@ -149,6 +149,10 @@ export function render(block) {
     });
 
   async function playCall(id) {
+    if (reduced) {
+      showStatic();
+      return wait(GO_MS + AT_TOOL_MS + BACK_MS + HOLD_MS, id);
+    }
     const c = calls[index % calls.length];
     index += 1;
     setLine(callLine, "→", c.call);
@@ -179,7 +183,7 @@ export function render(block) {
     clearTimeout(timer);
   }
 
-  // Reduced motion / "Next call": show the whole call and result at once, no travelling pulse.
+  // Reduced motion: show the whole call and result at once, no travelling pulse.
   function showStatic() {
     const c = calls[index % calls.length];
     index += 1;
@@ -190,7 +194,6 @@ export function render(block) {
   }
 
   toggle.addEventListener("click", () => {
-    if (reduced) return showStatic();
     playing = !playing;
     toggle.textContent = playing ? "Pause" : "Play";
     if (playing) loop();
@@ -199,7 +202,6 @@ export function render(block) {
   restart.addEventListener("click", () => {
     stopMotion();
     index = 0;
-    if (reduced) return showStatic();
     playing = true;
     toggle.textContent = "Pause";
     loop();
@@ -229,11 +231,6 @@ export function render(block) {
   if (calls.length) {
     const first = calls[0];
     setLine(callLine, "→", first.call);
-    if (reduced) {
-      setLine(resultLine, "←", first.result);
-      lightUp(first.tool, "tool");
-      index = 1;
-    }
   }
   return wrap;
 }

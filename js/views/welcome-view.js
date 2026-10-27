@@ -48,7 +48,7 @@ export function render(main, params, ctx) {
   // Hero
   const hero = el("header", "section-head");
   const h1 = el("h1", "hero-title", "Spec Kitty Class Prep");
-  const lead = el("p", "lead", "Get ready for the Spec Kitty class in about 30 minutes.");
+  const lead = el("p", "lead", "Get ready for the Spec Kitty class. It takes 30 to 60 minutes, a bit longer if this is your first time installing tools like these. You can stop and come back any time.");
   lead.style.marginTop = "var(--space-md)";
   const actions = el("div", "row");
   const cta = el("a", "btn btn--primary", hasAnswers ? "Back to the course" : "Start");
@@ -60,7 +60,7 @@ export function render(main, params, ctx) {
   const grid = el("div", "bento");
 
   // What Spec Kitty is
-  const what = el("section", "cell span-2 tall");
+  const what = el("section", "cell cell--blue span-2 tall");
   what.setAttribute("aria-labelledby", "welcome-what");
   const whatTitle = el("h2", "cell-title cell-title--lg", "What Spec Kitty is");
   whatTitle.id = "welcome-what";
@@ -70,7 +70,7 @@ export function render(main, params, ctx) {
   what.append(whatTitle, whatBody);
 
   // The session
-  const sess = el("section", "cell span-2 tall");
+  const sess = el("section", "cell cell--purple span-2 tall");
   sess.setAttribute("aria-labelledby", "welcome-agenda");
   const sessTitle = el("h2", "cell-title cell-title--lg", "The session");
   sessTitle.id = "welcome-agenda";
@@ -79,7 +79,7 @@ export function render(main, params, ctx) {
   sess.append(sessTitle, list("ol", agenda), goalP);
 
   // What to bring
-  const bringCell = el("section", "cell span-2");
+  const bringCell = el("section", "cell cell--orange span-2");
   bringCell.setAttribute("aria-labelledby", "welcome-bring");
   const bringTitle = el("h2", "cell-title", "What to bring");
   bringTitle.id = "welcome-bring";

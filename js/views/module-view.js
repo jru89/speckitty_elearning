@@ -3,7 +3,7 @@
 // Block `body` is trusted repo HTML (innerHTML); anything derived from answers or tool names uses textContent.
 
 import { loadModule, MODULES } from "../data/modules/index.js";
-import { tools, toolById } from "../data/tools.js";
+import { recommendedTools, otherTools, toolById } from "../data/tools.js";
 import { visibleBlocks } from "../lib/tailor.js";
 import { enhanceCodeBlocks } from "../lib/enhance.js";
 
@@ -60,27 +60,32 @@ function pager(id, near) {
 
 // ------------------------------------------------------------------ Blocks
 
+function toolCard(t, onPick) {
+  const li = el("li", "tool-card");
+  const name = el("h3", "cell-title--sm", t.name);
+  li.append(name);
+  if (t.demo) li.append(el("span", "chip chip--next", "Used in the demo"));
+  if (t.pitch) li.append(el("p", "", t.pitch));
+  li.append(el("p", "caption", t.costNote));
+  const btn = el("button", "btn btn--secondary", "Use this tool");
+  btn.type = "button";
+  btn.setAttribute("aria-label", `Use ${t.name}`);
+  btn.addEventListener("click", () => onPick(t.id));
+  li.append(btn);
+  return li;
+}
+
+// Recommended tools first; the rest sit in a fold so a newcomer isn't faced with 13 choices.
 function toolChooser(onPick) {
-  const list = el("ul", "stack");
-  list.style.listStyle = "none";
-  list.style.padding = "0";
-  for (const t of tools) {
-    const li = el("li", "cell");
-    li.style.background = "var(--elevated)";
-    li.style.padding = "var(--space-lg)";
-    const name = el("h3", "cell-title--sm", t.name);
-    li.append(name);
-    if (t.demo) li.append(el("span", "chip chip--next", "Used in the demo"));
-    li.append(el("p", "", t.costNote));
-    const btn = el("button", "btn btn--secondary", "Use this tool");
-    btn.type = "button";
-    btn.setAttribute("aria-label", `Use ${t.name}`);
-    btn.addEventListener("click", () => onPick(t.id));
-    li.append(btn);
-    list.append(li);
-  }
-  const intro = el("p", "", "Each of these works with Spec Kitty. Pick one and the setup steps below switch to it. You can change it later under Menu, Change my answers.");
-  return [intro, list];
+  const intro = el("p", "", "Pick one and the steps below switch to it. You can change it later under Menu → Change my answers.");
+  const list = el("ul", "tool-grid");
+  for (const t of recommendedTools) list.append(toolCard(t, onPick));
+  const fold = el("details", "more-choices");
+  fold.append(el("summary", "", `More supported tools (${otherTools.length})`));
+  const more = el("ul", "tool-grid");
+  for (const t of otherTools) more.append(toolCard(t, onPick));
+  fold.append(more);
+  return [intro, list, fold];
 }
 
 function commandStyle(answers) {
@@ -126,16 +131,48 @@ function renderBlock(block, index, answers, ctx, onPick) {
     section.append(...commandStyle(answers));
   } else if (typeof block.body === "string") {
     const tpl = document.createElement("template");
-    tpl.innerHTML = block.body; // trusted, repo-authored HTML
+    tpl.innerHTML = block.body.replaceAll("{{SITE}}", SITE); // trusted, repo-authored HTML
     section.append(tpl.content);
   }
   return section;
 }
 
+// The course's own address (works locally and under the GitHub Pages sub-path), for script links.
+const SITE = new URL("./", window.location.href).href;
+
+const GROUP_LABELS = { manual: "Do it by hand instead" };
+const openGroups = new Set(); // remembers which folds the attendee opened, across redraws
+
+// Wrap runs of blocks that share a `group` in one <details>, so optional detail stays out of the way.
+function groupBlocks(nodes, blocks) {
+  const out = [];
+  let fold = null;
+  nodes.forEach((node, i) => {
+    const group = blocks[i].group;
+    if (!group) {
+      fold = null;
+      out.push(node);
+      return;
+    }
+    if (!fold || fold.dataset.group !== group) {
+      fold = el("details", "block-group");
+      fold.dataset.group = group;
+      fold.open = openGroups.has(group);
+      fold.addEventListener("toggle", () => (fold.open ? openGroups.add(group) : openGroups.delete(group)));
+      const summary = el("summary", "", GROUP_LABELS[group] || group);
+      const inner = el("div", "stack block-group__body");
+      fold.append(summary, inner);
+      out.push(fold);
+    }
+    fold.lastElementChild.append(node);
+  });
+  return out;
+}
+
 // ------------------------------------------------------------------ Page
 
 function header(mod) {
-  const head = el("header");
+  const head = el("header", "module-head");
   head.append(link("#/course", "caption", "← Your course"));
   const h1 = el("h1", "page-title", mod.title);
   h1.style.marginTop = "var(--space-md)";
@@ -194,8 +231,9 @@ export async function render(main, params, ctx) {
   let mountToken = 0;
 
   const wrap = el("div", "container container--reading");
+  wrap.dataset.module = id; // module colour (css/style.css)
   const stack = el("div", "stack");
-  const blocksHost = el("div", "stack");
+  const blocksHost = el("div", "stack blocks");
   const exerciseHost = el("section", "exercise");
   exerciseHost.setAttribute("aria-label", "Exercise");
   wrap.append(stack);
@@ -254,7 +292,7 @@ export async function render(main, params, ctx) {
   function drawBlocks(answers) {
     const blocks = visibleBlocks(mod, answers);
     const nodes = blocks.map((b, i) => renderBlock(b, i, answers, ctx, (toolId) => pickTool(toolId, i)));
-    blocksHost.replaceChildren(...nodes);
+    blocksHost.replaceChildren(...groupBlocks(nodes, blocks));
     enhanceCodeBlocks(blocksHost);
   }
 

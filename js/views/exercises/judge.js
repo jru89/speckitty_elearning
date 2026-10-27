@@ -35,38 +35,32 @@ export function mount(container, exercise, ctx) {
   );
   root.append(head);
 
-  const list = el("ol", "stack");
-  list.style.paddingLeft = "1.25rem";
+  const list = el("ol", "judge-list");
   const rows = statements.map((s, i) => {
-    const li = el("li");
-    const text = el("p", "", s.text);
+    const li = el("li", "judge-card");
+    const text = el("p", "judge-card__text", s.text);
     text.id = `${prefix}-${i}`;
-    text.style.color = "var(--text)";
-    const group = el("div", "row");
+    const group = el("div", "judge-buttons");
     group.setAttribute("role", "group");
     group.setAttribute("aria-labelledby", text.id);
-    group.style.gap = "var(--space-sm)";
-    group.style.marginTop = "var(--space-sm)";
-    const yes = el("button", "btn btn--secondary", "Testable criterion");
-    const no = el("button", "btn btn--secondary", "Not testable");
+    const yes = el("button", "judge-btn judge-btn--yes", "✓ Testable");
+    const no = el("button", "judge-btn judge-btn--no", "✗ Not testable");
     for (const b of [yes, no]) b.type = "button";
     group.append(yes, no);
     const feedback = el("p");
     feedback.hidden = true;
-    feedback.style.marginTop = "var(--space-sm)";
     feedback.setAttribute("aria-live", "polite");
     li.append(text, group, feedback);
     list.append(li);
-    const row = { s, i, yes, no, feedback };
+    const row = { s, i, li, yes, no, feedback };
     yes.addEventListener("click", () => choose(row, true), { signal });
     no.addEventListener("click", () => choose(row, false), { signal });
     return row;
   });
   root.append(list);
 
-  const tally = el("p", "stat__label");
+  const tally = el("p", "quiz-tally");
   tally.setAttribute("role", "status");
-  tally.style.fontSize = "1rem";
   root.append(tally);
   container.append(root);
 
@@ -75,13 +69,15 @@ export function mount(container, exercise, ctx) {
     const judged = typeof pick === "boolean";
     row.yes.setAttribute("aria-pressed", String(pick === true));
     row.no.setAttribute("aria-pressed", String(pick === false));
-    row.yes.className = pick === true ? "btn btn--primary" : "btn btn--secondary";
-    row.no.className = pick === false ? "btn btn--primary" : "btn btn--secondary";
+    row.yes.classList.toggle("is-picked", pick === true);
+    row.no.classList.toggle("is-picked", pick === false);
+    const right = judged && pick === row.s.isCriterion;
+    row.li.classList.toggle("is-right", judged && right);
+    row.li.classList.toggle("is-wrong", judged && !right);
     if (!judged) {
       row.feedback.hidden = true;
       return;
     }
-    const right = pick === row.s.isCriterion;
     row.feedback.className = right ? "feedback--right" : "feedback--wrong";
     const verdict = row.s.isCriterion ? "This is a testable criterion." : "This isn't testable as written.";
     row.feedback.replaceChildren(el("strong", "", right ? "Right. " : "Not quite. "), document.createTextNode(`${verdict} ${row.s.why || ""}`.trim()));
@@ -92,7 +88,7 @@ export function mount(container, exercise, ctx) {
     const judged = rows.filter((r) => typeof answers[r.i] === "boolean");
     if (rows.length && judged.length === rows.length) {
       const spotted = rows.filter((r) => answers[r.i] === r.s.isCriterion).length;
-      tally.textContent = `You spotted ${spotted} of ${rows.length}.`;
+      tally.textContent = spotted === rows.length ? `You spotted all ${rows.length}. You're ready to write criteria!` : `You spotted ${spotted} of ${rows.length}.`;
     } else {
       tally.textContent = `${judged.length} of ${rows.length} judged.`;
     }

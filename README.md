@@ -38,9 +38,11 @@ All course content lives in `js/data/`:
 |------|---------------|
 | `js/data/welcome.js` | Welcome page text, agenda and session details |
 | `js/data/intake.js` | The five intake questions and their answer labels |
-| `js/data/tools.js` | Supported AI coding tools, cost labels and links |
+| `js/data/tools.js` | Supported AI coding tools, cost labels and links; `recommended` tools are shown first, and `ide` says whether a tool is a VS Code extension, its own editor, or runs in the terminal |
 | `js/data/modules/*.js` | The five modules (terminal, words, spec-driven, setup, ready) |
-| `js/data/setup/*.js` | Per-platform, per-tool and support blocks used by the setup module |
+| `js/data/setup/workflow-blocks.js` | The IDE-first setup flow: install VS Code, make the workspace, the per-OS prompt the AI tool runs, and the script option |
+| `js/data/setup/*.js` (other files) | Per-tool blocks, support blocks, and the hand-typed Git/Python steps shown under "Do it by hand instead" |
+| `scripts/setup-windows.ps1`, `scripts/setup-unix.sh` | The one-line setup scripts the setup page links to. They install what's missing, ask for a Git name and email, and create `Documents/spec-kitty-class`. Keep them in step with the prompt in `workflow-blocks.js`. They aren't cached for offline use, because they're downloaded by a terminal command. |
 
 After any change, open the test page and check for 0 failures. The coverage test checks every intake combination, so a missing install or verify step for some platform shows up there.
 

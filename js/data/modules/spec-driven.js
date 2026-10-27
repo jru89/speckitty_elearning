@@ -7,7 +7,7 @@ export default {
   id: "spec-driven",
   title: "Vibe coding vs spec-driven",
   summary: "Why loose prompting breaks down on bigger work, and the flow Spec Kitty uses instead.",
-  minutes: 3,
+  minutes: 4,
   optional: false,
   blocks: [
     {
@@ -37,19 +37,12 @@ export default {
     {
       id: "seven-steps",
       heading: "The seven steps",
+      // Rendered as a vertical flow (css/style.css .steps); colour shows who leads each step.
       body:
-        "<table>" +
-        "<thead><tr><th>Step</th><th>Produces</th><th>Who leads</th></tr></thead>" +
-        "<tbody>" +
-        "<tr><td>Spec</td><td>What and why, plus acceptance criteria</td><td>You</td></tr>" +
-        "<tr><td>Plan</td><td>How: the technical approach</td><td>Agent drafts, you check</td></tr>" +
-        "<tr><td>Tasks</td><td>Work packages</td><td>Agent</td></tr>" +
-        "<tr><td>Build</td><td>Code, per work package</td><td>Agent</td></tr>" +
-        "<tr><td>Review</td><td>A check against the spec</td><td>Another agent and/or you</td></tr>" +
-        "<tr><td>Accept</td><td>Confirmation the criteria are met</td><td>You</td></tr>" +
-        "<tr><td>Merge</td><td>The work in the main code</td><td>You approve</td></tr>" +
-        "</tbody>" +
-        "</table>",
+        "<ol class=\"steps\" aria-label=\"The seven steps\">" +
+        "<li class=\"step step--you\"><span class=\"step__num\">1</span><span class=\"step__body\"><strong>Spec</strong><span>What and why, plus the acceptance criteria</span><span class=\"who who--you\">You</span></span></li><li class=\"step step--both\"><span class=\"step__num\">2</span><span class=\"step__body\"><strong>Plan</strong><span>How: the technical approach</span><span class=\"who who--both\">Agent drafts, you check</span></span></li><li class=\"step step--agent\"><span class=\"step__num\">3</span><span class=\"step__body\"><strong>Tasks</strong><span>Small work packages</span><span class=\"who who--agent\">Agent</span></span></li><li class=\"step step--agent\"><span class=\"step__num\">4</span><span class=\"step__body\"><strong>Build</strong><span>Code for each work package</span><span class=\"who who--agent\">Agent</span></span></li><li class=\"step step--both\"><span class=\"step__num\">5</span><span class=\"step__body\"><strong>Review</strong><span>A check against the spec</span><span class=\"who who--both\">Another agent and you</span></span></li><li class=\"step step--you\"><span class=\"step__num\">6</span><span class=\"step__body\"><strong>Accept</strong><span>Confirmation the criteria are met</span><span class=\"who who--you\">You</span></span></li><li class=\"step step--you\"><span class=\"step__num\">7</span><span class=\"step__body\"><strong>Merge</strong><span>The work in the main version</span><span class=\"who who--you\">You approve</span></span></li>" +
+        "</ol>" +
+        "<p class=\"who-legend\"><span class=\"who who--you\">You lead</span><span class=\"who who--agent\">The agent leads</span><span class=\"who who--both\">Together</span></p>",
     },
     {
       id: "work-packages-worktrees",

@@ -22,3 +22,7 @@ kitty-specs/**/canary-evidence/** linguist-generated=true
 .kittify/workspaces/** -diff
 .kittify/migrations/** linguist-generated=true
 .kittify/migrations/** -diff
+
+# Setup scripts: shell scripts must keep LF line endings to run on macOS and Linux.
+*.sh text eol=lf
+*.ps1 text eol=crlf

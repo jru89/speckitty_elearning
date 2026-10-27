@@ -10,11 +10,14 @@ import { session } from "../data/welcome.js";
 export const title = "Course overview";
 
 // Shown while a module file hasn't landed yet ("Coming soon" cells).
+// Module colours (css/style.css .cell--*): one per module, as on the module pages.
+const MODULE_COLOUR = { words: "blue", "spec-driven": "purple", setup: "green", ready: "orange", terminal: "teal" };
+
 const FALLBACK = {
   terminal: { title: "Terminal in 5 minutes", summary: "Just enough terminal to follow the setup steps." },
   words: { title: "Words you'll hear", summary: "The terms the trainer will use, in plain language." },
   "spec-driven": { title: "Vibe coding vs spec-driven", summary: "Why loose prompting breaks down, and the flow Spec Kitty uses." },
-  setup: { title: "Get set up", summary: "Git, Python and your AI coding tool, for your machine only." },
+  setup: { title: "Get set up", summary: "Your editor and AI tool, a class workspace, and a prompt that installs the rest." },
   ready: { title: "Ready check", summary: "A short checklist so you walk in ready." },
 };
 
@@ -69,6 +72,7 @@ function moduleCell(entry, { status, suggested, extraClass = "", hero = false, a
   const available = Boolean(data);
 
   const cell = el(available ? "a" : "div", `cell ${extraClass}`.trim());
+  if (available && MODULE_COLOUR[entry.id]) cell.classList.add(`cell--${MODULE_COLOUR[entry.id]}`);
   if (available) {
     cell.classList.add("cell--link");
     cell.href = `#/m/${encodeURIComponent(entry.id)}`;

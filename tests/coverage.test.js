@@ -124,7 +124,7 @@ test("coverage rule 4: every `when` uses known dimensions and enum values", () =
 test("coverage rule 5: every visible ready-check item can be completed", () => {
   assert(ready.exercise && ready.exercise.type === "checklist", "ready module has no checklist exercise");
   assert(ready.exercise.config.summary === true, "ready checklist must render the setup summary");
-  const installOnly = ["git-version", "git-identity", "python-version", "tool-login", "agent-check"];
+  const installOnly = ["editor", "git-version", "git-identity", "python-version", "workspace-repo", "tool-login", "agent-check"];
   checkAll((a) => {
     const ids = readyItems(a).map((i) => i.id);
     const problems = [];

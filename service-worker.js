@@ -3,7 +3,7 @@
 // Isolation (research R0-02, plan R-02): this worker only ever touches caches named "skcp-*".
 // Another app on the same github.io origin may delete our cache; we then refill it from the network.
 
-const CACHE = "skcp-v1";
+const CACHE = "skcp-v2";
 const PREFIX = "skcp-";
 
 // Built from `git ls-files`, minus tests/, kitty-specs/, .kittify/, .claude/, dotfiles and README.md.
@@ -26,6 +26,7 @@ const PRECACHE = [
   "./js/data/setup/platform-blocks.js",
   "./js/data/setup/support-blocks.js",
   "./js/data/setup/tool-blocks.js",
+  "./js/data/setup/workflow-blocks.js",
   "./js/data/tools.js",
   "./js/data/welcome.js",
   "./js/lib/clipboard.js",
@@ -35,7 +36,7 @@ const PRECACHE = [
   "./js/lib/tailor.js",
   "./js/views/exercises/checklist.js",
   "./js/views/exercises/judge.js",
-  "./js/views/exercises/match.js",
+  "./js/views/exercises/quiz.js",
   "./js/views/intake-view.js",
   "./js/views/module-view.js",
   "./js/views/overview-view.js",
@@ -45,7 +46,9 @@ const PRECACHE = [
 const SCOPE = self.registration.scope; // e.g. https://jru89.github.io/<repo>/
 const INDEX = new URL("./index.html", SCOPE).href;
 
-const precache = () => caches.open(CACHE).then((cache) => cache.addAll(PRECACHE));
+// cache: "reload" skips the browser's own HTTP cache, so a new release never stores an older copy of a file.
+const precache = () =>
+  caches.open(CACHE).then((cache) => cache.addAll(PRECACHE.map((url) => new Request(url, { cache: "reload" }))));
 
 self.addEventListener("install", (event) => {
   event.waitUntil(precache().then(() => self.skipWaiting()));

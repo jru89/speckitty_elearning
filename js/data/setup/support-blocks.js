@@ -12,8 +12,16 @@ export const supportBlocks = [
     topic: "work-device",
     kind: "note",
     heading: "Using a work laptop",
-    when: { device: ["work-can-install"] },
+    when: { device: ["work-can-install", "work-unsure"] },
     body: "<p>Work laptops sometimes block AI tools or sit behind a company proxy. If an install or log-in fails, try a personal device, or ask IT, and tell your trainer before the session.</p>",
+  },
+  {
+    id: "work-unsure",
+    topic: "work-device",
+    kind: "note",
+    heading: "Not sure if you may install software?",
+    when: { device: ["work-unsure"] },
+    body: "<p>Just try the first step. If your laptop asks for an administrator password you don't have, or says installing is blocked, stop there: ask IT, or bring a personal laptop, and tell your trainer before the session.</p>",
   },
   {
     id: "work-locked",
@@ -41,21 +49,7 @@ export const supportBlocks = [
     body: "<p>These steps need a laptop or desktop. Read along here, and tell your trainer before the session.</p>",
   },
 
-  // Agent check (T028)
-  {
-    id: "agent-check-steps",
-    topic: "agent-check",
-    kind: "check",
-    heading: "Check that your AI coding tool works",
-    body: [
-      "<ol>",
-      "<li>Make an empty folder called <code>spec-kitty-test</code>.</li>",
-      "<li>Open it in your AI coding tool (or open a terminal there and start the tool).</li>",
-      "<li>Ask: \"List the files in this folder and create a file called hello.txt that says hi.\"</li>",
-      "<li><strong>Success looks like</strong>: the tool asks permission (or just does it), tells you the folder was empty, and <code>hello.txt</code> appears in the folder.</li>",
-      "</ol>",
-    ].join("\n"),
-  },
+  // Agent check: the setup prompt (workflow-blocks.js) is the check; this is the help when it fails.
   {
     id: "agent-check-trouble",
     topic: "agent-check",
@@ -63,8 +57,9 @@ export const supportBlocks = [
     heading: "If the check fails",
     body: [
       "<ul>",
-      "<li>Not logged in: log in to your tool.</li>",
-      "<li>The tool can't see the folder: open the folder itself, not its parent.</li>",
+      "<li>Not signed in: sign in to your tool.</li>",
+      "<li>The tool can't see the folder: open the workspace folder itself (File → Open Folder…), not the folder above it.</li>",
+      "<li>It can't install something: run the script instead, or follow “Do it by hand instead” below.</li>",
       "<li>An error about your plan or quota: check your account.</li>",
       "<li>Anything else: copy the error and send it to your trainer before the session.</li>",
       "</ul>",
@@ -83,10 +78,10 @@ export const supportBlocks = [
     id: "head-start-intro",
     topic: "head-start",
     kind: "note",
-    heading: "Optional: save time in the session",
+    heading: "pipx",
     when: { os: DESKTOP_OS },
     body: [
-      "<p>Spec Kitty installs with a Python tool called pipx (or uv). Installing it now saves a few minutes in the session. Skip this if you're short on time.</p>",
+      "<p>Spec Kitty installs with a small Python tool called pipx (or uv). The setup prompt and the script already install it; do this only if you're setting up by hand.</p>",
       "<p>Prefer uv? See its <a href=\"https://docs.astral.sh/uv/\" target=\"_blank\" rel=\"noopener\">official docs</a> instead.</p>",
     ].join("\n"),
   },

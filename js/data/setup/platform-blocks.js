@@ -88,7 +88,7 @@ export const platformBlocks = [
     heading: "Install Git",
     when: { os: ["linux"] },
     body: [
-      "<p>Run the commands for your distribution.</p>",
+      "<p>Run the commands for your distribution. Not sure which you have? It's most likely Ubuntu.</p>",
       "<p>Debian or Ubuntu:</p>",
       cmd("sudo apt update"),
       cmd("sudo apt install git"),
@@ -119,7 +119,7 @@ export const platformBlocks = [
     heading: "Tell Git who you are",
     when: { os: DESKTOP_OS },
     body: [
-      "<p>Use the name and email you want on your commits. Replace the examples with your own:</p>",
+      "<p>Git saves your name and an email with every change you save (a <em>commit</em>). Any email works. It stays on your computer unless you later publish your work, for example on GitHub. Replace the examples with your own:</p>",
       cmd("git config --global user.name \"Your Name\""),
       cmd("git config --global user.email \"you@example.com\""),
     ].join("\n"),

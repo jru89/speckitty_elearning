@@ -3,7 +3,7 @@
 
 export const whatIsIt =
   '<p><a href="https://github.com/spec-kitty/spec-kitty" target="_blank" rel="noopener">Spec Kitty</a> is an open-source tool that makes AI coding more structured. ' +
-  "Instead of “vibe coding” from loose prompts, you work in a fixed flow: spec → plan → tasks → build → review → accept → merge.</p>" +
+  "Instead of “vibe coding” from loose prompts, you work in a fixed flow: spec → plan → tasks → implement → review → accept → merge.</p>" +
   "<p>Specs, plans and decisions live in your Git repo, so the AI agent never loses track of what to build.</p>";
 
 export const agenda = [

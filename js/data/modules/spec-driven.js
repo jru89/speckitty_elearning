@@ -8,6 +8,7 @@ const SPEC_KITTY_WORDS = `
 <div class="tiles">
 <div class="tile tile--blue"><span class="tile__kicker">Work package</span><strong>One small slice</strong><span>A piece of the work that can be built and reviewed on its own.</span></div>
 <div class="tile tile--teal"><span class="tile__kicker">Worktree</span><strong>A separate working folder</strong><span>Of the same repo, so agents can build different work packages at once.</span></div>
+<div class="tile tile--orange"><span class="tile__kicker">Lane</span><strong>A queue of work packages</strong><span>One agent builds them in order, in its own worktree.</span></div>
 <div class="tile tile--purple"><span class="tile__kicker">Charter</span><strong>How this project works</strong><span>Your project's own rules. The spec says what to build; the charter says how.</span></div>
 <div class="tile tile--green"><span class="tile__kicker">Doctrine</span><strong>The shared library</strong><span>Proven rules and routines that a charter picks from.</span></div>
 <div class="tile tile--pink"><span class="tile__kicker">Agent profile</span><strong>A role to play</strong><span>Implementer, reviewer, architect: the same AI tool in a different part.</span></div>
@@ -52,8 +53,9 @@ export default {
       heading: "The seven steps",
       // Rendered as a vertical flow (css/style.css .steps); colour shows who leads each step.
       body:
+        "<p class=\"steps-pre\"><strong>Once per project, before step 1:</strong> the charter, your project's own rules.</p>" +
         "<ol class=\"steps\" aria-label=\"The seven steps\">" +
-        "<li class=\"step step--you\"><span class=\"step__num\">1</span><span class=\"step__body\"><strong>Spec</strong><span>What and why, plus the acceptance criteria</span><span class=\"who who--you\">You</span></span></li><li class=\"step step--both\"><span class=\"step__num\">2</span><span class=\"step__body\"><strong>Plan</strong><span>How: the technical approach</span><span class=\"who who--both\">Agent drafts, you check</span></span></li><li class=\"step step--agent\"><span class=\"step__num\">3</span><span class=\"step__body\"><strong>Tasks</strong><span>Small work packages</span><span class=\"who who--agent\">Agent</span></span></li><li class=\"step step--agent\"><span class=\"step__num\">4</span><span class=\"step__body\"><strong>Build</strong><span>Code for each work package</span><span class=\"who who--agent\">Agent</span></span></li><li class=\"step step--both\"><span class=\"step__num\">5</span><span class=\"step__body\"><strong>Review</strong><span>A check against the spec</span><span class=\"who who--both\">Another agent and you</span></span></li><li class=\"step step--you\"><span class=\"step__num\">6</span><span class=\"step__body\"><strong>Accept</strong><span>Confirmation the criteria are met</span><span class=\"who who--you\">You</span></span></li><li class=\"step step--you\"><span class=\"step__num\">7</span><span class=\"step__body\"><strong>Merge</strong><span>The work in the main version</span><span class=\"who who--you\">You approve</span></span></li>" +
+        "<li class=\"step step--you\"><span class=\"step__num\">1</span><span class=\"step__body\"><strong>Spec</strong><span>What and why, plus the acceptance criteria</span><span class=\"who who--you\">You</span></span></li><li class=\"step step--both\"><span class=\"step__num\">2</span><span class=\"step__body\"><strong>Plan</strong><span>How: the technical approach</span><span class=\"who who--both\">Agent drafts, you check</span></span></li><li class=\"step step--agent\"><span class=\"step__num\">3</span><span class=\"step__body\"><strong>Tasks</strong><span>Small work packages</span><span class=\"who who--agent\">Agent</span></span></li><li class=\"step step--agent\"><span class=\"step__num\">4</span><span class=\"step__body\"><strong>Implement</strong><span>Build the code for each work package</span><span class=\"who who--agent\">Agent</span></span></li><li class=\"step step--both\"><span class=\"step__num\">5</span><span class=\"step__body\"><strong>Review</strong><span>A check against the spec</span><span class=\"who who--both\">Another agent and you</span></span></li><li class=\"step step--you\"><span class=\"step__num\">6</span><span class=\"step__body\"><strong>Accept</strong><span>Confirmation the criteria are met</span><span class=\"who who--you\">You</span></span></li><li class=\"step step--you\"><span class=\"step__num\">7</span><span class=\"step__body\"><strong>Merge</strong><span>The work in the main version</span><span class=\"who who--you\">You approve</span></span></li>" +
         "</ol>" +
         "<p class=\"who-legend\"><span class=\"who who--you\">You lead</span><span class=\"who who--agent\">The agent leads</span><span class=\"who who--both\">Together</span></p>",
     },
@@ -100,7 +102,7 @@ export default {
         "<div class=\"habits\">" +
         habit("blue", "Say what done looks like.", "the spec and its acceptance criteria") +
         habit("purple", "Teach once, not every prompt.", "the charter") +
-        habit("green", "Let it verify.", "build, with tests per work package") +
+        habit("green", "Let it verify.", "implement, with tests per work package") +
         habit("orange", "Review before it matters.", "review and accept") +
         "</div>",
     },

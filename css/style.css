@@ -928,3 +928,11 @@ h3.sub { font-size: 1.125rem; margin-top: var(--space-lg); color: var(--text); }
 .deeper { margin-top: var(--space-lg); }
 .deeper > summary { color: var(--accent, var(--blue)); }
 .deeper > * + * { margin-top: var(--space-md); }
+
+/* Charter marker above the seven steps: a one-off, so it sits outside the numbered flow */
+.steps-pre {
+  margin-top: var(--space-md); padding: var(--space-sm) var(--space-md);
+  border: 1px dashed rgba(191,90,242,.6); border-radius: var(--radius-md);
+  background: rgba(191,90,242,.1); color: var(--text-2); font-size: .9375rem;
+}
+.steps-pre strong { color: #d9a3ff; }

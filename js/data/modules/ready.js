@@ -9,6 +9,8 @@ const CAN_INSTALL = ["personal", "work-can-install", "work-unsure"];
 const CHOSEN_TOOLS = ENUMS.tool.filter((t) => t !== "undecided");
 
 const installable = { os: DESKTOP_OS, device: CAN_INSTALL };
+// Without a chosen tool there is no "agent-check" item, so these separate checks stand in for it.
+const handCheck = { ...installable, tool: ["undecided"] };
 
 export default {
   id: "ready",
@@ -38,12 +40,12 @@ export default {
         },
         {
           id: "agent-check",
-          label: "My AI tool ran the setup prompt (or I ran the script) and showed versions for Git, Python and pipx",
+          label: "Git, Python and pipx all show a version number (from the setup prompt, the script or by hand)",
           when: { ...installable, tool: CHOSEN_TOOLS },
         },
-        { id: "git-version", label: "Git shows a version number", when: installable },
-        { id: "git-identity", label: "Git knows my name and email", when: installable },
-        { id: "python-version", label: "Python is version 3.11 or higher", when: installable },
+        { id: "git-version", label: "Git shows a version number", when: handCheck },
+        { id: "git-identity", label: "Git knows my name and email", when: handCheck },
+        { id: "python-version", label: "Python is version 3.11 or higher", when: handCheck },
         { id: "workspace-repo", label: "My workspace folder has a README.md, so it's a Git repository", when: installable },
         { id: "told-trainer-mobile", label: "I said in the WhatsApp group that I can't install on this device", when: { os: ["mobile"] } },
         {

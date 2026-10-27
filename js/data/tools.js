@@ -21,7 +21,7 @@ export const tools = [
     ide: "extension",
     extensionName: "Claude Code",
     recommended: true,
-    pitch: "Used in the demo. Works inside VS Code. Needs a paid Claude plan.",
+    pitch: "Works inside VS Code. Needs a paid Claude plan.",
   },
   {
     id: "antigravity",

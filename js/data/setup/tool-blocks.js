@@ -37,7 +37,9 @@ function toolBody(t) {
     lines.push(`<p>${escapeHtml(t.name)} runs in the terminal inside VS Code. Follow the ${guide(t)}. In VS Code, open a terminal with <strong>Terminal → New Terminal</strong> to run its commands.</p>`);
   }
   lines.push(`<p>Then sign in once, so it's ready on the day.</p>`);
-  lines.push(`<p class="caption"><strong>Cost:</strong> ${escapeHtml(t.costNote)}. You don't need an expensive plan: the cheapest one is plenty for the class. A free plan can work too, but may hit its limit during the hands-on.</p>`);
+  // Only tools with a free tier get the "free can work" line; Claude Code, for one, has no free option.
+  const free = t.cost === "free-tier" ? " A free plan can work too, but may hit its limit during the hands-on." : "";
+  lines.push(`<p class="caption"><strong>Cost:</strong> ${escapeHtml(t.costNote)}. You don't need an expensive plan: the cheapest one is plenty for the class.${free}</p>`);
   if (t.demo) lines.push(`<p class="caption">This is the tool the trainer demos with.</p>`);
   return lines.join("\n");
 }

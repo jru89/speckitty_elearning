@@ -2,6 +2,7 @@
 // The hand-typed Git, Python and pipx steps stay available as a folded "Do it by hand instead" group
 // (blocks with group: "manual"; module-view.js wraps them in one <details>).
 
+import { ENUMS } from "../intake.js";
 import { platformBlocks } from "../setup/platform-blocks.js";
 import { toolBlocks } from "../setup/tool-blocks.js";
 import { supportBlocks } from "../setup/support-blocks.js";
@@ -13,15 +14,28 @@ const manual = (blocks) => blocks.map((b) => ({ ...b, group: "manual" }));
 const chromeosLinux = platformBlocks.filter((b) => b.id === "chromeos-linux");
 const handSteps = platformBlocks.filter((b) => b.id !== "chromeos-linux");
 
-const intro = {
-  id: "setup-intro",
+// The intro names what you install yourself. Claude Code on Windows needs Git first, so that combination gets its
+// own wording; the three `when`s don't overlap and together cover every answer.
+const TIME = "<p>Plan 20 to 40 minutes, a bit longer if this is your first time. You can stop any time and come back: your progress is saved.</p>";
+const introBlock = (id, when, what, rest = "Git, Python and pipx") => ({
+  id,
   topic: "intro",
   kind: "note",
-  body: [
-    "<p>You'll install two things yourself: an <strong>editor</strong> and your <strong>AI tool</strong>. Then you make a class folder and let your AI tool install the rest (Git, Python and pipx).</p>",
-    "<p>Plan 20 to 40 minutes, a bit longer if this is your first time. You can stop any time and come back: your progress is saved.</p>",
-  ].join("\n"),
-};
+  when,
+  body: `<p>You'll install ${what}. Then you make a class folder and let your AI tool install the rest (${rest}).</p>
+${TIME}`,
+});
+const TWO = "two things yourself: an <strong>editor</strong> and your <strong>AI tool</strong>";
+const intros = [
+  introBlock("setup-intro", { os: ["macos", "linux", "chromeos", "mobile"] }, TWO),
+  introBlock("setup-intro-windows", { os: ["windows"], tool: ENUMS.tool.filter((t) => t !== "claude-code") }, TWO),
+  introBlock(
+    "setup-intro-windows-claude",
+    { os: ["windows"], tool: ["claude-code"] },
+    "three things yourself: <strong>Git</strong> (Claude Code on Windows needs it first), an <strong>editor</strong> and your <strong>AI tool</strong>",
+    "Python and pipx",
+  ),
+];
 
 export default {
   id: "setup",
@@ -30,7 +44,7 @@ export default {
   minutes: 30,
   optional: false,
   blocks: [
-    intro,
+    ...intros,
     ...byTopic(supportBlocks, "work-device"),
     ...chromeosLinux,
     ...workflowBlocks,

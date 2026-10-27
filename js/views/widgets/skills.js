@@ -72,7 +72,7 @@ export function render(block) {
     type(r.text, () => {
       cards[r.skill].classList.add("is-match");
       wrap.classList.remove("is-choosing");
-      status.append(el("span", "skills-demo__dot"), document.createTextNode(`${r.skill}/SKILL.md loaded · full playbook in context`));
+      status.append(el("span", "skills-demo__dot"), document.createTextNode(`${r.skill}/SKILL.md loaded · the agent now follows its playbook`));
     });
   }
 
